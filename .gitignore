@@ -6,6 +6,6 @@ xcuserdata/
 *.xcworkspace/
 
 bin/PDFixSDKSample*
-
 bin/*.dll
 bin/*.dylib
+bin/output/
