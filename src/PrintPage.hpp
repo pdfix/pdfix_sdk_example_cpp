@@ -21,6 +21,10 @@ Example how to print page.
 #include <algorithm>
 #include "Pdfix.h"
 
+#if defined (__ANDROID__) || defined (__APPLE__) || defined (__GNUC__)
+typedef unsigned char BYTE;
+#endif
+
 template<typename T>
 struct MallocDeleter {
   void operator() (T* ptr) {
