@@ -107,5 +107,8 @@
     <ClInclude Include="..\..\src\MakeAccessible.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\..\apps\pdfix_app\public\Initialization.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -23,6 +23,7 @@
     <ClCompile Include="..\..\src\Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\apps\pdfix_app\public\Initialization.hpp" />
     <ClInclude Include="..\..\include\OcrTesseract.h" />
     <ClInclude Include="..\..\include\Pdfix.h" />
     <ClInclude Include="..\..\include\PdfToHtml.h" />
