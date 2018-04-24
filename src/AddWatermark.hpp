@@ -42,12 +42,14 @@ void AddWatermark(
   if (!doc)
     throw std::runtime_error(pdfix->GetError());
 
-  /* set watermark params
-  watermark_params.h_value = 10;
-  watermark_params.v_value = 10;
-  watermark_params.scale = 0.5;
+  // set watermark params
+  watermark_params.h_value = .5;
+  watermark_params.v_value = .3;
+  watermark_params.percentage_vals = true;
+  watermark_params.scale = 1.5;
   watermark_params.opacity = 0.5;
-  */
+  watermark_params.order_top = true;
+  
 
   if (!doc->AddWatermarkFromImage(&watermark_params, img_path.c_str()))
     throw std::runtime_error(pdfix->GetError());
