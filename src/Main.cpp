@@ -54,7 +54,7 @@ int main()
     ConvertToHtml(email, key, open_path, GetAbsolutePath(L"output/index.html"), config_path, 
       PdfHtmlParams());
     DigitalSignature(email, key, open_path, GetAbsolutePath(L"output/DigitalSignature.pdf"), 
-      GetAbsolutePath(L"resources/cert.pfx"), L"PASSWORD");
+      GetAbsolutePath(L"resources/test.pfx"), L"TEST_PASSWORD");
     DocumentMetadata(email, key, open_path, GetAbsolutePath(L"output/DocumentMetadata.pdf"), 
       L"ouput/metadata.xml");
     EmbedFonts(email, key, open_path, GetAbsolutePath(L"output/EmbedFonts.pdf"));
