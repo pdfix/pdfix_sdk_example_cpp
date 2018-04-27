@@ -21,23 +21,6 @@ Example how to print page.
 #include <algorithm>
 #include "Pdfix.h"
 
-#if defined (__ANDROID__) || defined (__APPLE__) || defined (__GNUC__)
-typedef unsigned char BYTE;
-#endif
-
-template<typename T>
-struct MallocDeleter {
-  void operator() (T* ptr) {
-    if (ptr) {
-      free(ptr);
-      ptr = nullptr;
-    }
-  }
-};
-typedef std::unique_ptr<char, MallocDeleter<char> > unique_charp;
-typedef std::unique_ptr<wchar_t, MallocDeleter<wchar_t> > unique_wcharp;
-typedef std::unique_ptr<BYTE, MallocDeleter<BYTE> > unique_BYTEp;
-
 void PrintPage(
   std::wstring email,                         // authorization email   
   std::wstring license_key,                   // authorization license key
@@ -56,9 +39,14 @@ void PrintPage(
 
   // find the printer
   DWORD sz = 0;
-
   GetDefaultPrinter(NULL, &sz);
-  unique_wcharp name((wchar_t*)malloc(sz * sizeof(wchar_t) + 1));
+
+  auto malloc_deleter = [=](void* buf) { free(buf); };
+  std::unique_ptr<wchar_t, decltype(malloc_deleter)>
+    name((wchar_t*)malloc(sz * sizeof(wchar_t) + 1), malloc_deleter);
+  if (!name)
+    throw std::runtime_error("Memory allocation error");
+
   GetDefaultPrinter(name.get(), &sz);
 
   PRINTER_DEFAULTS pd;
@@ -72,7 +60,11 @@ void PrintPage(
     throw std::runtime_error("Error OpenPrinter");
 
   GetPrinter(handle, 2, 0, 0, &sz);
-  unique_BYTEp data_2((BYTE*)malloc(sz));
+  std::unique_ptr<unsigned char, decltype(malloc_deleter)>
+    data_2((unsigned char*)malloc(sz * sizeof(unsigned char) + 1), malloc_deleter);
+  if (!data_2)
+    throw std::runtime_error("Memory allocation error");
+
   PRINTER_INFO_2* pi_2 = (PRINTER_INFO_2*)data_2.get();
   GetPrinter(handle, 2, (LPBYTE)pi_2, sz, &sz);
 
