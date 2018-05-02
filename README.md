@@ -25,6 +25,7 @@ For complete SDK documentation see the [PDFix website](https://pdfix.net).
   * Watermarks / Stamps
   * Links / Actions
   * Bookmarks
+  * Convert to HTML
   * Extract, insert and update data from Form fields
   * Printing
   * OCR
