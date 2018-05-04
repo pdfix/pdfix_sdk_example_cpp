@@ -21,10 +21,10 @@ Example how to set a value into a form field.
 
   // Sets form field value.
 void SetFormFieldValue(
-  std::wstring email,                     // authorization email   
-  std::wstring license_key,               // authorization license key
-  std::wstring open_path,                 // source PDF document
-  std::wstring save_path                  // output PDF document
+  const std::wstring& email,                     // authorization email   
+  const std::wstring& license_key,               // authorization license key
+  const std::wstring& open_path,                 // source PDF document
+  const std::wstring& save_path                  // output PDF document
 ) {
   // initialize Pdfix
   if (!Pdfix_init(Pdfix_MODULE_NAME))

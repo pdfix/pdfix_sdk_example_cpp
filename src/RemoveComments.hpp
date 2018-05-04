@@ -21,10 +21,10 @@ Example how to remove from a first highlight annot with it's popup and all repli
 
   // Removes from first highlight annot with it's popup and all replies
 void RemoveComments(
-  std::wstring email,                     // authorization email   
-  std::wstring license_key,               // authorization license key
-  std::wstring open_path,                 // source PDF document
-  std::wstring save_path                  // output PDF document
+  const std::wstring& email,                     // authorization email   
+  const std::wstring& license_key,               // authorization license key
+  const std::wstring& open_path,                 // source PDF document
+  const std::wstring& save_path                  // output PDF document
 ) {
   // initialize Pdfix
   if (!Pdfix_init(Pdfix_MODULE_NAME))

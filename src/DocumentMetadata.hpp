@@ -21,11 +21,11 @@ Example how to get or set document metadata.
 
 // Gets/sets document metadata.
 void DocumentMetadata(
-  std::wstring email,                           // authorization email   
-  std::wstring license_key,                     // authorization license key
-  std::wstring open_path,                       // source PDF document
-  std::wstring save_path,                       // output PDF doucment
-  std::wstring xml_path                         // metadata file path
+  const std::wstring& email,                           // authorization email   
+  const std::wstring& license_key,                     // authorization license key
+  const std::wstring& open_path,                       // source PDF document
+  const std::wstring& save_path,                       // output PDF doucment
+  const std::wstring& xml_path                         // metadata file path
 ) {
   // initialize Pdfix
   if (!Pdfix_init(Pdfix_MODULE_NAME))

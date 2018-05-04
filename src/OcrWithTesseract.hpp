@@ -25,13 +25,13 @@ OcrTesseract_statics;
 
   // OCRs the document. 
 void OcrWithTesseract(
-  std::wstring email,                     // authorization email   
-  std::wstring license_key,               // authorization license key
-  std::wstring open_path,                 // source PDF document
-  std::wstring save_path,                 // searchable PDF document
-  std::wstring data_path,                 // path to OCR data
-  std::string language,                   // default OCR language
-  OcrTesseractParams ocr_params
+  const std::wstring& email,                     // authorization email   
+  const std::wstring& license_key,               // authorization license key
+  const std::wstring& open_path,                 // source PDF document
+  const std::wstring& save_path,                 // searchable PDF document
+  const std::wstring& data_path,                 // path to OCR data
+  const std::string& language,                   // default OCR language
+  OcrTesseractParams& ocr_params
 ) {
   // initialize Pdfix
   if (!Pdfix_init(Pdfix_MODULE_NAME))
@@ -43,12 +43,12 @@ void OcrWithTesseract(
   if (!pdfix->Authorize(email.c_str(), license_key.c_str()))
     throw std::runtime_error(pdfix->GetError());
 
-  // initialize PdfToHtml
+  // initialize OcrTesseract
   if (!OcrTesseract_init(OcrTesseract_MODULE_NAME))
     throw std::runtime_error("OcrTesseract_init fail");
 
   OcrTesseract* ocr = GetOcrTesseract();
-  if (!pdfix)
+  if (!ocr)
     throw std::runtime_error("GetOcrTesseract fail");
 
   std::cout << "PDFix OCR Tesseract " << ocr->GetVersionMajor() << "." <<

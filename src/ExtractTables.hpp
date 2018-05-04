@@ -55,7 +55,7 @@ void SaveTable(PdeElement* element, std::wstring save_path, int& table_index) {
   if (elem_type == kPdeTable) {
     PdeTable* table = static_cast<PdeTable*>(element);
 
-    auto path = save_path + L"table_" + std::to_wstring(table_index++) + L".csv";
+    auto path = save_path + L"/ExtractTables_" + std::to_wstring(table_index++) + L".csv";
     std::ofstream ofs;
     ofs.open(ToUtf8(path));
 
@@ -109,10 +109,10 @@ void SaveTable(PdeElement* element, std::wstring save_path, int& table_index) {
 
 // Extracts all tables from the document and saves them to CSV format. 
 void ExtractTables(
-  std::wstring email,                     // authorization email   
-  std::wstring license_key,               // authorization license key
-  std::wstring open_path,                 // source PDF document
-  std::wstring save_path                  // directory where to extract images
+  const std::wstring& email,                     // authorization email   
+  const std::wstring& license_key,               // authorization license key
+  const std::wstring& open_path,                 // source PDF document
+  const std::wstring& save_path                  // directory where to extract images
 ) {
   // initialize Pdfix
   if (!Pdfix_init(Pdfix_MODULE_NAME))

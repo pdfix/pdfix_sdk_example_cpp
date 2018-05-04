@@ -21,51 +21,15 @@ Example how to make PDF Accessible.
 #include "Pdfix.h"
 #include "OcrWithTesseract.hpp"
 
-// Test elements recursively if there is any text. 
-bool HasText(PdeElement* element) {
-  Pdfix* pdfix = GetPdfix();
-  PdfElementType elem_type = element->GetType();
-  if (elem_type == kPdeText)
-    return true;  
-  int count = element->GetNumChildren();
-  for (int i = 0; i < count; i++) {
-    PdeElement* child = element->GetChild(i);
-    if (child && HasText(child))
-      return true;
-  }
-  return false;
-}
-
-// Test if PDF document is searchable.
-bool IsSearchable(PdfDoc* doc) {
-  Pdfix* pdfix = GetPdfix();
-  auto num_pages = doc->GetNumPages();
-  for (auto i = 0; i < num_pages; i++) {
-    auto page_deleter = [=](PdfPage* page) { doc->ReleasePage(page); };
-    std::unique_ptr<PdfPage, decltype(page_deleter)> page(doc->AcquirePage(i), page_deleter);
-    if (!page)
-      throw std::runtime_error(pdfix->GetError());
-    PdePageMap* page_map = page->AcquirePageMap(nullptr, nullptr);
-    if (!page_map)
-      throw std::runtime_error(pdfix->GetError());
-    auto element = page_map->GetElement();
-    if (!element)
-      throw std::runtime_error(pdfix->GetError());
-    if (HasText(element))
-      return true;
-  }
-  return false;
-}
-
 // Make PDF accessible (PDF/UA) 
 void MakeAccessible(
-  std::wstring email,               // authorization email   
-  std::wstring license_key,         // authorization license key
-  std::wstring open_path,           // source PDF document
-  std::wstring save_path,           // output PDF/UA document
-  std::wstring ocr_data_path,       // path to OCR data or empty
-  std::string ocr_language,         // OCR language
-  std::wstring language             // document reading language
+  const std::wstring& email,               // authorization email   
+  const std::wstring& license_key,         // authorization license key
+  const std::wstring& open_path,           // source PDF document
+  const std::wstring& save_path,           // output PDF/UA document
+  const std::wstring& language,            // document reading language
+  const std::wstring& title,               // document title
+  const std::wstring& config_path          // configuration file
   ) {
   // initialize Pdfix
   if (!Pdfix_init(Pdfix_MODULE_NAME))
@@ -81,26 +45,34 @@ void MakeAccessible(
   if (!doc)
     throw std::runtime_error(pdfix->GetError());
   
-  // at first check, if document is searchable
-  // if not, it needs to be converted to searchable PDF with OCR engine
-  if (!ocr_data_path.empty() && !IsSearchable(doc)) {
-    OcrTesseractParams ocr_params;
-    ocr_params.zoom = 2;
-    ocr_params.rotate = kRotate0;
-    OcrWithTesseract(email, license_key, open_path, save_path, ocr_data_path, ocr_language, ocr_params);
-    // reopen document from save_path
-    doc->Close();
-    doc = pdfix->OpenDoc(save_path.c_str(), L"");
+  // customize auto-tagging 
+  if (!config_path.empty()) {
+    PdfDocTemplate* doc_tmpl = doc->GetDocTemplate();
+    if (!doc_tmpl)
+      throw std::runtime_error(pdfix->GetError());
+    PsFileStream* stm = pdfix->CreateFileStream(config_path.c_str(), kPsReadOnly);
+    if (stm) {
+      if (!doc_tmpl->LoadFromStream(stm, kDataFormatJson))
+        throw std::runtime_error(pdfix->GetError());
+      stm->Destroy();
+    }
   }
 
-  // set reading language
-  if (language.empty())
-    language = L"en-US";
-  doc->SetLang(language.c_str());
+  // set document language
+  if (!language.empty())
+    doc->SetLang(language.c_str());
+
+  // set documnt title
+  if (!title.empty())
+    doc->SetInfo(L"Title", title.c_str());
 
   // convert to PDF/UA
   PdfAccessibleParams params;
-  doc->MakeAccessible(&params, nullptr, nullptr);
+  if (!doc->MakeAccessible(&params, nullptr, nullptr))
+    throw std::runtime_error(pdfix->GetError());
+
+  if (!doc->Save(save_path.c_str(), kSaveFull))
+    throw std::runtime_error(pdfix->GetError());
 
   doc->Close();
   pdfix->Destroy();

@@ -46,9 +46,9 @@ void DocWillCallback(PdfEventParams* event, void* data) {
 
 // Registers different kinds of events.
 void RegisterEvent(
-  std::wstring email,                     // authorization email   
-  std::wstring license_key,               // authorization license key
-  std::wstring open_path                  // source PDF document
+  const std::wstring& email,                     // authorization email   
+  const std::wstring& license_key,               // authorization license key
+  const std::wstring& open_path                  // source PDF document
 ) {
   // initialize Pdfix
   if (!Pdfix_init(Pdfix_MODULE_NAME))

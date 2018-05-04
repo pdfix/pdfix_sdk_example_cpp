@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// AddComment.cpp
+// Initialization.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /*!
@@ -7,8 +7,8 @@
 - \subpage Initialization_cpp
 */
 /*!
-\page Initialization_cpp Add Comment Sample
-Example how to add a text annotation with a reply.
+\page Initialization_cpp Initialization Sample
+Example how to initialize PDFix SDK in c++.
 \snippet /Initialization.hpp Initialization_cpp
 */
 
@@ -19,10 +19,9 @@ Example how to add a text annotation with a reply.
 #include <iostream>
 #include "Pdfix.h"
 
-  // Adds a new text annotation.
 void Initialization(
-  std::wstring email,                   // authorization email   
-  std::wstring license_key              // authorization license key
+  const std::wstring& email,                   // authorization email   
+  const std::wstring& license_key              // authorization license key
 ) {
   // initialize Pdfix
   if (!Pdfix_init(Pdfix_MODULE_NAME))

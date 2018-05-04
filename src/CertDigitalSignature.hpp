@@ -39,11 +39,11 @@ static BOOL CALLBACK  CertFilterCallback(PCCERT_CONTEXT pCertContext,
   
 // Applies digital signature.
 void CertDigitalSignature(
-  std::wstring email,                           // authorization email   
-  std::wstring license_key,                     // authorization license key
-  std::wstring open_path,                       // source PDF document
-  std::wstring save_path,                       // signed PDF document
-  std::wstring time_stamp_server                // time stamp server
+  const std::wstring& email,                           // authorization email   
+  const std::wstring& license_key,                     // authorization license key
+  const std::wstring& open_path,                       // source PDF document
+  const std::wstring& save_path,                       // signed PDF document
+  const std::wstring& time_stamp_server                // time stamp server
 ) {
 #ifdef WIN32 
   HCERTSTORE cert_store = NULL;

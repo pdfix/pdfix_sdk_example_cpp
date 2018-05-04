@@ -21,10 +21,10 @@ Example how to add a text annotation with a reply.
 
   // Adds a new text annotation.
 void AddComment(
-  std::wstring email,                    // authorization email   
-  std::wstring license_key,              // authorization license key
-  std::wstring open_file,                // source PDF document
-  std::wstring save_file                 // directory where to save PDF docuemnt
+  const std::wstring& email,                    // authorization email   
+  const std::wstring& license_key,              // authorization license key
+  const std::wstring& open_file,                // source PDF document
+  const std::wstring& save_file                 // directory where to save PDF docuemnt
 ) {
   // initialize Pdfix
   if (!Pdfix_init(Pdfix_MODULE_NAME))

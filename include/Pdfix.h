@@ -69,9 +69,11 @@
 #define kTemplateTagAlternate "tag-alternate"
 #define kTemplateAltText "alt-text"
 #define kTemplateTagAttribute "tag-attribute"
-#define kTemplateLayout "layout"
 #define kTemplateList "list"
 #define kTemplateTable "table"
+#define kTemplateTableLayout "table_layout"
+#define kTemplateCellLayout "cell_layout"
+#define kTemplateRectLayout "rect_layout"
 #define kTemplateTextLine "text-line"
 #define kTemplateReflow "reflow"
 #define kTemplateCreateTextBlock "create-text-block"
@@ -339,6 +341,7 @@ enum {
   kErrorDocTemplateInvalidValue = 114,
   kErrorPdsStructTreeInvalid = 115,
   kErrorPsRegexIndexOutOfBounds = 116,
+  kErrorInit = 117,
 } ;
 
 typedef enum {

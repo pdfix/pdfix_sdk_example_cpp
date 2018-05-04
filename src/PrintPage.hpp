@@ -22,9 +22,9 @@ Example how to print page.
 #include "Pdfix.h"
 
 void PrintPage(
-  std::wstring email,                         // authorization email   
-  std::wstring license_key,                   // authorization license key
-  std::wstring open_path                      // source PDF document
+  const std::wstring& email,                         // authorization email   
+  const std::wstring& license_key,                   // authorization license key
+  const std::wstring& open_path                      // source PDF document
 ) {
 #ifdef _WIN32
   // initialize Pdfix

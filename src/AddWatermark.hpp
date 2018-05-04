@@ -21,12 +21,12 @@
 
   // Adds watermark from img_path and saves the document to save_path.
 void AddWatermark(
-  std::wstring email,                        // authorization email   
-  std::wstring license_key,                  // authorization license key
-  std::wstring open_path,                    // source PDF document
-  std::wstring save_path,                    // path to save PDF docuemnt
-  std::wstring img_path,                     // watermark to apply
-  PdfWatermarkParams watermark_params        // watermark parameters
+  const std::wstring& email,                        // authorization email   
+  const std::wstring& license_key,                  // authorization license key
+  const std::wstring& open_path,                    // source PDF document
+  const std::wstring& save_path,                    // path to save PDF docuemnt
+  const std::wstring& img_path,                     // watermark to apply
+  PdfWatermarkParams& watermark_params              // watermark parameters
 ) {
   // initialize Pdfix
   if (!Pdfix_init(Pdfix_MODULE_NAME))
@@ -50,12 +50,12 @@ void AddWatermark(
   watermark_params.opacity = 0.5;
   watermark_params.order_top = true;
   
-
   if (!doc->AddWatermarkFromImage(&watermark_params, img_path.c_str()))
     throw std::runtime_error(pdfix->GetError());
-  doc->Save(save_path.c_str(), kSaveFull);
-  doc->Close();
+  if (!doc->Save(save_path.c_str(), kSaveFull))
+    throw std::runtime_error(pdfix->GetError());
 
+  doc->Close();
   pdfix->Destroy();
 }
 

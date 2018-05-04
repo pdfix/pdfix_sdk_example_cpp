@@ -21,11 +21,11 @@ Example how to flatten annotations into the PDF content.
 
   // Flattens all annotations.
 void FlattenAnnots(
-  std::wstring email,                         // authorization email   
-  std::wstring license_key,                   // authorization license key
-  std::wstring open_path,                     // source PDF document
-  std::wstring save_path,                     // output PDF doucment
-  PdfFlattenAnnotsParams params               // flatten annotations parameters
+  const std::wstring& email,                   // authorization email   
+  const std::wstring& license_key,             // authorization license key
+  const std::wstring& open_path,               // source PDF document
+  const std::wstring& save_path,               // output PDF doucment
+  PdfFlattenAnnotsParams& params               // flatten annotations parameters
 ) {
   // initialize Pdfix
   if (!Pdfix_init(Pdfix_MODULE_NAME))

@@ -21,10 +21,10 @@ Example how to render a PDF document page into an image.
 
   // Renders a first page into the JPG image.
 void RenderPage(
-  std::wstring email,                         // authorization email   
-  std::wstring license_key,                   // authorization license key
-  std::wstring open_path,                     // source PDF document
-  std::wstring img_path,                      // output image
+  const std::wstring& email,                  // authorization email   
+  const std::wstring& license_key,            // authorization license key
+  const std::wstring& open_path,              // source PDF document
+  const std::wstring& img_path,               // output image
   double zoom,                                // page zoom
   PdfRotate rotate                            // page rotation
 ) {

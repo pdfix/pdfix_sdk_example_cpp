@@ -20,7 +20,7 @@ Example how to extract tables from a PDF document and save them to csv format.
 #include <sstream>
 #include "Pdfix.h"
 
-extern std::string ToUtf8(std::wstring& wstr);
+extern std::string ToUtf8(const std::wstring& wstr);
 
 // GetText processes each element recursively. If the element is a text, saves it to the output stream.
 void GetText(PdeElement* element, std::stringstream& ss, bool eof) {
@@ -50,11 +50,11 @@ void GetText(PdeElement* element, std::stringstream& ss, bool eof) {
 
 // Extracts texts from the document and saves them to TXT format. 
 void ExtractText(
-  std::wstring email,          // authorization email
-  std::wstring license_key,    // authorization license key
-  std::wstring open_path,      // source PDF document
-  std::wstring save_path,      // output TXT file
-  std::wstring config_path     // configuration file
+  const std::wstring& email,          // authorization email
+  const std::wstring& license_key,    // authorization license key
+  const std::wstring& open_path,      // source PDF document
+  const std::wstring& save_path,      // output TXT file
+  const std::wstring& config_path     // configuration file
 ) {
   // initialize Pdfix
   if (!Pdfix_init(Pdfix_MODULE_NAME))

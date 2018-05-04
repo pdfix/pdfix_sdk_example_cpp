@@ -20,13 +20,13 @@ Example how to export form fields values into a txt file.
 #include <fstream>
 #include "Pdfix.h"
 
-extern std::string ToUtf8(std::wstring& wstr);
+extern std::string ToUtf8(const std::wstring& wstr);
 
 void ExportFormFieldValues(
-  std::wstring email,                   // authorization email   
-  std::wstring license_key,             // authorization license key
-  std::wstring open_path,               // source PDF document
-  std::wstring save_path                // output PDF document
+  const std::wstring& email,                   // authorization email   
+  const std::wstring& license_key,             // authorization license key
+  const std::wstring& open_path,               // source PDF document
+  const std::wstring& save_path                // output PDF document
 ) {
   // initialize Pdfix
   if (!Pdfix_init(Pdfix_MODULE_NAME))

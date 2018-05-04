@@ -21,12 +21,12 @@ Example how to add a text annotation with a reply.
 
 // Example how to apply a digital signature from the PFX file.
 void DigitalSignature(
-  std::wstring email,                   // authorization email   
-  std::wstring license_key,             // authorization license key
-  std::wstring open_path,               // source PDF document
-  std::wstring save_path,               // signed PDF document
-  std::wstring pfx_path,                // pfx file
-  std::wstring pfx_password             // pfx password
+  const std::wstring& email,                   // authorization email   
+  const std::wstring& license_key,             // authorization license key
+  const std::wstring& open_path,               // source PDF document
+  const std::wstring& save_path,               // signed PDF document
+  const std::wstring& pfx_path,                // pfx file
+  const std::wstring& pfx_password             // pfx password
 ) {
   // initialize Pdfix
   if (!Pdfix_init(Pdfix_MODULE_NAME))

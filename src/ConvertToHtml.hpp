@@ -24,12 +24,12 @@ PdfToHtml_statics;
 
 // Converts PDF to HTML.
 void ConvertToHtml(
-  std::wstring email,          // authorization email   
-  std::wstring license_key,    // authorization license key
-  std::wstring open_path,      // source PDF document
-  std::wstring save_path,      // output HTML file
-  std::wstring config_path,    // configuration file
-  PdfHtmlParams html_params    // conversion parameters
+  const std::wstring& email,          // authorization email   
+  const std::wstring& license_key,    // authorization license key
+  const std::wstring& open_path,      // source PDF document
+  const std::wstring& save_path,      // output HTML file
+  const std::wstring& config_path,    // configuration file
+  PdfHtmlParams& html_params    // conversion parameters
 ) {
   // initialize Pdfix
   if (!Pdfix_init(Pdfix_MODULE_NAME))
@@ -46,7 +46,7 @@ void ConvertToHtml(
     throw std::runtime_error("PdfToHtml_init fail");
     
   PdfToHtml* pdf_to_html = GetPdfToHtml();
-  if (!pdfix)
+  if (!pdf_to_html)
     throw std::runtime_error("GetPdfToHtml fail");
 
   std::cout << "PDFix PDF to HTML " << pdf_to_html->GetVersionMajor() << "." <<

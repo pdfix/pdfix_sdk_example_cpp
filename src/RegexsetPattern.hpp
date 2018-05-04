@@ -22,9 +22,9 @@
 
   // Finds a first occurence of the pattern in an input text.
 void RegexSetPattern(
-  std::wstring email,                     // authorization email   
-  std::wstring license_key,               // authorization license key
-  std::wstring text                       // text where to search the pattern
+  const std::wstring& email,                     // authorization email   
+  const std::wstring& license_key,               // authorization license key
+  const std::wstring& text                       // text where to search the pattern
 ) {
   // initialize Pdfix
   if (!Pdfix_init(Pdfix_MODULE_NAME))

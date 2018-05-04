@@ -20,8 +20,12 @@ Example how to extract images from a PDF document.
 #include "Pdfix.h"
 
 // SaveImage processes each element recursively. If the element is an image, it saves it to save_path.
-void SaveImage(PdeElement* element, std::wstring& save_path, PdfImageParams& img_params,
-  PdfPage* page, PdfPageView* page_view, int& image_index) {
+void SaveImage(PdeElement* element, 
+  const std::wstring& save_path, 
+  PdfImageParams& img_params,
+  PdfPage* page, 
+  PdfPageView* page_view, 
+  int& image_index) {
 
   Pdfix* pdfix = GetPdfix();
     
@@ -51,7 +55,7 @@ void SaveImage(PdeElement* element, std::wstring& save_path, PdfImageParams& img
     page_view->GetDeviceMatrix(&render_params.matrix);
     page->DrawContent(&render_params, nullptr, nullptr);
       
-    std::wstring path = save_path + L"image_" + std::to_wstring(image_index++) + L".png";
+    std::wstring path = save_path + L"/ExtractImages_" + std::to_wstring(image_index++) + L".png";
     ps_image->SaveRect(path.c_str(), &img_params, &elem_dev_rect);
     ps_image->Destroy();
 
@@ -70,12 +74,12 @@ void SaveImage(PdeElement* element, std::wstring& save_path, PdfImageParams& img
 
 // Extracts all images from the document and saves them to save_path.
 void ExtractImages(
-  std::wstring email,                           // authorization email   
-  std::wstring license_key,                     // authorization license key
-  std::wstring open_path,                       // source PDF document
-  std::wstring save_path,                       // directory where to extract images
+  const std::wstring& email,                    // authorization email   
+  const std::wstring& license_key,              // authorization license key
+  const std::wstring& open_path,                // source PDF document
+  const std::wstring& save_path,                // directory where to extract images
   int render_width,                             // with of the rendered page in pixels (image )
-  PdfImageParams img_params                     // image parameters
+  PdfImageParams& img_params                    // image parameters
 ) {
   // initialize Pdfix
   if (!Pdfix_init(Pdfix_MODULE_NAME))

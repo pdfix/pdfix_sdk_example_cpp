@@ -22,9 +22,9 @@ It can be used when you search for the best place where to put a watermark.
 
   // GetWhitespace example
 void GetWhitespace(
-  std::wstring email,                     // authorization email   
-  std::wstring license_key,               // authorization license key
-  std::wstring open_path                  // source PDF document
+  const std::wstring& email,                     // authorization email   
+  const std::wstring& license_key,               // authorization license key
+  const std::wstring& open_path                  // source PDF document
 ) {
   // initialize Pdfix
   if (!Pdfix_init(Pdfix_MODULE_NAME))
