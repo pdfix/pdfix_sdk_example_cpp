@@ -69,6 +69,7 @@ void OcrWithTesseract(
   if (!ocr_doc)
     throw std::runtime_error(pdfix->GetError());
 
+  ocr_params.zoom = 4;
   if (!ocr_doc->Save(save_path.c_str(), &ocr_params, nullptr, nullptr))
     throw std::runtime_error(pdfix->GetError());
 
