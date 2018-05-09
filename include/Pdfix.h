@@ -78,6 +78,7 @@
 #define kTemplateReflow "reflow"
 #define kTemplateCreateTextBlock "create-text-block"
 #define kTemplateTextWord "text-word"
+#define kTemplateNumColls "num-colls"
 #define _in_
 #define _out_
 #define _callback_
