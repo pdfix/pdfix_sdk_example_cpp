@@ -47,6 +47,8 @@ void AddComment(
     throw std::runtime_error(pdfix->GetError());
 
   PdfPage* page = doc->AcquirePage(0);
+  if (!page)
+    throw std::runtime_error(pdfix->GetError());
   PdfRect crop_box;
   page->GetCropBox(&crop_box);
 
@@ -58,6 +60,8 @@ void AddComment(
   annot_rect.top = (crop_box.top + crop_box.bottom) / 2. + 10;
 
   PdfTextAnnot* annot = page->AddTextAnnot(-1, &annot_rect);
+  if (!annot)
+    throw std::runtime_error(pdfix->GetError());
   annot->SetAuthor(L"Peter Brown");
   annot->SetContents(L"This is my comment.");
   annot->AddReply(L"Mark Fish", L"This is some reply.");

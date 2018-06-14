@@ -79,7 +79,7 @@ void SaveTable(PdeElement* element, std::wstring save_path, int& table_index) {
             if (child && (child->GetType() == kPdeText)) {
               GetText(child, ofs, false);
             }
-            if (i < count) {
+            if (i < count - 1) {
               ofs << " ";
             }
           }
@@ -87,7 +87,7 @@ void SaveTable(PdeElement* element, std::wstring save_path, int& table_index) {
         }
 
         if (col < col_count)
-          ofs << std::endl;
+          ofs << ",";
       }
       if (row < row_count)
         ofs << std::endl;
