@@ -30,7 +30,7 @@ void OcrWithTesseract(
   const std::wstring& open_path,                 // source PDF document
   const std::wstring& save_path,                 // searchable PDF document
   const std::wstring& data_path,                 // path to OCR data
-  const std::string& language,                   // default OCR language
+  const std::wstring& language,                  // default OCR language
   OcrTesseractParams& ocr_params
 ) {
   // initialize Pdfix
