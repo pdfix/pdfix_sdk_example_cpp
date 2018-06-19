@@ -22,28 +22,15 @@ Example how to extract images from a PDF document.
 
 // Example how to extract tables from a PDF document and save them to csv format.
 // GetText processes each element recursively. If the element is a text, saves it to the output stream.
-void GetText(PdeElement* element, std::ofstream& ofs, bool eof) {
-  PdfElementType elem_type = element->GetType();
-  if (elem_type == kPdeText) {
-    PdeText* text_elem = static_cast<PdeText*>(element);
-    std::wstring text;
-    text.resize(text_elem->GetText(nullptr, 0));
-    text_elem->GetText((wchar_t*)text.c_str(), text.size());
-    std::string str = ToUtf8(text);
-    ofs << str;
-    if (eof)
-      ofs << std::endl;
-  }
-  else {
-    int count = element->GetNumChildren();
-    if (count == 0)
-      return;
-    for (int i = 0; i < count; i++) {
-      PdeElement* child = element->GetChild(i);
-      if (child)
-        GetText(child, ofs, eof);
-    }
-  }
+void GetText(PdeText* element, std::ofstream& ofs, bool eof) {
+  PdeText* text_elem = static_cast<PdeText*>(element);
+  std::wstring text;
+  text.resize(text_elem->GetText(nullptr, 0));
+  text_elem->GetText((wchar_t*)text.c_str(), text.size());
+  std::string str = ToUtf8(text);
+  ofs << str;
+  if (eof)
+    ofs << std::endl;
 }
 
 // SaveTable processes each element recursively. 
@@ -77,7 +64,7 @@ void SaveTable(PdeElement* element, std::wstring save_path, int& table_index) {
           for (int i = 0; i < count; i++) {
             PdeElement* child = cell->GetChild(i);
             if (child && (child->GetType() == kPdeText)) {
-              GetText(child, ofs, false);
+              GetText((PdeText*)child, ofs, false);
             }
             if (i < count - 1) {
               ofs << " ";
