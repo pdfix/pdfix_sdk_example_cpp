@@ -109,7 +109,7 @@ int main()
     std::cout << "OcrWithTesseract" << std::endl;
     OcrTesseractParams ocr_params;
     OcrWithTesseract(email, key, open_path, GetAbsolutePath(L"output/OcrTesseract.pdf"), 
-      GetAbsolutePath(L"resources/"), "eng", ocr_params);
+      GetAbsolutePath(L"resources/"), L"eng", ocr_params);
 
     std::cout << "PrintPage" << std::endl;
     PrintPage(email, key, open_path);

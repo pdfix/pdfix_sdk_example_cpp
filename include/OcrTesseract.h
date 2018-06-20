@@ -9,7 +9,7 @@
 
 #define OCRTESSERACT_VERSION_MAJOR 1
 #define OCRTESSERACT_VERSION_MINOR 0
-#define OCRTESSERACT_VERSION_PATCH 0
+#define OCRTESSERACT_VERSION_PATCH 1
 #define _in_
 #define _out_
 #define _callback_
@@ -79,7 +79,7 @@ typedef struct _OcrTesseractParams {
 
 
 struct OcrTesseract : PdfixPlugin {
-  virtual bool SetLanguage(const char* lang) = 0;
+  virtual bool SetLanguage(const wchar_t* lang) = 0;
   virtual bool SetData(const wchar_t* path) = 0;
   virtual TesseractDoc* OpenOcrDoc(PdfDoc* pdDoc) = 0;
 };

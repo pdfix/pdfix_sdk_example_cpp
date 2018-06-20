@@ -9,7 +9,7 @@
 
 #define PDFIX_VERSION_MAJOR 4
 #define PDFIX_VERSION_MINOR 0
-#define PDFIX_VERSION_PATCH 0
+#define PDFIX_VERSION_PATCH 1
 #define MAX_INT 2147483647
 #define MIN_INT -2147483647
 #define kTemplateFlatAnnots "flat-annots"
@@ -79,6 +79,9 @@
 #define kTemplateCreateTextBlock "create-text-block"
 #define kTemplateTextWord "text-word"
 #define kTemplateNumColls "num-colls"
+#define kTemplateSplitterSizeRatio "splitter-size-ratio"
+#define kTemplateSplitterDeflateRatio "splitter-deflate-ratio"
+#define kTemplateSplitterMaxDeflate "splitter-max-deflate"
 #define _in_
 #define _out_
 #define _callback_
@@ -799,6 +802,12 @@ typedef enum {
   kDataFormatXml = 1,
 } PsDataFormat;
 
+typedef enum {
+  kFileStream = 0,
+  kMemoryStream = 1,
+  kProcStream = 2,
+} PdfStreamType;
+
 
 typedef struct _PdfEventParams {
   PdfEventType type;
@@ -1075,13 +1084,13 @@ typedef struct _PdfImageParams {
 } PdfImageParams;
 
 typedef struct _PdfAccessibleParams {
-  bool accept_tags;
-  bool embed_fonts;
-  bool subset_fonts;
+  int accept_tags;
+  int embed_fonts;
+  int subset_fonts;
   _PdfAccessibleParams() {
-    accept_tags = false;
-    embed_fonts = true;
-    subset_fonts = true;
+    accept_tags = 0;
+    embed_fonts = 0;
+    subset_fonts = 0;
   }
 } PdfAccessibleParams;
 
@@ -1470,6 +1479,7 @@ struct PsStream {
   virtual int GetPos() = 0;
   virtual bool Flush() = 0;
   virtual void* GetStream() = 0;
+  virtual PdfStreamType GetType() = 0;
 };
 
 struct PsFileStream : PsStream {
@@ -1488,7 +1498,7 @@ struct PsProcStream : PsStream {
 
 struct PdfStructElement {
   virtual const char* GetType() = 0;
-  virtual const char* GetSubType() = 0;
+  virtual const char* GetSubtype() = 0;
   virtual int GetActualText(_out_ wchar_t* buffer, int len) = 0;
 };
 
