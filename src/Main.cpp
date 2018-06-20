@@ -42,58 +42,62 @@ int main()
 {
   std::wstring email = L"YOUR_EMAIL";                                     // authorization email   
   std::wstring key = L"LICENSE_KEY";                                      // authorization license key
-  std::wstring open_path = GetAbsolutePath(L"resources/test.pdf");        // source PDF document
-  std::wstring config_path = GetAbsolutePath(L"resources/config.json");   // configuration file
+
+  std::wstring resources_dir = GetAbsolutePath(L"../resources");
+  std::wstring output_dir = GetAbsolutePath(L"../output");
+
+  std::wstring open_path = resources_dir + L"/test.pdf";        // source PDF document
+  std::wstring config_path = resources_dir + L"/config.json";   // configuration file
 
   try {
     std::cout << "Initialization" << std::endl;
     Initialization(email, key);
 
     std::cout << "AddComment" << std::endl;
-    AddComment(email, key, open_path, GetAbsolutePath(L"output/AddComment.pdf"));
+    AddComment(email, key, open_path, output_dir + L"/AddComment.pdf");
 
     std::cout << "AddTags" << std::endl;
-    AddTags(email, key, open_path, GetAbsolutePath(L"output/AddTags.pdf"), config_path);
+    AddTags(email, key, open_path, output_dir + L"/AddTags.pdf", config_path);
 
     std::cout << "AddWatermark" << std::endl;
     PdfWatermarkParams watermark_params;
-    AddWatermark(email, key, open_path, GetAbsolutePath(L"output/AddWatermark.pdf"), 
-      GetAbsolutePath(L"resources/watermark.png"), watermark_params);
+    AddWatermark(email, key, open_path, output_dir + L"/AddWatermark.pdf", 
+      resources_dir + L"/watermark.png", watermark_params);
 
     std::cout << "ConvertToHtml" << std::endl;
     PdfHtmlParams html_params;
-    ConvertToHtml(email, key, open_path, GetAbsolutePath(L"output/index.html"), config_path, 
+    ConvertToHtml(email, key, open_path, output_dir + L"/index.html", config_path, 
       html_params);
 
     std::cout << "DigitalSignature" << std::endl;
-    DigitalSignature(email, key, open_path, GetAbsolutePath(L"output/DigitalSignature.pdf"),
-      GetAbsolutePath(L"resources/test.pfx"), L"TEST_PASSWORD");
+    DigitalSignature(email, key, open_path, output_dir + L"/DigitalSignature.pdf",
+      resources_dir + L"/test.pfx", L"TEST_PASSWORD");
 
     std::cout << "DocumentMetadata" << std::endl;
-    DocumentMetadata(email, key, open_path, GetAbsolutePath(L"output/DocumentMetadata.pdf"),
-      GetAbsolutePath(L"output/metadata.xml"));
+    DocumentMetadata(email, key, open_path, output_dir + L"/DocumentMetadata.pdf",
+      output_dir + L"/metadata.xml");
 
     std::cout << "EmbedFonts" << std::endl;
-    EmbedFonts(email, key, open_path, GetAbsolutePath(L"output/EmbedFonts.pdf"));
+    EmbedFonts(email, key, open_path, output_dir + L"/EmbedFonts.pdf");
 
     std::cout << "ExportFormFieldValues" << std::endl;
     ExportFormFieldValues(email, key, open_path,
-      GetAbsolutePath(L"output/ExportFormFieldValues.txt"));
+      output_dir + L"/ExportFormFieldValues.txt");
 
     std::cout << "ExtractImages" << std::endl;
     PdfImageParams image_params;
-    ExtractImages(email, key, open_path, GetAbsolutePath(L"output/"), 800, 
+    ExtractImages(email, key, open_path, output_dir + L"/", 800, 
       image_params);
 
     std::cout << "ExtractTables" << std::endl;
-    ExtractTables(email, key, open_path, GetAbsolutePath(L"output/"));
+    ExtractTables(email, key, open_path, output_dir + L"/");
     
     std::cout << "ExtractText" << std::endl;
-    ExtractText(email, key, open_path, GetAbsolutePath(L"output/ExtractText.txt"), config_path);
+    ExtractText(email, key, open_path, output_dir + L"/ExtractText.txt", config_path);
 
     std::cout << "FlattenAnnots" << std::endl;
     PdfFlattenAnnotsParams flatten_annots_params;
-    FlattenAnnots(email, key, open_path, GetAbsolutePath(L"output/FlattenAnnots.pdf"), 
+    FlattenAnnots(email, key, open_path, output_dir + L"/FlattenAnnots.pdf", 
       flatten_annots_params);
 
     std::cout << "GetBookmarks" << std::endl;
@@ -103,13 +107,13 @@ int main()
     GetWhitespace(email, key, open_path);
     
     std::cout << "MakeAccessible" << std::endl;
-    MakeAccessible(email, key, open_path, GetAbsolutePath(L"output/MakeAccessible.pdf"),
+    MakeAccessible(email, key, open_path, output_dir + L"/MakeAccessible.pdf",
       L"en", L"Document Title", config_path);
 
     std::cout << "OcrWithTesseract" << std::endl;
     OcrTesseractParams ocr_params;
-    OcrWithTesseract(email, key, open_path, GetAbsolutePath(L"output/OcrTesseract.pdf"), 
-      GetAbsolutePath(L"resources/"), L"eng", ocr_params);
+    OcrWithTesseract(email, key, open_path, output_dir + L"/OcrTesseract.pdf", 
+      resources_dir, L"eng", ocr_params);
 
     std::cout << "PrintPage" << std::endl;
     PrintPage(email, key, open_path);
@@ -124,16 +128,16 @@ int main()
     RegisterEvent(email, key, open_path);
 
     std::cout << "RemoveComments" << std::endl;
-    RemoveComments(email, key, open_path, GetAbsolutePath(L"output/RemoveComments.pdf"));
+    RemoveComments(email, key, open_path, output_dir + L"/RemoveComments.pdf");
 
     std::cout << "RenderPage" << std::endl;
-    RenderPage(email, key, open_path, GetAbsolutePath(L"output/RenderPage.jpg"), 2.0, kRotate0);
+    RenderPage(email, key, open_path, output_dir + L"/RenderPage.jpg", 2.0, kRotate0);
     
     std::cout << "SetFieldFlags" << std::endl;
-    SetFieldFlags(email, key, open_path, GetAbsolutePath(L"output/SetFieldFlags.pdf"));
+    SetFieldFlags(email, key, open_path, output_dir + L"/SetFieldFlags.pdf");
     
     std::cout << "SetFormFieldValue" << std::endl;
-    SetFormFieldValue(email, key, open_path, GetAbsolutePath(L"output/SetFormFieldValue.pdf"));
+    SetFormFieldValue(email, key, open_path, output_dir + L"/SetFormFieldValue.pdf");
   }
   catch (std::exception& ex) {
     std::cout << ex.what();
