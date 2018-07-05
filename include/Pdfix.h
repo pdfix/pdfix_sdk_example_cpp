@@ -9,7 +9,7 @@
 
 #define PDFIX_VERSION_MAJOR 4
 #define PDFIX_VERSION_MINOR 0
-#define PDFIX_VERSION_PATCH 1
+#define PDFIX_VERSION_PATCH 4
 #define MAX_INT 2147483647
 #define MIN_INT -2147483647
 #define kTemplateFlatAnnots "flat-annots"

@@ -9,7 +9,7 @@
 
 #define PDFTOHTML_VERSION_MAJOR 4
 #define PDFTOHTML_VERSION_MINOR 0
-#define PDFTOHTML_VERSION_PATCH 1
+#define PDFTOHTML_VERSION_PATCH 4
 #define _in_
 #define _out_
 #define _callback_

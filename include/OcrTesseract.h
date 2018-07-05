@@ -9,7 +9,7 @@
 
 #define OCRTESSERACT_VERSION_MAJOR 1
 #define OCRTESSERACT_VERSION_MINOR 0
-#define OCRTESSERACT_VERSION_PATCH 1
+#define OCRTESSERACT_VERSION_PATCH 4
 #define _in_
 #define _out_
 #define _callback_
