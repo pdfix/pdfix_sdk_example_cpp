@@ -19,6 +19,7 @@
 #include "EmbedFonts.hpp"
 #include "ExportFormFieldValues.hpp"
 #include "ExtractText.hpp"
+#include "ExtractHighlightedText.hpp"
 #include "ExtractImages.hpp"
 #include "ExtractTables.hpp"
 #include "FlattenAnnots.hpp"
@@ -83,6 +84,10 @@ int main()
     std::cout << "ExportFormFieldValues" << std::endl;
     ExportFormFieldValues(email, key, open_path,
       output_dir + L"/ExportFormFieldValues.txt");
+
+    std::cout << "ExtractHighlightedText" << std::endl;
+    ExtractHighlightedText(email, key, open_path, output_dir + L"/ExtractHighlightedText.txt",
+      config_path);
 
     std::cout << "ExtractImages" << std::endl;
     PdfImageParams image_params;
