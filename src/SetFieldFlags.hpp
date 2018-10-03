@@ -19,7 +19,6 @@ Sets form fields flags as readonly.
 #include <iostream>
 #include "Pdfix.h"
 
-// Example how to change form fields flags.
 void SetFieldFlags(
   const std::wstring& email,                     // authorization email   
   const std::wstring& license_key,               // authorization license key
@@ -28,7 +27,7 @@ void SetFieldFlags(
 ) {
   // initialize Pdfix
   if (!Pdfix_init(Pdfix_MODULE_NAME))
-    throw std::runtime_error("Pdfix initialization fail.");
+    throw std::runtime_error("Pdfix initialization fail");
 
   Pdfix* pdfix = GetPdfix();
   if (!pdfix)

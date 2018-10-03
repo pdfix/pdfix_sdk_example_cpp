@@ -22,23 +22,27 @@ extern HINSTANCE ghInstance;
 Pdfix_statics;
 
 // convert UTF-8 string to wstring
-std::wstring FromUtf8(const std::string& str)
-{
+std::wstring FromUtf8(const std::string& str) {
   std::wstring_convert<std::codecvt_utf8<wchar_t>> myconv;
   return myconv.from_bytes(str);
 }
 
 // convert wstring to UTF-8 string
-std::string ToUtf8(const std::wstring& str)
-{
+std::string ToUtf8(const std::wstring& str) {
   std::wstring_convert<std::codecvt_utf8<wchar_t>> myconv;
   return myconv.to_bytes(str);
 }
+
 std::string GetAbsolutePath(const std::string& path) {
   std::string result;
 #ifndef _WIN32
-  result.resize(PATH_MAX);
-  realpath(path.c_str(), (char*)result.c_str());
+  if (path.length() && path.front() == '/') {
+    result = path;
+  }
+  else {
+    result.resize(PATH_MAX);
+    realpath(path.c_str(), (char*)result.c_str());
+  }  
 #else
   std::string dir;
   dir.resize(_MAX_PATH);

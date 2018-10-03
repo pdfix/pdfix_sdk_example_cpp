@@ -130,7 +130,7 @@ void OcrTesseract_destroy() {\
   GetOcrTesseract = 0;\
 }\
 DLL_HANDLE* OcrTesseract_init(const char* path) {\
-  g_OcrTesseract_handle = PdfixLoadLibrary(path);   if (!g_OcrTesseract_handle) return nullptr;\
+  if (g_OcrTesseract_handle == nullptr) g_OcrTesseract_handle = PdfixLoadLibrary(path);   if (!g_OcrTesseract_handle) return nullptr;\
   GetOcrTesseract = (GetOcrTesseractProcType)PdfixGetProcAddress(g_OcrTesseract_handle, "GetOcrTesseract");\
   if (GetOcrTesseract == nullptr) { OcrTesseract_destroy(); return nullptr; } return &g_OcrTesseract_handle; }
 
@@ -143,15 +143,15 @@ DLL_HANDLE* OcrTesseract_init(const char* path) {\
 #endif
 #elif defined __linux__
 #if defined __x86_64__
-#define OcrTesseract_MODULE_NAME "libocr_tesseract64.so"
+#define OcrTesseract_MODULE_NAME "./libocr_tesseract64.so"
 #else
-#define OcrTesseract_MODULE_NAME "libocr_tesseract.so"
+#define OcrTesseract_MODULE_NAME "./libocr_tesseract.so"
 #endif
 #elif defined __APPLE__
 #if defined __x86_64__
-#define OcrTesseract_MODULE_NAME "libocr_tesseract64.dylib"
+#define OcrTesseract_MODULE_NAME "./libocr_tesseract64.dylib"
 #else
-#define OcrTesseract_MODULE_NAME "libocr_tesseract.dylib"
+#define OcrTesseract_MODULE_NAME "./libocr_tesseract.dylib"
 #endif
 #else
 #error unknown platform

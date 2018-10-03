@@ -19,7 +19,6 @@ Example how to Embed Fonts.
 #include <iostream>
 #include "Pdfix.h"
 
-  // Gets/sets document metadata.
 void EmbedFonts(
   const std::wstring& email,                 // authorization email   
   const std::wstring& license_key,           // authorization license key
@@ -28,7 +27,7 @@ void EmbedFonts(
 ) {
   // initialize Pdfix
   if (!Pdfix_init(Pdfix_MODULE_NAME))
-    throw std::runtime_error("Pdfix initialization fail.");
+    throw std::runtime_error("Pdfix initialization fail");
 
   Pdfix* pdfix = GetPdfix();
   if (!pdfix)

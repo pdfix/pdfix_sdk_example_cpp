@@ -8,8 +8,8 @@
 #include <stdint.h>
 
 #define PDFTOHTML_VERSION_MAJOR 4
-#define PDFTOHTML_VERSION_MINOR 0
-#define PDFTOHTML_VERSION_PATCH 4
+#define PDFTOHTML_VERSION_MINOR 1
+#define PDFTOHTML_VERSION_PATCH 0
 #define _in_
 #define _out_
 #define _callback_
@@ -113,7 +113,7 @@ void PdfToHtml_destroy() {\
   GetPdfToHtml = 0;\
 }\
 DLL_HANDLE* PdfToHtml_init(const char* path) {\
-  g_PdfToHtml_handle = PdfixLoadLibrary(path);   if (!g_PdfToHtml_handle) return nullptr;\
+  if (g_PdfToHtml_handle == nullptr) g_PdfToHtml_handle = PdfixLoadLibrary(path);   if (!g_PdfToHtml_handle) return nullptr;\
   GetPdfToHtml = (GetPdfToHtmlProcType)PdfixGetProcAddress(g_PdfToHtml_handle, "GetPdfToHtml");\
   if (GetPdfToHtml == nullptr) { PdfToHtml_destroy(); return nullptr; } return &g_PdfToHtml_handle; }
 
@@ -126,15 +126,15 @@ DLL_HANDLE* PdfToHtml_init(const char* path) {\
 #endif
 #elif defined __linux__
 #if defined __x86_64__
-#define PdfToHtml_MODULE_NAME "libpdf_to_html64.so"
+#define PdfToHtml_MODULE_NAME "./libpdf_to_html64.so"
 #else
-#define PdfToHtml_MODULE_NAME "libpdf_to_html.so"
+#define PdfToHtml_MODULE_NAME "./libpdf_to_html.so"
 #endif
 #elif defined __APPLE__
 #if defined __x86_64__
-#define PdfToHtml_MODULE_NAME "libpdf_to_html64.dylib"
+#define PdfToHtml_MODULE_NAME "./libpdf_to_html64.dylib"
 #else
-#define PdfToHtml_MODULE_NAME "libpdf_to_html.dylib"
+#define PdfToHtml_MODULE_NAME "./libpdf_to_html.dylib"
 #endif
 #else
 #error unknown platform

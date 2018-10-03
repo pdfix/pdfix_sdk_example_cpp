@@ -32,6 +32,7 @@
     <ClInclude Include="..\..\src\AddWatermark.hpp" />
     <ClInclude Include="..\..\src\CertDigitalSignature.hpp" />
     <ClInclude Include="..\..\src\ConvertToHtml.hpp" />
+    <ClInclude Include="..\..\src\ConvertToXml.hpp" />
     <ClInclude Include="..\..\src\DigitalSignature.hpp" />
     <ClInclude Include="..\..\src\DocumentMetadata.hpp" />
     <ClInclude Include="..\..\src\EmbedFonts.hpp" />

@@ -20,7 +20,6 @@ It can be used when you search for the best place where to put a watermark.
 #include <iostream>
 #include "Pdfix.h"
 
-  // GetWhitespace example
 void GetWhitespace(
   const std::wstring& email,                     // authorization email   
   const std::wstring& license_key,               // authorization license key
@@ -28,7 +27,7 @@ void GetWhitespace(
 ) {
   // initialize Pdfix
   if (!Pdfix_init(Pdfix_MODULE_NAME))
-    throw std::runtime_error("Pdfix initialization fail.");
+    throw std::runtime_error("Pdfix initialization fail");
 
   Pdfix* pdfix = GetPdfix();
   if (!pdfix)

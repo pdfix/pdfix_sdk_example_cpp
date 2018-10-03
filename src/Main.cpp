@@ -14,6 +14,7 @@
 #include "AddTags.hpp"
 #include "AddWatermark.hpp"
 #include "ConvertToHtml.hpp"
+#include "ConvertToXml.hpp"
 #include "DigitalSignature.hpp"
 #include "DocumentMetadata.hpp"
 #include "EmbedFonts.hpp"
@@ -69,6 +70,9 @@ int main()
     PdfHtmlParams html_params;
     ConvertToHtml(email, key, open_path, output_dir + L"/index.html", config_path, 
       html_params);
+
+    std::cout << "ConvertToXml" << std::endl;
+    ConvertToXml(email, key, open_path, output_dir + L"/", config_path);
 
     std::cout << "DigitalSignature" << std::endl;
     DigitalSignature(email, key, open_path, output_dir + L"/DigitalSignature.pdf",

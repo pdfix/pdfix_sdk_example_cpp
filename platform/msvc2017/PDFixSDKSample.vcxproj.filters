@@ -110,5 +110,8 @@
     <ClInclude Include="..\..\..\..\..\apps\pdfix_app\public\Initialization.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\ConvertToXml.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

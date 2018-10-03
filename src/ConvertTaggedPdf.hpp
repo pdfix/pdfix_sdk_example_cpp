@@ -1,34 +1,34 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// ConvertToHtml.cpp
+// ConvertTaggedPdf.hpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /*!
 \page CPP_Samples C++ Samples
-- \subpage ConvertToHtml_cpp
+- \subpage ConvertTaggedPdf_cpp
 */
 /*!
-\page ConvertToHtml_cpp Pdf To Html Sample
-Example how to convert whole PDF document to HTML.
-\snippet /ConvertToHtml.hpp ConvertToHtml_cpp
+\page ConvertTaggedPdf_cpp Tagged Pdf To JSON, XML and HTML Sample
+Example how to convert Tagged PDF document to different structured formats.
+\snippet /ConvertTaggedPdf.hpp ConvertTaggedPdf_cpp
 */
 
 #pragma once
 
-//! [ConvertToHtml_cpp]
+//! [ConvertTaggedPdf_cpp]
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
-#include "PdfToHtml.h"
+#include "TaggedPdf.h"
 
-PdfToHtml_statics;
+TaggedPdf_statics;
 
-void ConvertToHtml(
+void ConvertTaggedPdf(
   const std::wstring& email,          // authorization email   
   const std::wstring& license_key,    // authorization license key
   const std::wstring& open_path,      // source PDF document
   const std::wstring& save_path,      // output HTML file
   const std::wstring& config_path,    // configuration file
-  PdfHtmlParams& html_params    // conversion parameters
+  PdfTaggedParams& params             // conversion parameters
 ) {
   // initialize Pdfix
   if (!Pdfix_init(Pdfix_MODULE_NAME))
@@ -40,19 +40,19 @@ void ConvertToHtml(
   if (!pdfix->Authorize(email.c_str(), license_key.c_str()))
     throw std::runtime_error(pdfix->GetError());
 
-  // initialize PdfToHtml
-  if (!PdfToHtml_init(PdfToHtml_MODULE_NAME))
-    throw std::runtime_error("PdfToHtml_init fail");
+  // initialize TaggedPdf
+  if (!TaggedPdf_init(TaggedPdf_MODULE_NAME))
+    throw std::runtime_error("TaggedPdf_init fail");
     
-  PdfToHtml* pdf_to_html = GetPdfToHtml();
-  if (!pdf_to_html)
-    throw std::runtime_error("GetPdfToHtml fail");
+  TaggedPdf* tagged_pdf = GetTaggedPdf();
+  if (!tagged_pdf)
+    throw std::runtime_error("GetTaggedPdf fail");
 
-  std::cout << "PDFix PDF to HTML " << pdf_to_html->GetVersionMajor() << "." <<
-    pdf_to_html->GetVersionMinor() << "." <<
-    pdf_to_html->GetVersionPatch() << std::endl;
+  std::cout << "PDFix Tagged PDF" << tagged_pdf->GetVersionMajor() << "." <<
+    tagged_pdf->GetVersionMinor() << "." <<
+    tagged_pdf->GetVersionPatch() << std::endl;
     
-  if (!pdf_to_html->Initialize(pdfix))
+  if (!tagged_pdf->Initialize(pdfix))
     throw std::runtime_error(pdfix->GetError()); 
 
   PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), L"");
@@ -64,7 +64,6 @@ void ConvertToHtml(
     PdfDocTemplate* doc_tmpl = doc->GetDocTemplate();
     if (!doc_tmpl)
       throw std::runtime_error(pdfix->GetError());
-    // load from 
     PsFileStream* stm = pdfix->CreateFileStream(config_path.c_str(), kPsReadOnly);
     if (stm) {
       if (!doc_tmpl->LoadFromStream(stm, kDataFormatJson))
@@ -73,7 +72,7 @@ void ConvertToHtml(
     }
   }
 
-  PdfHtmlDoc* html_doc = pdf_to_html->OpenHtmlDoc(doc);
+  TaggedPdfHtmlDoc* html_doc = tagged_pdf->OpenTaggedPdfHtmlDoc(doc);
   if (!html_doc)
     throw std::runtime_error(pdfix->GetError());
 
@@ -87,13 +86,13 @@ void ConvertToHtml(
   html_params.flags |= kHtmlNoExternalCSS | kHtmlNoExternalJS | kHtmlNoExternalIMG | kHtmlNoExternalFONT;
   */
 
-  if (!html_doc->Save(save_path.c_str(), &html_params, nullptr, nullptr))
+  if (!html_doc->Save(save_path.c_str(), &params, nullptr, nullptr))
     throw std::runtime_error(pdfix->GetError());
 
   html_doc->Close();
   doc->Close();
 
-  pdf_to_html->Destroy();
+  tagged_pdf->Destroy();
   pdfix->Destroy();
 }
-//! [ConvertToHtml_cpp]
+//! [ConvertTaggedPdf_cpp]

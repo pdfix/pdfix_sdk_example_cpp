@@ -52,7 +52,7 @@ void RegisterEvent(
 ) {
   // initialize Pdfix
   if (!Pdfix_init(Pdfix_MODULE_NAME))
-    throw std::runtime_error("Pdfix initialization fail.");
+    throw std::runtime_error("Pdfix initialization fail");
 
   Pdfix* pdfix = GetPdfix();
   if (!pdfix)

@@ -19,7 +19,6 @@ Example how to automatically add tags into the document.
 #include <iostream>
 #include "Pdfix.h"
 
-// required parameters
 void AddTags(
   const std::wstring& email,            // authorization email
   const std::wstring& license_key,      // authorization license key
@@ -29,7 +28,7 @@ void AddTags(
 ) {
   // initialize Pdfix
   if (!Pdfix_init(Pdfix_MODULE_NAME))
-    throw std::runtime_error("Pdfix initialization fail.");
+    throw std::runtime_error("Pdfix initialization fail");
 
   Pdfix* pdfix = GetPdfix();
   if (!pdfix)

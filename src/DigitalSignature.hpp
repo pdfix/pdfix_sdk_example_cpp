@@ -8,7 +8,7 @@
 */
 /*!
 \page DigitalSignature_cpp PFX Digital Signature Sample
-Example how to add a text annotation with a reply.
+Example how to apply a digital signature from the PFX file.
 \snippet /DigitalSignature.hpp DigitalSignature_cpp
 */
 
@@ -19,7 +19,6 @@ Example how to add a text annotation with a reply.
 #include <iostream>
 #include "Pdfix.h"
 
-// Example how to apply a digital signature from the PFX file.
 void DigitalSignature(
   const std::wstring& email,                   // authorization email   
   const std::wstring& license_key,             // authorization license key
@@ -30,7 +29,7 @@ void DigitalSignature(
 ) {
   // initialize Pdfix
   if (!Pdfix_init(Pdfix_MODULE_NAME))
-    throw std::runtime_error("Pdfix initialization fail.");
+    throw std::runtime_error("Pdfix initialization fail");
 
   Pdfix* pdfix = GetPdfix();
   if (!pdfix)

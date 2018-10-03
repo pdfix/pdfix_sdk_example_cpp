@@ -21,7 +21,6 @@ Example how to make PDF Accessible.
 #include "Pdfix.h"
 #include "OcrWithTesseract.hpp"
 
-// Make PDF accessible (PDF/UA) 
 void MakeAccessible(
   const std::wstring& email,               // authorization email   
   const std::wstring& license_key,         // authorization license key
@@ -33,7 +32,7 @@ void MakeAccessible(
   ) {
   // initialize Pdfix
   if (!Pdfix_init(Pdfix_MODULE_NAME))
-    throw std::runtime_error("Pdfix initialization fail.");
+    throw std::runtime_error("Pdfix initialization fail");
 
   Pdfix* pdfix = GetPdfix();
   if (!pdfix)
@@ -68,6 +67,10 @@ void MakeAccessible(
 
   // convert to PDF/UA
   PdfAccessibleParams params;
+  params.embed_fonts = 1;
+  params.subset_fonts = 1;
+  //params.accept_tags = 1;
+ 
   if (!doc->MakeAccessible(&params, nullptr, nullptr))
     throw std::runtime_error(pdfix->GetError());
 

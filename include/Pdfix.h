@@ -8,80 +8,77 @@
 #include <stdint.h>
 
 #define PDFIX_VERSION_MAJOR 4
-#define PDFIX_VERSION_MINOR 0
-#define PDFIX_VERSION_PATCH 4
+#define PDFIX_VERSION_MINOR 1
+#define PDFIX_VERSION_PATCH 0
 #define MAX_INT 2147483647
 #define MIN_INT -2147483647
-#define kTemplateFlatAnnots "flat-annots"
-#define kTemplateAcceptTags "accept-tags"
-#define kTemplateNoJustifiedText "no-justified-text"
-#define kTemplateMaxWordSpacing "max-word-spacing"
-#define kTemplateHeaderRatio "header-ratio"
-#define kTemplateFooterRatio "footer-ratio"
-#define kTemplateObjectIntersection "object-intersection"
-#define kTemplateIsolatedIntersectionH "isolated-intersection-h"
-#define kTemplateIsolatedIntersectionV "isolated-intersection-v"
-#define kTemplateIgnoreTextTables "ignore-text-tables"
-#define kTemplateIgnoreBgTables "ignore-background-tables"
-#define kTemplateIsolatedImage "isolated-image"
-#define kTemplateTextOnly "text-only"
-#define kTrTextHeight "kTrTextHeight"
-#define kTrBBoxExpansion "kTrBBoxExpansion"
-#define kTrChartBackgroundRatio "kTrChartBackgroundRatio"
-#define kTrRectIsLine "kTrRectIsLine"
-#define kTrAngleDeviation "kTrAngleDeviation"
-#define kLineIntersection "kLineIntersection"
-#define kTrIsolatedText "kTrIsolatedText"
-#define kTrIsolatedElement "kTrIsolatedElement"
-#define kTrTableChartRatio "kTrTableChartRatio"
-#define kTrTableAlignmentH "kTrTableAlignmentH"
-#define kTrTableAlignmentV "kTrTableAlignmentV"
-#define kTrSameFontSize "kTrSameFontSize"
-#define kTrSameTextVertPos "kTrSameTextVertPos"
-#define kTrLineSpacingTextSplit "kTrLineSpacingTextSplit"
-#define kTrLineSpacing "kTrLineSpacing"
-#define kMinDropCapSize "kMinDropCapSize"
-#define kMinSpaceWidthRatio "kMinSpaceWidthRatio"
-#define kTrSplitterRatio "kTrSplitterRatio"
-#define kTrBaselineTextRatio "kTrBaselineTextRatio"
-#define kTrBaselineTableRation "kTrBaselineTableRation"
-#define kTrBaselineBulletRation "kTrBaselineBulletRation"
-#define kTrPathObjectMax "kTrPathObjectMax"
-#define kTrPathObjectMin "kTrPathObjectMin"
-#define kTemplatePagemap "pagemap"
-#define kTemplateOuery "query"
-#define kTemplateObjectType "object-type"
-#define kTemplateMinFontSize "min-font-size"
-#define kTemplateMaxFontSize "max-font-size"
-#define kTemplateFontName "font-name"
-#define kTemplateTextColor "text-color"
-#define kTemplateRegex "regex"
-#define kTemplateIgnore "ignore"
-#define kTemplateNoJoin "no-join"
-#define kTemplateNoSplit "no-split"
-#define kTemplateStartPage "start-page"
-#define kTemplateEndPage "end-page"
-#define kTemplateTagArtifact "tag-artifact"
-#define kTemplateHeading "heading"
-#define kTemplateHeadingStyle "style"
-#define kTemplateTagHeader "tag-header"
-#define kTemplateFirstInstanceOnly "first-instance-only"
-#define kTemplateTagAlternate "tag-alternate"
-#define kTemplateAltText "alt-text"
-#define kTemplateTagAttribute "tag-attribute"
-#define kTemplateList "list"
-#define kTemplateTable "table"
-#define kTemplateTableLayout "table_layout"
-#define kTemplateCellLayout "cell_layout"
-#define kTemplateRectLayout "rect_layout"
-#define kTemplateTextLine "text-line"
-#define kTemplateReflow "reflow"
-#define kTemplateCreateTextBlock "create-text-block"
-#define kTemplateTextWord "text-word"
-#define kTemplateNumColls "num-colls"
-#define kTemplateSplitterSizeRatio "splitter-size-ratio"
-#define kTemplateSplitterDeflateRatio "splitter-deflate-ratio"
-#define kTemplateSplitterMaxDeflate "splitter-max-deflate"
+#define kTrNoJustifiedText "no-justified-text"
+#define kTrMaxWordSpacing "max-word-spacing"
+#define kTrHeaderRatio "header-ratio"
+#define kTrFooterRatio "footer-ratio"
+#define kTrObjectIntersection "object-intersection"
+#define kTrIsolatedIntersectionH "isolated-intersection-h"
+#define kTrIsolatedIntersectionV "isolated-intersection-v"
+#define kTrIgnoreTextTables "ignore-text-tables"
+#define kTrIgnoreBgTables "ignore-background-tables"
+#define kTrIsolatedImage "isolated-image"
+#define kTrTextOnly "text-only"
+#define kTrTextHeight "text-height"
+#define kTrBBoxExpansion "bbox-expansion"
+#define kTrChartBackgroundRatio "chart-background-ratio"
+#define kTrRectIsLine "rect-is-line"
+#define kTrAngleDeviation "angle-deviation"
+#define kLineIntersection "line-intersection"
+#define kTrIsolatedText "isolated-text"
+#define kTrIsolatedElement "isolated-element"
+#define kTrTableChartRatio "table-chart-ratio"
+#define kTrTableAlignmentH "table-alignment-h"
+#define kTrTableAlignmentV "table-alignment-v"
+#define kTrSameFontSize "same-font-size"
+#define kTrSameTextVertPos "same-text-pos-v"
+#define kTrMaxLineSpacing "max-line-spacing"
+#define kTrMinDropCapSize "min-drop-cap-size"
+#define kTrMinSpaceWidthRatio "min-space-width-ratio"
+#define kTrSplitterRatio "splitter-ratio"
+#define kTrBaselineTextRatio "baseline-text-ratio"
+#define kTrBaselineTableRation "baseline-table-ration"
+#define kTrBaselineBulletRation "baseline-bullet-ration"
+#define kTrPathObjectMax "max-path-object"
+#define kTrPathObjectMin "min-path-object"
+#define kTrPagemapSettings "pagemap"
+#define kTrOuery "query"
+#define kTrObjectType "object-type"
+#define kTrMinFontSize "min-font-size"
+#define kTrMaxFontSize "max-font-size"
+#define kTrFontName "font-name"
+#define kTrTextColor "text-color"
+#define kTrRegex "regex"
+#define kTrIgnore "ignore"
+#define kTrNoJoin "no-join"
+#define kTrNoSplit "no-split"
+#define kTrStartPage "start-page"
+#define kTrEndPage "end-page"
+#define kTrTagArtifact "tag-artifact"
+#define kTrHeading "heading"
+#define kTrHeadingStyle "style"
+#define kTrTagHeader "tag-header"
+#define kTrFirstInstanceOnly "first-instance-only"
+#define kTrTagAlternate "tag-alternate"
+#define kTrAltText "alt-text"
+#define kTrTagAttribute "tag-attribute"
+#define kTrTagAttrStandard "standard"
+#define kTrTagAttrCss "css"
+#define kTrTextLine "text-line"
+#define kTrReflow "reflow"
+#define kTrCreateTextBlock "create-text-block"
+#define kTrTextWord "text-word"
+#define kTrNumColls "num-colls"
+#define kTrSplitterSizeRatio "splitter-size-ratio"
+#define kTrSplitterDeflateRatio "splitter-deflate-ratio"
+#define kTrSplitterMaxDeflate "splitter-max-deflate"
+#define kTrDetectRotation "detect-rotation"
+#define kTrMinCharClipRatio "char-min-clip-ratio"
+#define kTrFormTables "form-tables"
 #define _in_
 #define _out_
 #define _callback_
@@ -96,11 +93,16 @@ struct PdsDictionary;
 struct PdsStream;
 struct PdsNull;
 struct PdsReference;
+struct PdsPageObject;
+struct PdsText;
+struct PdsForm;
+struct PdsPath;
+struct PdsImage;
+struct PdsShading;
 struct PdeElement;
 struct PdeContainer;
 struct PdeList;
 struct PdeToc;
-struct PdeTag;
 struct PdeAnnot;
 struct PdeFormField;
 struct PdeImage;
@@ -124,7 +126,6 @@ struct PdfBaseDigSig;
 struct PdfDigSig;
 struct PdfCertDigSig;
 struct PdfCustomDigSig;
-struct PdsStructTree;
 struct PdfDoc;
 struct PdfDocTemplate;
 struct PdfAlternate;
@@ -141,11 +142,15 @@ struct PsStream;
 struct PsFileStream;
 struct PsMemoryStream;
 struct PsProcStream;
-struct PdfStructElement;
+struct PdsStructElement;
+struct PdsClassMap;
+struct PdsRoleMap;
+struct PdsStructTree;
 struct PsMetadata;
 struct Pdfix;
 struct PdfixPlugin;
 
+typedef void* PsStreamData;
 typedef int PdfErrorType;
 typedef int PdfAnnotFlags;
 typedef int PdfRemoveAnnotFlags;
@@ -155,9 +160,6 @@ typedef int PdfRenderFlags;
 typedef int PdfFontFlags;
 typedef int PdfWordFlags;
 typedef int PdfTextLineFlags;
-typedef void* PsPlatformFile;
-typedef void* PsFolderIterator;
-typedef void* PsStreamData;
 typedef PdsObject* PdfObjectP;
 typedef PdsBoolean* PdfBooleanP;
 typedef PdsNumber* PdfNumberP;
@@ -172,7 +174,6 @@ typedef PdeElement* PdeElementP;
 typedef PdeContainer* PdeContainerP;
 typedef PdeList* PdeListP;
 typedef PdeToc* PdeTocP;
-typedef PdeTag* PdeTagP;
 typedef PdeAnnot* PdeAnnotP;
 typedef PdeFormField* PdeFormFieldP;
 typedef PdeImage* PdeImageP;
@@ -209,7 +210,10 @@ typedef PsStream* PsStreamP;
 typedef PsFileStream* PsFileStreamP;
 typedef PsMemoryStream* PsMemoryStreamP;
 typedef PsProcStream* PsProcStreamP;
-typedef PdfStructElement* PdsStructElementP;
+typedef PdsStructElement* PdsStructElementP;
+typedef PdsClassMap* PdsClassMapP;
+typedef PdsRoleMap* PdsRoleMapP;
+typedef PdsStructTree* PdsStructTreeP;
 typedef Pdfix* PdfixP;
 typedef PdfixPlugin* PdfixPluginP;
 
@@ -260,92 +264,87 @@ enum {
   kErrorPdfDigSigVerifyDetachedMessage = 29,
   kErrorPdfDigSigUnknownType = 30,
   kErrorPdfDigSigCallback = 31,
-  kErrorPdfCosObjInvalid = 32,
+  kErrorPdsObjectInvalid = 32,
   kErrorPdfFontSubstFontMissing = 33,
   kErrorPdfPageRelease = 34,
   kErrorPdfPageGetImage = 35,
   kErrorPdfPageInvalidObj = 36,
   kErrorPdfPageInvalidColorSpace = 37,
-  kErrorPdfPageOutOfRange = 38,
-  kErrorPdfPageMapInvalidObj = 39,
-  kErrorPdfPageMapParse = 40,
-  kErrorPdfPageMapRangeOutOf = 41,
-  kErrorPdfPageMapAddElement = 42,
-  kErrorPdfPageMapCantInsertTj = 43,
-  kErrorPdfPageMapWhitespaceOutOfRange = 44,
-  kErrorPdfPageViewNotFound = 45,
-  kErrorPsImageOpenFile = 46,
-  kErrorPsImageUnsupportedFormat = 47,
-  kErrorPsImageWriteBMP = 48,
-  kErrorPsImageWritePNG = 49,
-  kErrorPsImageWriteJPG = 50,
-  kErrorPsImageInvalidBitmap = 51,
-  kErrorPsImageFormat = 52,
-  kErrorPdfAnnotMalformed = 53,
-  kErrorPdfAnnotInvalidType = 54,
-  kErrorPdfAnnotOutOfRange = 55,
-  kErrorPdeAnnotMalformed = 56,
-  kErrorPdeElementChildrenOutOfRange = 57,
-  kErrorPdeElementMalformed = 58,
-  kErrorPdeTextRunMalformed = 59,
-  kErrorPdeWordMalformed = 60,
-  kErrorPdeLineMalformed = 61,
-  kErrorPdeListMalformed = 62,
-  kErrorPdeTextMalformed = 63,
-  kErrorPdeTextRangeOutOf = 64,
-  kErrorPdeTextSelectRange = 65,
-  kErrorPdeTableMalformed = 66,
-  kErrorPdeTableCellRangeOutOf = 67,
-  kErrorPdeCellRangeOutOf = 68,
-  kErrorPsRegexDestroy = 69,
-  kErrorPsRegexPatternMissing = 70,
-  kErrorPsRegexPositionOutOfRange = 71,
-  kErrorPsEventMalformed = 72,
-  kErrorPsEventExists = 73,
-  kErrorPsNoEvent = 74,
-  kErrorPdfBookmarkMalformed = 75,
-  kErrorPdfBookmarkRoot = 76,
-  kErrorPdfBookmarkChildrenOutOfRange = 77,
-  kErrorPsAuthorizationFailed = 78,
-  kErrorPsAuthorizationNeeded = 79,
-  kErrorPsAuthorizationCalled = 80,
-  kErrorPsAuthorizationEmail = 81,
-  kErrorPsAuthorizationWin = 82,
-  kErrorPsAuthorizationMac = 83,
-  kErrorPsAuthorizationAndroid = 84,
-  kErrorPsAuthorizationiOS = 85,
-  kErrorPsAuthorizationLinux = 86,
-  kErrorPsAuthorizationServer = 87,
-  kErrorPsAuthorizationFeature = 88,
-  kErrorPsAuthorizationDate = 89,
-  kErrorPsAuthorizationVersion = 90,
-  kErrorPsAuthorizationNumber = 91,
-  kErrorPsAuthorizationOsCheck = 92,
-  kErrorPdfFontNotEmbedded = 93,
-  kErrorPdfFontSave = 94,
-  kErrorPathNotFound = 95,
-  kErrorPdfPageMapAddTags = 96,
-  kErrorPdfPageMapRemoveTags = 97,
-  kErrorPdfAlternateNotFound = 98,
-  kErrorPdfAlternateInvalid = 99,
-  kErrorPdfAlternateResourceNotFound = 100,
-  kErrorPdfHtmlAlternateFont = 101,
-  kErrorPdfHtmlAlternateCreateAF = 102,
-  kErrorPdfHtmlAlternateWriteAF = 103,
-  kErrorPdfHtmlAlternateImage = 104,
-  kErrorPsStreamReadProcMissing = 105,
-  kErrorPsStreamWriteProcMissing = 106,
-  kErrorPsStreamGetSizeProcMissing = 107,
-  kErrorPdfPageMapTagAttributes = 108,
-  kErrorPdfPageMapTagParentTree = 109,
-  kErrorPdeContentWriter = 110,
-  kErrorParsingDataFile = 111,
-  kErrorPsRegexSearchFail = 112,
-  kErrorDocTemplateInvalidQuery = 113,
-  kErrorDocTemplateInvalidValue = 114,
-  kErrorPdsStructTreeInvalid = 115,
-  kErrorPsRegexIndexOutOfBounds = 116,
-  kErrorInit = 117,
+  kErrorPdfPageMapInvalidObj = 38,
+  kErrorPdfPageMapParse = 39,
+  kErrorPdfPageMapRangeOutOf = 40,
+  kErrorPdfPageMapAddElement = 41,
+  kErrorPdfPageMapCantInsertTj = 42,
+  kErrorPdfPageViewNotFound = 43,
+  kErrorPsImageOpenFile = 44,
+  kErrorPsImageUnsupportedFormat = 45,
+  kErrorPsImageWriteBMP = 46,
+  kErrorPsImageWritePNG = 47,
+  kErrorPsImageWriteJPG = 48,
+  kErrorPsImageInvalidBitmap = 49,
+  kErrorPsImageFormat = 50,
+  kErrorPdfAnnotMalformed = 51,
+  kErrorPdfAnnotInvalidType = 52,
+  kErrorPdeAnnotMalformed = 53,
+  kErrorPdeElementMalformed = 54,
+  kErrorPdeTextRunMalformed = 55,
+  kErrorPdeWordMalformed = 56,
+  kErrorPdeLineMalformed = 57,
+  kErrorPdeListMalformed = 58,
+  kErrorPdeTextMalformed = 59,
+  kErrorPdeTextRangeOutOf = 60,
+  kErrorPdeTextSelectRange = 61,
+  kErrorPdeTableMalformed = 62,
+  kErrorPdeTableCellRangeOutOf = 63,
+  kErrorPdeCellRangeOutOf = 64,
+  kErrorPsRegexDestroy = 65,
+  kErrorPsRegexPatternMissing = 66,
+  kErrorPsEventMalformed = 67,
+  kErrorPsEventExists = 68,
+  kErrorPsNoEvent = 69,
+  kErrorPdfBookmarkMalformed = 70,
+  kErrorPdfBookmarkRoot = 71,
+  kErrorPsAuthorizationFailed = 72,
+  kErrorPsAuthorizationNeeded = 73,
+  kErrorPsAuthorizationCalled = 74,
+  kErrorPsAuthorizationEmail = 75,
+  kErrorPsAuthorizationWin = 76,
+  kErrorPsAuthorizationMac = 77,
+  kErrorPsAuthorizationAndroid = 78,
+  kErrorPsAuthorizationiOS = 79,
+  kErrorPsAuthorizationLinux = 80,
+  kErrorPsAuthorizationServer = 81,
+  kErrorPsAuthorizationFeature = 82,
+  kErrorPsAuthorizationDate = 83,
+  kErrorPsAuthorizationVersion = 84,
+  kErrorPsAuthorizationNumber = 85,
+  kErrorPsAuthorizationOsCheck = 86,
+  kErrorPdfFontNotEmbedded = 87,
+  kErrorPdfFontSave = 88,
+  kErrorPathNotFound = 89,
+  kErrorPdfPageMapAddTags = 90,
+  kErrorPdfPageMapRemoveTags = 91,
+  kErrorPdfAlternateNotFound = 92,
+  kErrorPdfAlternateInvalid = 93,
+  kErrorPdfAlternateResourceNotFound = 94,
+  kErrorPdfHtmlAlternateFont = 95,
+  kErrorPdfHtmlAlternateCreateAF = 96,
+  kErrorPdfHtmlAlternateWriteAF = 97,
+  kErrorPdfHtmlAlternateImage = 98,
+  kErrorPsStreamReadProcMissing = 99,
+  kErrorPsStreamWriteProcMissing = 100,
+  kErrorPsStreamGetSizeProcMissing = 101,
+  kErrorPdfPageMapTagAttributes = 102,
+  kErrorPdfPageMapTagParentTree = 103,
+  kErrorPdeContentWriter = 104,
+  kErrorParsingDataFile = 105,
+  kErrorPsRegexSearchFail = 106,
+  kErrorDocTemplateInvalidQuery = 107,
+  kErrorDocTemplateInvalidValue = 108,
+  kErrorPdsStructTreeInvalid = 109,
+  kErrorInit = 110,
+  kErrorIndexOutOfRange = 111,
+  kErrorPdsStructElementNotFound = 112,
 } ;
 
 typedef enum {
@@ -408,6 +407,15 @@ typedef enum {
 } PdfObjectType;
 
 typedef enum {
+  kPdsPageUnknown = 0,
+  kPdsPageText = 1,
+  kPdsPagePath = 2,
+  kPdsPageImage = 3,
+  kPdsPageShading = 4,
+  kPdsPageForm = 5,
+} PdfPageObjectType;
+
+typedef enum {
   kPdeUnknown = 0,
   kPdeText = 1,
   kPdeTextLine = 2,
@@ -424,9 +432,8 @@ typedef enum {
   kPdeFormField = 13,
   kPdeHeader = 14,
   kPdeFooter = 15,
-  kPdeTag = 16,
-  kPdeColumn = 17,
-  kPdeRow = 18,
+  kPdeColumn = 16,
+  kPdeRow = 17,
 } PdfElementType;
 
 typedef enum {
@@ -525,6 +532,7 @@ enum {
   kTextFlagPatternStroke = 0x080,
   kTextFlagAngle = 0x100,
   kTextFlagWhiteSpace = 0x200,
+  kTextFlagUnicode = 0x400,
 } ;
 
 enum {
@@ -714,6 +722,15 @@ typedef enum {
 } PdfImageType;
 
 typedef enum {
+  kTableGraphic = 0,
+  kTableIsolated = 1,
+  kTableIsolatedCol = 2,
+  kTableIsolatedRow = 3,
+  kTableForm = 4,
+  kTableElement = 5,
+} PdfTableType;
+
+typedef enum {
   kListUnordered = 0,
   kListOrdered = 1,
 } PdfListType;
@@ -807,6 +824,14 @@ typedef enum {
   kMemoryStream = 1,
   kProcStream = 2,
 } PdfStreamType;
+
+typedef enum {
+  kPdsStructKidInvalid = 0,
+  kPdsStructKidElement = 1,
+  kPdsStructKidPageContent = 2,
+  kPdsStructKidStreamContent = 3,
+  kPdsStructKidObject = 4,
+} PdfStructElementType;
 
 
 typedef struct _PdfEventParams {
@@ -1059,9 +1084,9 @@ typedef struct _PdfWhitespaceParams {
 
 typedef struct _PdfFlattenAnnotsParams {
   PdfPageRangeParams page_range;
-  int flags;
+  PdfAnnotSubtype flags;
   _PdfFlattenAnnotsParams() {
-    flags = 0;
+    flags = kAnnotUnknown;
   }
 } PdfFlattenAnnotsParams;
 
@@ -1102,45 +1127,71 @@ typedef void (*PsStreamDestroyProc)(PsStreamData data);
 typedef int (*PsStreamGetSizeProc)(PsStreamData data);
 
 struct PdsObject {
-  virtual PdfObjectType GetType() = 0;
+  virtual PdfObjectType GetObjectType() = 0;
 };
 
 struct PdsBoolean : PdsObject {
   virtual bool GetValue() = 0;
-  virtual bool SetValue(bool value) = 0;
 };
 
 struct PdsNumber : PdsObject {
+  virtual bool IsIntegerValue() = 0;
   virtual int GetIntegerValue() = 0;
-  virtual double GetNumberValue() = 0;
-  virtual bool SetIntegerValue(int value) = 0;
-  virtual bool SetNumberValue(double value) = 0;
+  virtual double GetValue() = 0;
 };
 
 struct PdsString : PdsObject {
-  virtual int GetValue(_out_ wchar_t* buffer, int len) = 0;
-  virtual bool SetValue(const wchar_t* buffer) = 0;
+  virtual int GetValue(_out_ char* buffer, int len) = 0;
+  virtual int GetText(_out_ wchar_t* text, int len) = 0;
 };
 
 struct PdsName : PdsObject {
+  virtual int GetValue(_out_ wchar_t* text, int len) = 0;
 };
 
 struct PdsArray : PdsObject {
+  virtual int GetNumObjects() = 0;
+  virtual PdsObject* Get(int index) = 0;
 };
 
 struct PdsDictionary : PdsObject {
-  virtual bool KnownObject(const char* key) = 0;
-  virtual PdsObject* GetObject(const char* key) = 0;
-  virtual bool SetObject(const char* key, PdsObject* value) = 0;
+  virtual bool Known(const wchar_t* key) = 0;
+  virtual int GetNumKeys() = 0;
+  virtual int GetKey(int index, _out_ wchar_t* buffer, int len) = 0;
+  virtual PdsObject* Get(const wchar_t* key) = 0;
 };
 
 struct PdsStream : PdsObject {
+  virtual PdsDictionary* GetStreamDict() = 0;
+  virtual int GetRawDataSize() = 0;
 };
 
 struct PdsNull : PdsObject {
 };
 
 struct PdsReference : PdsObject {
+  virtual int GetObjectNumber() = 0;
+};
+
+struct PdsPageObject {
+  virtual PdfPageObjectType GetObjectType() = 0;
+  virtual void GetBBox(_out_ PdfRect* bbox) = 0;
+};
+
+struct PdsText : PdsPageObject {
+  virtual int GetText(_out_ wchar_t* buffer, int len) = 0;
+};
+
+struct PdsForm : PdsPageObject {
+};
+
+struct PdsPath : PdsPageObject {
+};
+
+struct PdsImage : PdsPageObject {
+};
+
+struct PdsShading : PdsPageObject {
 };
 
 struct PdeElement {
@@ -1162,10 +1213,6 @@ struct PdeList : PdeElement {
 };
 
 struct PdeToc : PdeElement {
-};
-
-struct PdeTag : PdeElement {
-  virtual PdfStructElement* GetStructElement() = 0;
 };
 
 struct PdeAnnot : PdeElement {
@@ -1206,6 +1253,7 @@ struct PdeTable : PdeContainer {
   virtual PdfAlignment GetRowAlignment(int row) = 0;
   virtual PdfAlignment GetColAlignment(int col) = 0;
   virtual PdeElement* GetCaption() = 0;
+  virtual PdfTableType GetTableType() = 0;
 };
 
 struct PdeWord : PdeElement {
@@ -1319,9 +1367,6 @@ struct PdfCustomDigSig : PdfBaseDigSig {
   virtual bool RegisterDigestDataProc(_callback_ PdfDigestDataProc proc, void* data) = 0;
 };
 
-struct PdsStructTree {
-};
-
 struct PdfDoc {
   virtual bool Save(const wchar_t* path, PdfSaveFlags flags) = 0;
   virtual bool SaveToStream(PsStream* stream, PdfSaveFlags flags) = 0;
@@ -1353,6 +1398,9 @@ struct PdfDoc {
   virtual bool SetLang(const wchar_t* buffer) = 0;
   virtual bool EmbedFonts(bool subset, _callback_ PdfCancelProc cancel_proc, void* cancel_data) = 0;
   virtual bool MakeAccessible(PdfAccessibleParams* params, _callback_ PdfCancelProc cancel_proc, void* cancel_data) = 0;
+  virtual PdsObject* GetRootObject() = 0;
+  virtual PdsObject* GetInfoObject() = 0;
+  virtual PdsStructTree* GetStructTree() = 0;
 };
 
 struct PdfDocTemplate {
@@ -1434,6 +1482,8 @@ struct PdfPage {
   virtual int GetNumAnnotsAtRect(PdfRect* rect) = 0;
   virtual PdfAnnot* GetAnnotAtRect(PdfRect* rect, int index) = 0;
   virtual bool DrawContent(PdfPageRenderParams* params, _callback_ PdfCancelProc cancel_proc, void* cancel_data) = 0;
+  virtual int GetNumMcidPageObjects(int mcid) = 0;
+  virtual PdsPageObject* GetMcidPageObject(int mcid, int index) = 0;
 };
 
 struct PdePageMap {
@@ -1496,10 +1546,42 @@ struct PsProcStream : PsStream {
   virtual void SetGetSizeProc(_callback_ PsStreamGetSizeProc proc) = 0;
 };
 
-struct PdfStructElement {
-  virtual const char* GetType() = 0;
-  virtual const char* GetSubtype() = 0;
+struct PdsStructElement {
+  virtual int GetType(_out_ wchar_t* text, int len) = 0;
   virtual int GetActualText(_out_ wchar_t* buffer, int len) = 0;
+  virtual int GetAlt(_out_ wchar_t* buffer, int len) = 0;
+  virtual int GetAbbreviation(_out_ wchar_t* buffer, int len) = 0;
+  virtual int GetPageNumber() = 0;
+  virtual PdsObject* GetAttrObject(int index) = 0;
+  virtual PdsObject* GetElementObject() = 0;
+  virtual PdsObject* GetKidObject(int index) = 0;
+  virtual PdfStructElementType GetKidType(int index) = 0;
+  virtual int GetKidPageNumber(int index) = 0;
+  virtual int GetKidMcid(int index) = 0;
+  virtual int GetNumAttrObjects() = 0;
+  virtual int GetNumKids() = 0;
+  virtual PdsObject* GetParentObject() = 0;
+  virtual int GetTitle(_out_ wchar_t* buffer, int len) = 0;
+  virtual int GetID(_out_ wchar_t* buffer, int len) = 0;
+};
+
+struct PdsClassMap {
+  virtual PdsObject* GetAttrObject(const wchar_t* class_name, int index) = 0;
+  virtual int GetNumAttrObjects(const wchar_t* class_name) = 0;
+};
+
+struct PdsRoleMap {
+  virtual bool DoesMap(const wchar_t* src, const wchar_t* dst) = 0;
+  virtual int GetDirectMap(const wchar_t* type, _out_ wchar_t* buffer, int len) = 0;
+};
+
+struct PdsStructTree {
+  virtual PdsClassMap* GetClassMap() = 0;
+  virtual PdsObject* GetKidObject(int index) = 0;
+  virtual int GetNumKids() = 0;
+  virtual PdsRoleMap* GetRoleMap() = 0;
+  virtual PdsStructElement* AcquireStructElement(PdsObject* object) = 0;
+  virtual bool ReleaseStructElement(PdsStructElement* element) = 0;
 };
 
 struct PsMetadata {
@@ -1586,7 +1668,7 @@ void Pdfix_destroy() {\
   GetPdfix = 0;\
 }\
 DLL_HANDLE* Pdfix_init(const char* path) {\
-  g_Pdfix_handle = PdfixLoadLibrary(path);   if (!g_Pdfix_handle) return nullptr;\
+  if (g_Pdfix_handle == nullptr) g_Pdfix_handle = PdfixLoadLibrary(path);   if (!g_Pdfix_handle) return nullptr;\
   GetPdfix = (GetPdfixProcType)PdfixGetProcAddress(g_Pdfix_handle, "GetPdfix");\
   if (GetPdfix == nullptr) { Pdfix_destroy(); return nullptr; } return &g_Pdfix_handle; }
 
@@ -1599,15 +1681,15 @@ DLL_HANDLE* Pdfix_init(const char* path) {\
 #endif
 #elif defined __linux__
 #if defined __x86_64__
-#define Pdfix_MODULE_NAME "libpdfix64.so"
+#define Pdfix_MODULE_NAME "./libpdfix64.so"
 #else
-#define Pdfix_MODULE_NAME "libpdfix.so"
+#define Pdfix_MODULE_NAME "./libpdfix.so"
 #endif
 #elif defined __APPLE__
 #if defined __x86_64__
-#define Pdfix_MODULE_NAME "libpdfix64.dylib"
+#define Pdfix_MODULE_NAME "./libpdfix64.dylib"
 #else
-#define Pdfix_MODULE_NAME "libpdfix.dylib"
+#define Pdfix_MODULE_NAME "./libpdfix.dylib"
 #endif
 #else
 #error unknown platform

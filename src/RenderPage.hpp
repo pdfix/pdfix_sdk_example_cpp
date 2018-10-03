@@ -19,7 +19,6 @@ Example how to render a PDF document page into an image.
 #include <iostream>
 #include "Pdfix.h"
 
-  // Renders a first page into the JPG image.
 void RenderPage(
   const std::wstring& email,                  // authorization email   
   const std::wstring& license_key,            // authorization license key
@@ -30,7 +29,7 @@ void RenderPage(
 ) {
   // initialize Pdfix
   if (!Pdfix_init(Pdfix_MODULE_NAME))
-    throw std::runtime_error("Pdfix initialization fail.");
+    throw std::runtime_error("Pdfix initialization fail");
 
   Pdfix* pdfix = GetPdfix();
   if (!pdfix)
