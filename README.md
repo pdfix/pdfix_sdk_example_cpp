@@ -44,9 +44,9 @@ For complete SDK documentation see the [PDFix website](https://pdfix.net).
 
 ## Installation on Windows, MacOS, Linux
 Copy shared libraries from the bin folder in downloaded PDFix SDK package (https://pdfix.net/download) into the build folder same as the the executable. For 64-bit environment use files with \*64.* suffix.
-Windows: pdfix.dll, pdf_to_html.dll, ocr_tesseract.dll
-MacOS: libpdfix.dylib, libpdf_to_html.dylib, libocr_tesseract.dylib
-Linux: libpdfix.so, libpdf_to_html.so, libocr_tesseract.so
+* Windows: pdfix.dll, pdf_to_html.dll, ocr_tesseract.dll
+* MacOS: libpdfix.dylib, libpdf_to_html.dylib, libocr_tesseract.dylib
+* Linux: libpdfix.so, libpdf_to_html.so, libocr_tesseract.so
 
 ## Have a question? Need help?
 Let us know and we’ll get back to you. Write us to support@pdfix.net or fill the
