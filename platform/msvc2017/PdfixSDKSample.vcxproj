@@ -23,36 +23,9 @@
     <ClCompile Include="..\..\src\Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\apps\pdfix_app\public\Initialization.hpp" />
     <ClInclude Include="..\..\include\OcrTesseract.h" />
     <ClInclude Include="..\..\include\Pdfix.h" />
     <ClInclude Include="..\..\include\PdfToHtml.h" />
-    <ClInclude Include="..\..\src\AddComment.hpp" />
-    <ClInclude Include="..\..\src\AddTags.hpp" />
-    <ClInclude Include="..\..\src\AddWatermark.hpp" />
-    <ClInclude Include="..\..\src\CertDigitalSignature.hpp" />
-    <ClInclude Include="..\..\src\ConvertToHtml.hpp" />
-    <ClInclude Include="..\..\src\ConvertToXml.hpp" />
-    <ClInclude Include="..\..\src\DigitalSignature.hpp" />
-    <ClInclude Include="..\..\src\DocumentMetadata.hpp" />
-    <ClInclude Include="..\..\src\EmbedFonts.hpp" />
-    <ClInclude Include="..\..\src\ExportFormFieldValues.hpp" />
-    <ClInclude Include="..\..\src\ExtractImages.hpp" />
-    <ClInclude Include="..\..\src\ExtractTables.hpp" />
-    <ClInclude Include="..\..\src\ExtractText.hpp" />
-    <ClInclude Include="..\..\src\FlattenAnnots.hpp" />
-    <ClInclude Include="..\..\src\GetBookmarks.hpp" />
-    <ClInclude Include="..\..\src\GetWhitespace.hpp" />
-    <ClInclude Include="..\..\src\MakeAccessible.hpp" />
-    <ClInclude Include="..\..\src\OcrWithTesseract.hpp" />
-    <ClInclude Include="..\..\src\PrintPage.hpp" />
-    <ClInclude Include="..\..\src\RegexSearch.hpp" />
-    <ClInclude Include="..\..\src\RegexsetPattern.hpp" />
-    <ClInclude Include="..\..\src\RegisterEvent.hpp" />
-    <ClInclude Include="..\..\src\RemoveComments.hpp" />
-    <ClInclude Include="..\..\src\RenderPage.hpp" />
-    <ClInclude Include="..\..\src\SetFieldFlags.hpp" />
-    <ClInclude Include="..\..\src\SetFormFieldValue.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
