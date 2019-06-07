@@ -16,6 +16,7 @@ Example how to read all documents objects in the document catalog.
 
 //! [ParsePdsObjects_cpp]
 #include <string>
+#include <map>
 #include <iostream>
 #include "Pdfix.h"
 
