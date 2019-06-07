@@ -1,25 +1,44 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// RenderPage.cpp
+// RenderPageWithoutText.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /*!
 \page CPP_Samples C++ Samples
-- \subpage RenderPage_cpp
+- \subpage RenderPageWithoutText_cpp
 */
 /*!
-\page RenderPage_cpp Render Page Sample
-Example how to render a PDF document page into an image.
-\snippet /RenderPage.hpp RenderPage_cpp
+\page RenderPageWithoutText_cpp Render Page Sample
+Example how to render a PDF document page without text into an image.
+\snippet /RenderPageWithoutText.hpp RenderPageWithoutText_cpp
 */
 
 #pragma once
 
-//! [RenderPage_cpp]
+//! [RenderPageWithoutText_cpp]
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
 
-void RenderPage(
+// set page object render flag
+void SetPageObjectsRenderFlag(PdsPageObject* obj) {
+  if (obj->GetObjectType() == kPdsPageText) {
+    // disable text object rendering
+    obj->SetRender(false);
+    return;
+  }
+  
+  obj->SetRender(true);  
+  if (obj->GetObjectType() == kPdsPageForm) {
+    // form object - process child objects
+    obj->SetRender(true);
+    PdsForm* form = (PdsForm*)obj;
+    int num_objects = form->GetNumPageObjects();
+    for (int i = 0; i < num_objects; i++)
+      SetPageObjectsRenderFlag(form->GetPageObject(i));
+  }
+}
+
+void RenderPageWithoutText(
   const std::wstring& email,                  // authorization email   
   const std::wstring& license_key,            // authorization license key
   const std::wstring& open_path,              // source PDF document
@@ -55,6 +74,12 @@ void RenderPage(
   PsImage* image = pdfix->CreateImage(width, height, kImageDIBFormatArgb);
   if (!image)
     throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
+  
+  // enumerate page elements to disable rendering of the text objects
+  auto num_page_objects = page->GetNumPageObjects();
+  for (int i = 0; i < num_page_objects; i++) {
+    SetPageObjectsRenderFlag(page->GetPageObject(i));
+  }
 
   PdfPageRenderParams params;
   params.image = image;
@@ -76,4 +101,4 @@ void RenderPage(
 
   pdfix->Destroy();
 }
-//! [RenderPage_cpp]
+//! [RenderPageWithoutText_cpp]

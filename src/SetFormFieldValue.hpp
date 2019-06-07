@@ -33,16 +33,16 @@ void SetFormFieldValue(
   if (!pdfix)
     throw std::runtime_error("GetPdfix fail");
   if (!pdfix->Authorize(email.c_str(), license_key.c_str()))
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), L"");
   if (!doc)
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
   PdfFormField* field = doc->GetFormFieldByName(L"Text1");
   if (field) {
     std::wstring value;
     value.resize(field->GetValue(nullptr, 0));
-    field->GetValue((wchar_t*)value.c_str(), value.size());
+    field->GetValue((wchar_t*)value.c_str(), (int)value.size());
     if (value.length() == 0)
       value = L"New value";
     else

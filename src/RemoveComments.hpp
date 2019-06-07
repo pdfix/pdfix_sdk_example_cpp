@@ -34,11 +34,11 @@ void RemoveComments(
   if (!pdfix)
     throw std::runtime_error("GetPdfix fail");
   if (!pdfix->Authorize(email.c_str(), license_key.c_str()))
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), L"");
   if (!doc)
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
   PdfPage* page = doc->AcquirePage(0);
 
   for (auto i = 0; i < page->GetNumAnnots(); i++) {
@@ -48,7 +48,7 @@ void RemoveComments(
       break;
     }
   }
-  doc->ReleasePage(page);
+  page->Release();
   doc->Save(save_path.c_str(), kSaveFull);
   doc->Close();
   pdfix->Destroy();

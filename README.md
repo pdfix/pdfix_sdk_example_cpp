@@ -34,13 +34,16 @@ For complete SDK documentation see the [PDFix website](https://pdfix.net).
   * Digital Signature Support
   * eSignature Support
   * Time Stamp Support
+* PDF Forms to HTML Form conversion
 * Logical Content Extraction
-* PDF to HTML Conversion
-* PDF to JSON Conversion
-* PDF Forms to HTML Forms
-* Add Tags to PDF
-* PDF to PDF/UA
-* PDF to XML
+  * PDF to HTML Conversion
+  * PDF to JSON Conversion
+  * PDF to XML Conversion
+* PDF Accessibility
+  * Add Tags to PDF
+  * Read and Edit document structure tree
+  * Edit reading order
+  * PDF to PDF/UA
 
 ## Installation on Windows, MacOS, Linux
 Copy shared libraries from the bin folder in downloaded PDFix SDK package (https://pdfix.net/download) into the build folder same as the the executable. For 64-bit environment use files with \*64.* suffix.

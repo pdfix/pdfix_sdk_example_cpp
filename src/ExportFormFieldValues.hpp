@@ -36,12 +36,12 @@ void ExportFormFieldValues(
   if (!pdfix)
     throw std::runtime_error("GetPdfix fail");
   if (!pdfix->Authorize(email.c_str(), license_key.c_str()))
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   PdfDoc* doc = nullptr;
   doc = pdfix->OpenDoc(open_path.c_str(), L"");
   if (!doc)
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   std::string path = ToUtf8(save_path);
   std::ofstream ofs;
@@ -51,11 +51,13 @@ void ExportFormFieldValues(
     std::wstring name, value;
     PdfFormField* field = doc->GetFormField(i);
     if (!field)
-      throw std::runtime_error(pdfix->GetError());
+      throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
+
     name.resize(field->GetFullName(nullptr, 0));
-    field->GetFullName((wchar_t*)name.c_str(), name.size());
+    field->GetFullName((wchar_t*)name.c_str(), (int)name.size());
+
     value.resize(field->GetValue(nullptr, 0));
-    field->GetValue((wchar_t*)value.c_str(), value.size());
+    field->GetValue((wchar_t*)value.c_str(), (int)value.size());
 
     ofs << ToUtf8(name) << ": " << ToUtf8(value) << std::endl;
   }

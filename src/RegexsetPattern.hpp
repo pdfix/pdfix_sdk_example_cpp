@@ -34,7 +34,7 @@ void RegexSetPattern(
   if (!pdfix)
     throw std::runtime_error("GetPdfix fail");
   if (!pdfix->Authorize(email.c_str(), license_key.c_str()))
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   PsRegex* regex = pdfix->CreateRegex();
   if (!regex)
@@ -71,7 +71,8 @@ void RegexSetPattern(
       int len = regex->GetLength();
       std::wstring match_text;
       match_text.resize(regex->GetText(nullptr, 0));
-      regex->GetText((wchar_t*)match_text.c_str(), match_text.size());
+      regex->GetText((wchar_t*)match_text.c_str(), (int)match_text.size());
+
       std::wcout << match_text << std::endl;
     }
   }

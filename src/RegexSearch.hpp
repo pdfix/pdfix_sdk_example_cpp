@@ -34,19 +34,19 @@ void RegexSearch(
   if (!pdfix)
     throw std::runtime_error("GetPdfix fail");
   if (!pdfix->Authorize(email.c_str(), license_key.c_str()))
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), L"");
   if (!doc)
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   PdfPage* page = doc->AcquirePage(0);
   if (!page)
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   PdePageMap* page_map = page->AcquirePageMap(nullptr, nullptr);
   if (!page_map)
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   PsRegex* regex = pdfix->CreateRegex();
   regex->SetPattern(regex_pattern.c_str());
@@ -60,7 +60,8 @@ void RegexSearch(
       PdeText* text_elem = static_cast<PdeText*>(elem);
       std::wstring text;
       text.resize(text_elem->GetText(nullptr, 0));
-      text_elem->GetText((wchar_t*)text.c_str(), text.size());
+      text_elem->GetText((wchar_t*)text.c_str(), (int)text.size());
+
       int start_pos = 0;
       while (start_pos < (int)text.length()) {
         if (regex->Search(text.c_str(), start_pos)) {
@@ -71,14 +72,14 @@ void RegexSearch(
           start_pos += pos + 1;
         }
         else
-          start_pos = text.length();
+          start_pos = (int)text.length();
       }
     }
   }
 
   regex->Destroy();
 
-  doc->ReleasePage(0);
+  page->Release();
   doc->Close();
   pdfix->Destroy();
 }

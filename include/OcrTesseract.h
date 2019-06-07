@@ -1,15 +1,13 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Copyright (c) 2016 PDFix. All Rights Reserved.
+////////////////////////////////////////////////////////////////////////////////
+// Copyright (c) 2019 PDFix (http://pdfix.net). All Rights Reserved.
 // This file was generated automatically
-////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 #ifndef _OcrTesseract_h
 #define _OcrTesseract_h
 
 #include <stdint.h>
+#include <vector>
 
-#define OCRTESSERACT_VERSION_MAJOR 1
-#define OCRTESSERACT_VERSION_MINOR 0
-#define OCRTESSERACT_VERSION_PATCH 4
 #define _in_
 #define _out_
 #define _callback_
@@ -17,7 +15,6 @@
 struct OcrTesseract;
 struct TesseractDoc;
 
-typedef int OcrTesseractFlags;
 typedef OcrTesseract* OcrTesseractP;
 typedef TesseractDoc* TesseractDocP;
 
@@ -29,11 +26,8 @@ enum {
   kErrorOcrTesseractMissingPageImage = 2004,
   kErrorOcrTesseractProcessDoc = 2005,
   kErrorOcrTesseractProcessPage = 2006,
-} ;
-
-enum {
-  kOcrNone = 0x00,
-  kOcrImages = 0x0001,
+  kErrorOcrTesseractIteratePage = 2007,
+  kErrorOcrTesseractMissingFont = 2008,
 } ;
 
 typedef enum {
@@ -61,32 +55,17 @@ typedef enum {
 } OcrTesseractEngineType;
 
 
-typedef struct _OcrTesseractParams {
-  OcrTesseractFlags flags;
-  PdfDevRect clip_rect;
-  OcrTesseractPageSegType page_seg;
-  OcrTesseractEngineType engine;
-  double zoom;
-  PdfRotate rotate;
-  _OcrTesseractParams() {
-    flags = 0;
-    zoom = 1;
-    rotate = kRotate0;
-    page_seg = kOcrSegAutoOSD;
-    engine = kOcrTesseractDefault;
-  }
-} OcrTesseractParams;
-
 
 struct OcrTesseract : PdfixPlugin {
   virtual bool SetLanguage(const wchar_t* lang) = 0;
-  virtual bool SetData(const wchar_t* path) = 0;
+  virtual bool SetDataPath(const wchar_t* path) = 0;
+  virtual bool SetEngine(OcrTesseractEngineType engine) = 0;
   virtual TesseractDoc* OpenOcrDoc(PdfDoc* pdDoc) = 0;
 };
 
 struct TesseractDoc {
   virtual bool Close() = 0;
-  virtual bool Save(const wchar_t* path, OcrTesseractParams* params, _callback_ PdfCancelProc cancel_proc, void* cancel_data) = 0;
+  virtual bool OcrImageToPage(PsImage* image, PdfMatrix* matrix, PdfPage* page, _callback_ PdfCancelProc cancel_proc, void* cancel_data) = 0;
 };
 
 ///////////////////////////////////////////////////////////////////////////////

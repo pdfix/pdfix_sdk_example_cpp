@@ -26,7 +26,7 @@ Example how to read all documents objects in the document catalog.
 // ProcessObject gets the value of the object.
 void ProcessObject(PdsObject* obj, std::ostream& ss, std::string indent, 
   std::map<PdsObject*, int>& mapped) {
-  indent += " ";
+//  indent += " ";
 
 //  ss << "{" << obj->GetObjectNumber() << "} ";
 
@@ -36,7 +36,9 @@ void ProcessObject(PdsObject* obj, std::ostream& ss, std::string indent,
     ss << "[already mapped]";
     return;
   }
-
+  
+  ss << "==== Obj {" << obj->GetId() << "} " << std::endl;
+  
   mapped.insert(std::make_pair(obj, 1));
   switch (obj->GetObjectType()) {
   case kPdsBoolean:{
@@ -53,20 +55,28 @@ void ProcessObject(PdsObject* obj, std::ostream& ss, std::string indent,
   case kPdsName: {
     PdsName* nameObj = (PdsName*)obj;
     std::wstring str;
-    str.resize(nameObj->GetValue(nullptr, 0));
-    nameObj->GetValue((wchar_t*)str.c_str(), str.size());
+    str.resize(nameObj->GetText(nullptr, 0));
+    nameObj->GetText((wchar_t*)str.c_str(), (int)str.size());
     ss << ToUtf8(str) << std::endl;
   } break;
   case kPdsString: {
     PdsString* strObj = (PdsString*)obj;
     std::wstring str;
     str.resize(strObj->GetText(nullptr, 0));
-    strObj->GetText((wchar_t*)str.c_str(), str.size());
+    strObj->GetText((wchar_t*)str.c_str(), (int)str.size());
     ss << ToUtf8(str) << std::endl;
   } break;
   case kPdsStream: {
     PdsStream* streamObj = (PdsStream*)obj;
-    ss << "Stream (" << streamObj->GetRawDataSize() << ")";
+    ss << "Stream (" << streamObj->GetRawDataSize() << ")" << std::endl;
+    auto sz = streamObj->GetSize();
+    std::vector<unsigned char> data;
+    if (sz) {
+      data.resize(sz);
+      if (!streamObj->Read(0, &data[0], sz))
+        throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
+    }
+    ss << "stream" << std::endl << std::string(begin(data), end(data)) << std::endl << "endstream" << std::endl;
     ProcessObject(streamObj->GetStreamDict(), ss, indent, mapped);
   } break;
   case kPdsArray: {
@@ -81,8 +91,21 @@ void ProcessObject(PdsObject* obj, std::ostream& ss, std::string indent,
     for (int i = 0; i < (dictObj->GetNumKeys()); i++) {
       std::wstring key;
       key.resize(dictObj->GetKey(i, nullptr, 0));
-      dictObj->GetKey(i, (wchar_t*)key.c_str(), key.size());
+      dictObj->GetKey(i, (wchar_t*)key.c_str(), (int)key.size());
+
       ss << std::endl << indent << "[" << ToUtf8(key) << "] ";
+      
+      std::string str;
+      str.resize(dictObj->GetString(key.c_str(), nullptr, 0));
+      dictObj->GetString(key.c_str(), (char*)str.c_str(), (int)str.size());
+
+      std::wstring txt;
+      txt.resize(dictObj->GetText(key.c_str(), nullptr, 0));
+      dictObj->GetText(key.c_str(), (wchar_t*)txt.c_str(), (int)txt.size());
+
+      int i_value = dictObj->GetInteger(key.c_str(), -1);
+      double d_value = dictObj->GetNumber(key.c_str());
+      
       ProcessObject(dictObj->Get(key.c_str()), ss, indent, mapped);
     }
   } break;
@@ -106,16 +129,16 @@ void ParsePdsObjects(
   if (!pdfix)
     throw std::runtime_error("GetPdfix fail");
   if (!pdfix->Authorize(email.c_str(), license_key.c_str()))
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   PdfDoc* doc = nullptr;
   doc = pdfix->OpenDoc(open_path.c_str(), L"");
   if (!doc)
-    throw pdfix->GetError();
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   PdsObject* root = doc->GetRootObject();
   if (!root)
-    throw pdfix->GetError();
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   std::map<PdsObject*, int> mapped;
 

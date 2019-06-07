@@ -43,12 +43,12 @@ void SaveImage(PdeElement* element,
     if (elem_height == 0 || elem_width == 0)
       return;
       
-    image->SetRenderMode(kRenderElem);
+    image->SetRender(true);
 
     PsImage* ps_image = pdfix->CreateImage(page_view->GetDeviceWidth(),
       page_view->GetDeviceHeight(), kImageDIBFormatArgb);
     if (!ps_image)
-      throw std::runtime_error(pdfix->GetError());
+      throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
     PdfPageRenderParams render_params;
     render_params.image = ps_image;
@@ -59,7 +59,7 @@ void SaveImage(PdeElement* element,
     ps_image->SaveRect(path.c_str(), &img_params, &elem_dev_rect);
     ps_image->Destroy();
 
-    image->SetRenderMode(kRenderElemNone);
+    image->SetRender(false);
   }
 
   int count = element->GetNumChildren();
@@ -92,11 +92,11 @@ void ExtractImages(
     pdfix->GetVersionMinor() << "." <<
     pdfix->GetVersionPatch() << std::endl;
   if (!pdfix->Authorize(email.c_str(), license_key.c_str()))
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), L"");
   if (!doc)
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   img_params.format = kImageFormatPng;
   int image_index = 1;
@@ -109,7 +109,7 @@ void ExtractImages(
 
     PdfPage* page = doc->AcquirePage(i);
     if (!page)
-      throw std::runtime_error(pdfix->GetError());
+      throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
     PdfRect crop_box;
     page->GetCropBox(&crop_box);
@@ -117,18 +117,18 @@ void ExtractImages(
     double zoom = render_width / page_width;
     PdfPageView* page_view = page->AcquirePageView(zoom, kRotate0);
     if (!page_view)
-      throw std::runtime_error(pdfix->GetError());
+      throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
     PdePageMap* page_map = page->AcquirePageMap(nullptr, nullptr);
     if (!page_map)
-      throw std::runtime_error(pdfix->GetError());
+      throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
     auto element = page_map->GetElement();
     if (!element)
-      throw std::runtime_error(pdfix->GetError());
-    SaveImage(element, save_path, img_params, page, page_view, image_index);
+      throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
+    SaveImage(element, save_path.c_str(), img_params, page, page_view, image_index);
 
-    doc->ReleasePage(page);
+    page->Release();
   }
   std::cout << std::endl << image_index - 1 << " images found" << std::endl;
 

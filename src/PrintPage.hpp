@@ -35,7 +35,7 @@ void PrintPage(
   if (!pdfix)
     throw std::runtime_error("GetPdfix fail");
   if (!pdfix->Authorize(email.c_str(), license_key.c_str()))
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   // find the printer
   DWORD sz = 0;
@@ -76,23 +76,38 @@ void PrintPage(
 
   PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), L"");
   if (!doc)
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   PdfPage* page = doc->AcquirePage(0);
   if (!page)
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   PdfRect crop_box;
   page->GetCropBox(&crop_box);
+
+  auto page_width = crop_box.right - crop_box.left;
+  auto page_height = crop_box.top - crop_box.bottom;
+  auto rotate = page->GetRotate();
+  if (rotate / 90 % 2)
+    std::swap(page_width, page_height);
 
   HDC hdc = CreateDC(pi_2->pDriverName, pi_2->pPrinterName, pi_2->pPortName, NULL);
 
   int w = GetDeviceCaps(hdc, PHYSICALWIDTH);
   int h = GetDeviceCaps(hdc, PHYSICALHEIGHT);
 
-  auto zoom = std::min(w / (crop_box.right - crop_box.left),
-    h / (crop_box.top - crop_box.bottom));
-  std::cout << zoom << std::endl;
+  // calculate zoom and prepare the page view
+  auto zoom = std::min(w / page_width, h / page_height);
+  PdfPageView* page_view = page->AcquirePageView(zoom, kRotate0);
+  if (!page_view)
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
+
+  PdfMatrix matrix;
+  page_view->GetDeviceMatrix(&matrix);
+
+  //center page on the device
+  matrix.e += ((w - page_view->GetDeviceWidth()) / 2.);
+  matrix.f += ((h - page_view->GetDeviceHeight()) / 2.);
 
   DOCINFO di;
   memset(&di, 0, sizeof(di));
@@ -101,30 +116,25 @@ void PrintPage(
 
   if (StartDoc(hdc, &di) > 0) {
     if (StartPage(hdc) > 0) {
-      // render first page to jpg image
-      PdfPageView* page_view = page->AcquirePageView(zoom, kRotate0);
-      if (!page_view)
-        throw std::runtime_error(pdfix->GetError());
 
       PdfDevRect clip_rect;
       page_view->RectToDevice(&crop_box, &clip_rect);
 
       PdfPageRenderParams params;
       params.device = hdc;
-      page_view->GetDeviceMatrix(&params.matrix);
-      params.clip_rect = clip_rect;
+      params.matrix = matrix;
+      params.clip_box = crop_box;
       params.render_flags = kRenderAnnot;// | kRenderGrayscale;
       if (!page->DrawContent(&params, nullptr, nullptr))
-        std::cout << pdfix->GetError() << std::endl;
+        std::cout << std::to_string(GetPdfix()->GetErrorType()) << std::endl;
 
-      page->ReleasePageView(page_view);
       EndPage(hdc);
     }
     EndDoc(hdc);
   }
   DeleteDC(hdc);
 
-  doc->ReleasePage(page);
+  page->Release();
   doc->Close();
   pdfix->Destroy();
 #endif

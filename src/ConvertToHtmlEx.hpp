@@ -1,32 +1,37 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// ConvertToHtml.cpp
+// ConvertToHtmlEx.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /*!
 \page CPP_Samples C++ Samples
-- \subpage ConvertToHtml_cpp
+- \subpage ConvertToHtmlEx_cpp
 */
 /*!
-\page ConvertToHtml_cpp Pdf To Html Sample
-Example how to convert whole PDF document to HTML.
-\snippet /ConvertToHtml.hpp ConvertToHtml_cpp
+ \page ConvertToHtmlEx_cpp Pdf To Html Sample #2
+Example how to convert PDF to HTML by pages for REST API service.
+\snippet /ConvertToHtmlEx.hpp ConvertToHtmlEx_cpp
 */
 
 #pragma once
 
-//! [ConvertToHtml_cpp]
+//! [ConvertToHtmlEx_cpp]
 #include <string>
+#include <cstdlib>
 #include <iostream>
 #include "Pdfix.h"
 #include "PdfToHtml.h"
 
-void ConvertToHtml(
+extern std::string ToUtf8(const std::wstring& wstr);
+
+void ConvertToHtmlEx(
   const std::wstring& email,          // authorization email   
   const std::wstring& license_key,    // authorization license key
   const std::wstring& open_path,      // source PDF document
   const std::wstring& save_path,      // output HTML file
-  const std::wstring& config_path,    // configuration file
-  PdfHtmlParams& html_params          // conversion parameters
+  const std::wstring& config_path,    // configuration
+  PdfHtmlParams& html_params,         // conversion parameters
+  const std::wstring& param1,         // param 1
+  const std::wstring& param2          // param 2
 ) {
   // initialize Pdfix
   if (!Pdfix_init(Pdfix_MODULE_NAME))
@@ -51,52 +56,49 @@ void ConvertToHtml(
     pdf_to_html->GetVersionPatch() << std::endl;
     
   if (!pdf_to_html->Initialize(pdfix))
-    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType())); 
-
-  PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), L"");
-  if (!doc)
     throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
-
-  PdfHtmlDoc* html_doc = pdf_to_html->OpenHtmlDoc(doc);
-  if (!html_doc)
+  
+  // prepare output stream
+  PsStream* stm = pdfix->CreateFileStream(save_path.c_str(), kPsTruncate);
+  if (!stm)
     throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
-
-  //PdfDocTemplate* doc_tmpl = doc->GetDocTemplate();
-  //if (!doc_tmpl)
-  //  throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
-  //doc_tmpl->PreflightDoc(nullptr, nullptr);
-
-  // customize conversion 
-  if (!config_path.empty()) {
-    PdfDocTemplate* doc_tmpl = doc->GetDocTemplate();
-    if (!doc_tmpl)
-      throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
-    // load from 
-    PsFileStream* stm = pdfix->CreateFileStream(config_path.c_str(), kPsReadOnly);
-    if (stm) {
-      if (!doc_tmpl->LoadFromStream(stm, kDataFormatJson))
-        throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
-      stm->Destroy();
-    }
+  
+  if (param1 == L"js") {
+    pdf_to_html->SaveJavaScript(stm);
   }
+  else if (param1 == L"css") {
+    pdf_to_html->SaveCSS(stm);
+  }
+  else {
+    PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), L"");
+    if (!doc)
+      throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
-  /* set html_param
-  html_params.type = kPdfHtmlResponsive;
-  html_params.width = 1200;    
-  html_params.flags |= kHtmlExportJavaScripts;
-  html_params.flags |= kHtmlExportFonts;
-  html_params.flags |= kHtmlRetainFontSize;
-  html_params.flags |= kHtmlRetainTextColor;
-  html_params.flags |= kHtmlNoExternalCSS | kHtmlNoExternalJS | kHtmlNoExternalIMG | kHtmlNoExternalFONT;
-  */
+    PdfHtmlDoc* html_doc = pdf_to_html->OpenHtmlDoc(doc);
+    if (!html_doc)
+      throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
-  if (!html_doc->Save(save_path.c_str(), &html_params, nullptr, nullptr))
-    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
+    html_params.flags |= kHtmlNoExternalCSS | kHtmlNoExternalJS | kHtmlNoExternalIMG |
+      kHtmlNoExternalFONT;
 
-  html_doc->Close();
-  doc->Close();
+    if (param1 == L"document") {
+      if (!html_doc->SaveDocHtml(stm, &html_params, nullptr, nullptr))
+        throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
+    }
+    else if (param1 == L"page") {
+      auto page_num = atoi(ToUtf8(param2).c_str());
+      if (page_num == 0)
+        throw std::runtime_error("Invalid page num");
 
+      if (!html_doc->SavePageHtml(stm, &html_params, page_num - 1, nullptr, nullptr))
+        throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
+    }
+    html_doc->Close();
+    doc->Close();
+  }
+  
+  stm->Destroy();
   pdf_to_html->Destroy();
   pdfix->Destroy();
 }
-//! [ConvertToHtml_cpp]
+//! [ConvertToHtmlEx_cpp]

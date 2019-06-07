@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// GetTags.cpp
+// TagsReadStructTree.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /*!
@@ -26,26 +26,26 @@ void ProcessStructElement(PdsStructTree* struct_tree, PdsStructElement* struct_e
   indent += " ";
   Pdfix* pdfix = GetPdfix();
   if (!struct_elem)
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   std::wstring type_str;
-  type_str.resize(struct_elem->GetType(nullptr, 0));
-  struct_elem->GetType((wchar_t*)type_str.c_str(), type_str.size());
+  type_str.resize(struct_elem->GetType(true, nullptr, 0));
+  struct_elem->GetType(true, (wchar_t*)type_str.c_str(), (int)type_str.size());
   ss << indent << ToUtf8(type_str) << std::endl;
 
   std::wstring tile_str;
   tile_str.resize(struct_elem->GetTitle(nullptr, 0));
-  struct_elem->GetTitle((wchar_t*)tile_str.c_str(), tile_str.size());
+  struct_elem->GetTitle((wchar_t*)tile_str.c_str(), (int)tile_str.size());
   ss << indent << ToUtf8(tile_str) << std::endl;
 
   std::wstring actual_text_str;
   actual_text_str.resize(struct_elem->GetActualText(nullptr, 0));
-  struct_elem->GetActualText((wchar_t*)actual_text_str.c_str(), actual_text_str.size());
+  struct_elem->GetActualText((wchar_t*)actual_text_str.c_str(), (int)actual_text_str.size());
   ss << indent << ToUtf8(actual_text_str) << std::endl;
 
   std::wstring alt_str;
   alt_str.resize(struct_elem->GetAlt(nullptr, 0));
-  struct_elem->GetAlt((wchar_t*)alt_str.c_str(), alt_str.size());
+  struct_elem->GetAlt((wchar_t*)alt_str.c_str(), (int)alt_str.size());
   ss << indent << ToUtf8(alt_str) << std::endl;
 
   auto page_num = struct_elem->GetPageNumber();
@@ -59,9 +59,9 @@ void ProcessStructElement(PdsStructTree* struct_tree, PdsStructElement* struct_e
     case kPdsStructKidElement: {
       auto kid_struct_elem = struct_tree->AcquireStructElement(kid_obj);
       if (kid_struct_elem == nullptr)
-        throw std::runtime_error(pdfix->GetError());
+        throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
       ProcessStructElement(struct_tree, kid_struct_elem, indent, ss);
-      struct_tree->ReleaseStructElement(kid_struct_elem);
+      kid_struct_elem->Release();
     } break;
     case kPdsStructKidObject: 
       break;
@@ -79,7 +79,7 @@ void ProcessStructElement(PdsStructTree* struct_tree, PdsStructElement* struct_e
   }
 }
 
-void GetTags(
+void TagsReadStructTree(
   const std::wstring& email,            // authorization email
   const std::wstring& license_key,      // authorization license key
   const std::wstring& open_path,        // source PDF document
@@ -94,11 +94,11 @@ void GetTags(
   if (!pdfix)
     throw std::runtime_error("GetPdfix fail");
   if (!pdfix->Authorize(email.c_str(), license_key.c_str()))
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), L"");
   if (!doc)
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   std::ofstream ofs;
   ofs.open(ToUtf8(save_path));
@@ -113,7 +113,7 @@ void GetTags(
       PdsObject* kid_object = struct_tree->GetKidObject(i);
       PdsStructElement* struct_elem = struct_tree->AcquireStructElement(kid_object);
       ProcessStructElement(struct_tree, struct_elem, "", ofs);
-      struct_tree->ReleaseStructElement(struct_elem);
+      struct_elem->Release();
     }
   }
 

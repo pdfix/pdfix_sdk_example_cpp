@@ -34,36 +34,37 @@ void DocumentMetadata(
   if (!pdfix)
     throw std::runtime_error("GetPdfix fail");
   if (!pdfix->Authorize(email.c_str(), license_key.c_str()))
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   PdfDoc* doc = nullptr;
   doc = pdfix->OpenDoc(open_path.c_str(), L"");
   if (!doc)
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   std::wstring title;
   title.resize(doc->GetInfo(L"Title", nullptr, 0));
-  doc->GetInfo(L"Title", (wchar_t*)title.c_str(), title.size());
+  doc->GetInfo(L"Title", (wchar_t*)title.c_str(), (int)title.size());
+
   doc->SetInfo(L"Title", L"My next presentation");
 
   PsMetadata* metadata = doc->GetMetadata();
   if (!metadata)
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   PsFileStream* stream = pdfix->CreateFileStream(xml_path.c_str(), kPsTruncate);
   if (!metadata->SaveToStream(stream))
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
   stream->Destroy();
 
   // do something with XML metadata ...
 
   stream = pdfix->CreateFileStream(xml_path.c_str(), kPsReadOnly);
   if (!metadata->LoadFromStream(stream))
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
   stream->Destroy();
 
   if (!doc->Save(save_path.c_str(), kSaveFull))
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   doc->Close();
   pdfix->Destroy();

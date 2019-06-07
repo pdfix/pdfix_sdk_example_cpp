@@ -20,21 +20,32 @@
 #include "Pdfix.h"
 
 // DocDidOpenCallback gets title when the document is opened.
-void DocDidOpenCallback(PdfEventParams* event, void* data) {
-  if (event->type != kEventDocDidOpen)
+void DocDidOpenCallback(void* data) {
+  PsEvent* event = GetPdfix()->GetEvent();
+  if (!event)
+    throw std::runtime_error("No event!");
+  
+  if (event->GetType() != kEventDocDidOpen)
     throw std::runtime_error("This should never happen!");
-  if (event->doc == nullptr)
+  
+  PdfDoc* doc = event->GetDoc();
+  if (doc == nullptr)
     throw std::runtime_error("This should never happen!");
   std::cout << "Document was opened!" << std::endl;
   std::wstring title;
-  title.resize(event->doc->GetInfo(L"Title", nullptr, 0));
-  event->doc->GetInfo(L"Title", (wchar_t*)title.c_str(), title.size());
+  title.resize(doc->GetInfo(L"Title", nullptr, 0));
+  doc->GetInfo(L"Title", (wchar_t*)title.c_str(), (int)title.size());
   std::wcout << title << std::endl;
 }
 
 // DocWillCallback notifies you when the event happens.
-void DocWillCallback(PdfEventParams* event, void* data) {
-  switch (event->type) {
+void DocWillCallback(void* data) {
+  PsEvent* event = GetPdfix()->GetEvent();
+  if (!event)
+    throw std::runtime_error("No event!");
+  
+
+  switch (event->GetType()) {
   case kEventDocWillClose:
     std::cout << "Document will be closed!" << std::endl;
     break;
@@ -58,7 +69,7 @@ void RegisterEvent(
   if (!pdfix)
     throw std::runtime_error("GetPdfix fail");
   if (!pdfix->Authorize(email.c_str(), license_key.c_str()))
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   // add events
   pdfix->RegisterEvent(kEventDocDidOpen, &DocDidOpenCallback, nullptr);
@@ -67,7 +78,7 @@ void RegisterEvent(
 
   PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), L"");
   if (!doc)
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
   doc->Close();
   pdfix->Destroy();
 }

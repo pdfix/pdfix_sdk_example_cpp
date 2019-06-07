@@ -9,3 +9,5 @@ bin/PDFixSDKSample*
 bin/*.dll
 bin/*.dylib
 bin/output/
+
+include/boost

@@ -37,7 +37,7 @@ void Initialization(
     throw std::runtime_error("Incompatible version");
 
   if (!pdfix->Authorize(email.c_str(), license_key.c_str()))
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   // ...
 

@@ -34,30 +34,30 @@ void AddTags(
   if (!pdfix)
     throw std::runtime_error("GetPdfix fail");
   if (!pdfix->Authorize(email.c_str(), license_key.c_str()))
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), L"");
   if (!doc)
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   // customize auto-tagging 
   if (!config_path.empty()) {
     PdfDocTemplate* doc_tmpl = doc->GetDocTemplate();
     if (!doc_tmpl)
-      throw std::runtime_error(pdfix->GetError());
+      throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
     PsFileStream* stm = pdfix->CreateFileStream(config_path.c_str(), kPsReadOnly);
     if (stm) {
       if (!doc_tmpl->LoadFromStream(stm, kDataFormatJson))
-        throw std::runtime_error(pdfix->GetError());
+        throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
       stm->Destroy();
     }
   }
 
   if (!doc->AddTags(nullptr, nullptr))
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   if (!doc->Save(save_path.c_str(), kSaveFull))
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
   doc->Close();
   pdfix->Destroy();
 }

@@ -26,7 +26,8 @@ void GetText(PdeText* element, std::ofstream& ofs, bool eof) {
   PdeText* text_elem = static_cast<PdeText*>(element);
   std::wstring text;
   text.resize(text_elem->GetText(nullptr, 0));
-  text_elem->GetText((wchar_t*)text.c_str(), text.size());
+  text_elem->GetText((wchar_t*)text.c_str(), (int)text.size());
+
   std::string str = ToUtf8(text);
   ofs << str;
   if (eof)
@@ -109,11 +110,11 @@ void ExtractTables(
   if (!pdfix)
     throw std::runtime_error("GetPdfix fail");
   if (!pdfix->Authorize(email.c_str(), license_key.c_str()))
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), L"");
   if (!doc)
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   int table_index = 1;
 
@@ -124,18 +125,18 @@ void ExtractTables(
 
     PdfPage* page = doc->AcquirePage(i);
     if (!page)
-      throw std::runtime_error(pdfix->GetError());
+      throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
     PdePageMap* page_map = page->AcquirePageMap(nullptr, nullptr);
     if (!page_map)
-      throw std::runtime_error(pdfix->GetError());
+      throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
     auto element = page_map->GetElement();
     if (!element)
-      throw std::runtime_error(pdfix->GetError());
+      throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
     SaveTable(element, save_path, table_index);
 
-    doc->ReleasePage(page);
+    page->Release();
   }
   std::cout << std::endl << table_index - 1 << " tables found" << std::endl;
 

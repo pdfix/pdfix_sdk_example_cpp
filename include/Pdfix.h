@@ -1,84 +1,18 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Copyright (c) 2016 PDFix. All Rights Reserved.
+////////////////////////////////////////////////////////////////////////////////
+// Copyright (c) 2019 PDFix (http://pdfix.net). All Rights Reserved.
 // This file was generated automatically
-////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 #ifndef _Pdfix_h
 #define _Pdfix_h
 
 #include <stdint.h>
+#include <vector>
 
-#define PDFIX_VERSION_MAJOR 4
-#define PDFIX_VERSION_MINOR 1
-#define PDFIX_VERSION_PATCH 0
+#define PDFIX_VERSION_MAJOR 5
+#define PDFIX_VERSION_MINOR 0
+#define PDFIX_VERSION_PATCH 27
 #define MAX_INT 2147483647
 #define MIN_INT -2147483647
-#define kTrNoJustifiedText "no-justified-text"
-#define kTrMaxWordSpacing "max-word-spacing"
-#define kTrHeaderRatio "header-ratio"
-#define kTrFooterRatio "footer-ratio"
-#define kTrObjectIntersection "object-intersection"
-#define kTrIsolatedIntersectionH "isolated-intersection-h"
-#define kTrIsolatedIntersectionV "isolated-intersection-v"
-#define kTrIgnoreTextTables "ignore-text-tables"
-#define kTrIgnoreBgTables "ignore-background-tables"
-#define kTrIsolatedImage "isolated-image"
-#define kTrTextOnly "text-only"
-#define kTrTextHeight "text-height"
-#define kTrBBoxExpansion "bbox-expansion"
-#define kTrChartBackgroundRatio "chart-background-ratio"
-#define kTrRectIsLine "rect-is-line"
-#define kTrAngleDeviation "angle-deviation"
-#define kLineIntersection "line-intersection"
-#define kTrIsolatedText "isolated-text"
-#define kTrIsolatedElement "isolated-element"
-#define kTrTableChartRatio "table-chart-ratio"
-#define kTrTableAlignmentH "table-alignment-h"
-#define kTrTableAlignmentV "table-alignment-v"
-#define kTrSameFontSize "same-font-size"
-#define kTrSameTextVertPos "same-text-pos-v"
-#define kTrMaxLineSpacing "max-line-spacing"
-#define kTrMinDropCapSize "min-drop-cap-size"
-#define kTrMinSpaceWidthRatio "min-space-width-ratio"
-#define kTrSplitterRatio "splitter-ratio"
-#define kTrBaselineTextRatio "baseline-text-ratio"
-#define kTrBaselineTableRation "baseline-table-ration"
-#define kTrBaselineBulletRation "baseline-bullet-ration"
-#define kTrPathObjectMax "max-path-object"
-#define kTrPathObjectMin "min-path-object"
-#define kTrPagemapSettings "pagemap"
-#define kTrOuery "query"
-#define kTrObjectType "object-type"
-#define kTrMinFontSize "min-font-size"
-#define kTrMaxFontSize "max-font-size"
-#define kTrFontName "font-name"
-#define kTrTextColor "text-color"
-#define kTrRegex "regex"
-#define kTrIgnore "ignore"
-#define kTrNoJoin "no-join"
-#define kTrNoSplit "no-split"
-#define kTrStartPage "start-page"
-#define kTrEndPage "end-page"
-#define kTrTagArtifact "tag-artifact"
-#define kTrHeading "heading"
-#define kTrHeadingStyle "style"
-#define kTrTagHeader "tag-header"
-#define kTrFirstInstanceOnly "first-instance-only"
-#define kTrTagAlternate "tag-alternate"
-#define kTrAltText "alt-text"
-#define kTrTagAttribute "tag-attribute"
-#define kTrTagAttrStandard "standard"
-#define kTrTagAttrCss "css"
-#define kTrTextLine "text-line"
-#define kTrReflow "reflow"
-#define kTrCreateTextBlock "create-text-block"
-#define kTrTextWord "text-word"
-#define kTrNumColls "num-colls"
-#define kTrSplitterSizeRatio "splitter-size-ratio"
-#define kTrSplitterDeflateRatio "splitter-deflate-ratio"
-#define kTrSplitterMaxDeflate "splitter-max-deflate"
-#define kTrDetectRotation "detect-rotation"
-#define kTrMinCharClipRatio "char-min-clip-ratio"
-#define kTrFormTables "form-tables"
 #define _in_
 #define _out_
 #define _callback_
@@ -92,13 +26,13 @@ struct PdsArray;
 struct PdsDictionary;
 struct PdsStream;
 struct PdsNull;
-struct PdsReference;
 struct PdsPageObject;
 struct PdsText;
 struct PdsForm;
 struct PdsPath;
 struct PdsImage;
 struct PdsShading;
+struct PdsContentMark;
 struct PdeElement;
 struct PdeContainer;
 struct PdeList;
@@ -147,6 +81,7 @@ struct PdsClassMap;
 struct PdsRoleMap;
 struct PdsStructTree;
 struct PsMetadata;
+struct PsEvent;
 struct Pdfix;
 struct PdfixPlugin;
 
@@ -158,64 +93,12 @@ typedef int PdfTextStateFlag;
 typedef int PdfFieldFlags;
 typedef int PdfRenderFlags;
 typedef int PdfFontFlags;
+typedef int PdfPageContentFlags;
+typedef int PdfTableType;
 typedef int PdfWordFlags;
 typedef int PdfTextLineFlags;
-typedef PdsObject* PdfObjectP;
-typedef PdsBoolean* PdfBooleanP;
-typedef PdsNumber* PdfNumberP;
-typedef PdsString* PdfStringP;
-typedef PdsName* PdfNameP;
-typedef PdsArray* PdfArrayP;
-typedef PdsDictionary* PdfDictionaryP;
-typedef PdsStream* PdfStreamP;
-typedef PdsNull* PdfNullP;
-typedef PdsReference* PdfReferenceP;
-typedef PdeElement* PdeElementP;
-typedef PdeContainer* PdeContainerP;
-typedef PdeList* PdeListP;
-typedef PdeToc* PdeTocP;
-typedef PdeAnnot* PdeAnnotP;
-typedef PdeFormField* PdeFormFieldP;
-typedef PdeImage* PdeImageP;
-typedef PdeLine* PdeLineP;
-typedef PdeRect* PdeRectP;
-typedef PdeHeader* PdeHeaderP;
-typedef PdeFooter* PdeFooterP;
-typedef PdeCell* PdeCellP;
-typedef PdeTable* PdeTableP;
-typedef PdeWord* PdeWordP;
-typedef PdeTextLine* PdeTextLineP;
-typedef PdeText* PdeTextP;
-typedef PdfAction* PdfActionP;
-typedef PdfAnnot* PdfAnnotP;
-typedef PdfLinkAnnot* PdfLinkAnnotP;
-typedef PdfMarkupAnnot* PdfMarkupAnnotP;
-typedef PdfTextAnnot* PdfTextAnnotP;
-typedef PdfTextMarkupAnnot* PdfTextMarkupAnnotP;
-typedef PdfWidgetAnnot* PdfWidgetAnnotP;
-typedef PdfDigSig* PdfDigSigP;
-typedef PdfDigSig* PdfDigSigP;
-typedef PdfCertDigSig* PdfCertDigSigP;
-typedef PdfCustomDigSig* PdfCustomDigSigP;
-typedef PdfDoc* PdfDocP;
-typedef PdfFont* PdfFontP;
-typedef PdfFormField* PdfFormFieldP;
-typedef PsImage* PsImageP;
-typedef PdfPage* PdfPageP;
-typedef PdePageMap* PdePageMapP;
-typedef PdfPageView* PdfPageViewP;
-typedef PdfBookmark* PdfBookmarkP;
-typedef PsRegex* PsRegexP;
-typedef PsStream* PsStreamP;
-typedef PsFileStream* PsFileStreamP;
-typedef PsMemoryStream* PsMemoryStreamP;
-typedef PsProcStream* PsProcStreamP;
-typedef PdsStructElement* PdsStructElementP;
-typedef PdsClassMap* PdsClassMapP;
-typedef PdsRoleMap* PdsRoleMapP;
-typedef PdsStructTree* PdsStructTreeP;
-typedef Pdfix* PdfixP;
-typedef PdfixPlugin* PdfixPluginP;
+typedef int PdfTextRegexFlags;
+typedef int PdfElementFlags;
 
 typedef enum {
   kAuthPlatformWin = 0,
@@ -233,118 +116,96 @@ typedef enum {
 } PdfAuthOption;
 
 enum {
+  kNoError = 0,
   kErrorUnknown = 1,
   kErrorOutOfMemory = 2,
   kErrorMalformedInput = 3,
   kErrorMethodNotImplemented = 4,
-  kErrorPdfDocInvalid = 5,
-  kErrorPdfDocOpen = 6,
-  kErrorPdfDocCreate = 7,
-  kErrorPdfDocSave = 8,
-  kErrorPdfDocXFA = 9,
-  kErrorPdfDocInterForm = 10,
-  kErrorPdfDocClose = 11,
-  kErrorPdfDocInfo = 12,
-  kErrorPdfDocStructTreeMissing = 13,
-  kErrorPdfDigSigDestroy = 14,
-  kErrorPdfDigSigOpenPfxFile = 15,
-  kErrorPdfDigSigSaveFile = 16,
-  kErrorPdfDigSigReadFile = 17,
-  kErrorPdfDigSigCertOpenSystemStore = 18,
-  kErrorPdfDigSigPFXImportCertStore = 19,
-  kErrorPdfDigSigCertFindInStore = 20,
-  kErrorPdfDigSigPFXImportOpenSSL = 21,
-  kErrorPdfDigSigPFXParseOpenSSL = 22,
-  kErrorPdfDigSigByteRange = 23,
-  kErrorPdfDigSigCryptMemAlloc = 24,
-  kErrorPdfDigSigCryptSignMessage = 25,
-  kErrorPdfDigSigTimeStampMessage = 26,
-  kErrorPdfDigSigTimeStampRequest = 27,
-  kErrorPdfDigSigCryptHash = 28,
-  kErrorPdfDigSigVerifyDetachedMessage = 29,
-  kErrorPdfDigSigUnknownType = 30,
-  kErrorPdfDigSigCallback = 31,
-  kErrorPdsObjectInvalid = 32,
-  kErrorPdfFontSubstFontMissing = 33,
-  kErrorPdfPageRelease = 34,
-  kErrorPdfPageGetImage = 35,
-  kErrorPdfPageInvalidObj = 36,
-  kErrorPdfPageInvalidColorSpace = 37,
-  kErrorPdfPageMapInvalidObj = 38,
-  kErrorPdfPageMapParse = 39,
-  kErrorPdfPageMapRangeOutOf = 40,
-  kErrorPdfPageMapAddElement = 41,
-  kErrorPdfPageMapCantInsertTj = 42,
-  kErrorPdfPageViewNotFound = 43,
-  kErrorPsImageOpenFile = 44,
-  kErrorPsImageUnsupportedFormat = 45,
-  kErrorPsImageWriteBMP = 46,
-  kErrorPsImageWritePNG = 47,
-  kErrorPsImageWriteJPG = 48,
-  kErrorPsImageInvalidBitmap = 49,
-  kErrorPsImageFormat = 50,
-  kErrorPdfAnnotMalformed = 51,
-  kErrorPdfAnnotInvalidType = 52,
-  kErrorPdeAnnotMalformed = 53,
-  kErrorPdeElementMalformed = 54,
-  kErrorPdeTextRunMalformed = 55,
-  kErrorPdeWordMalformed = 56,
-  kErrorPdeLineMalformed = 57,
-  kErrorPdeListMalformed = 58,
-  kErrorPdeTextMalformed = 59,
-  kErrorPdeTextRangeOutOf = 60,
-  kErrorPdeTextSelectRange = 61,
-  kErrorPdeTableMalformed = 62,
-  kErrorPdeTableCellRangeOutOf = 63,
-  kErrorPdeCellRangeOutOf = 64,
-  kErrorPsRegexDestroy = 65,
-  kErrorPsRegexPatternMissing = 66,
-  kErrorPsEventMalformed = 67,
-  kErrorPsEventExists = 68,
-  kErrorPsNoEvent = 69,
-  kErrorPdfBookmarkMalformed = 70,
-  kErrorPdfBookmarkRoot = 71,
-  kErrorPsAuthorizationFailed = 72,
-  kErrorPsAuthorizationNeeded = 73,
-  kErrorPsAuthorizationCalled = 74,
-  kErrorPsAuthorizationEmail = 75,
-  kErrorPsAuthorizationWin = 76,
-  kErrorPsAuthorizationMac = 77,
-  kErrorPsAuthorizationAndroid = 78,
-  kErrorPsAuthorizationiOS = 79,
-  kErrorPsAuthorizationLinux = 80,
-  kErrorPsAuthorizationServer = 81,
-  kErrorPsAuthorizationFeature = 82,
-  kErrorPsAuthorizationDate = 83,
-  kErrorPsAuthorizationVersion = 84,
-  kErrorPsAuthorizationNumber = 85,
-  kErrorPsAuthorizationOsCheck = 86,
-  kErrorPdfFontNotEmbedded = 87,
-  kErrorPdfFontSave = 88,
-  kErrorPathNotFound = 89,
-  kErrorPdfPageMapAddTags = 90,
-  kErrorPdfPageMapRemoveTags = 91,
-  kErrorPdfAlternateNotFound = 92,
-  kErrorPdfAlternateInvalid = 93,
-  kErrorPdfAlternateResourceNotFound = 94,
-  kErrorPdfHtmlAlternateFont = 95,
-  kErrorPdfHtmlAlternateCreateAF = 96,
-  kErrorPdfHtmlAlternateWriteAF = 97,
-  kErrorPdfHtmlAlternateImage = 98,
-  kErrorPsStreamReadProcMissing = 99,
-  kErrorPsStreamWriteProcMissing = 100,
-  kErrorPsStreamGetSizeProcMissing = 101,
-  kErrorPdfPageMapTagAttributes = 102,
-  kErrorPdfPageMapTagParentTree = 103,
-  kErrorPdeContentWriter = 104,
-  kErrorParsingDataFile = 105,
-  kErrorPsRegexSearchFail = 106,
-  kErrorDocTemplateInvalidQuery = 107,
-  kErrorDocTemplateInvalidValue = 108,
-  kErrorPdsStructTreeInvalid = 109,
-  kErrorInit = 110,
-  kErrorIndexOutOfRange = 111,
-  kErrorPdsStructElementNotFound = 112,
+  kErrorPathNotFound = 5,
+  kErrorOperationCancelled = 6,
+  kErrorParsingDataFile = 7,
+  kErrorInit = 8,
+  kErrorIndexOutOfRange = 9,
+  kErrorIncompatiblePluginVersion = 10,
+  kErrorPdfDocInvalid = 30,
+  kErrorPdfDocOpen = 31,
+  kErrorPdfDocCreate = 32,
+  kErrorPdfDocSave = 33,
+  kErrorPdfDocXFA = 34,
+  kErrorPdfDocClose = 35,
+  kErrorDocTemplateInvalid = 60,
+  kErrorDocTemplateInvalidValue = 61,
+  kErrorPdfDigSigOpenPfxFile = 90,
+  kErrorPdfDigSigSaveFile = 91,
+  kErrorPdfDigSigReadFile = 92,
+  kErrorPdfDigSigCertOpenSystemStore = 93,
+  kErrorPdfDigSigPFXImportCertStore = 94,
+  kErrorPdfDigSigCertFindInStore = 95,
+  kErrorPdfDigSigPFXImportOpenSSL = 96,
+  kErrorPdfDigSigPFXParseOpenSSL = 97,
+  kErrorPdfDigSigByteRange = 98,
+  kErrorPdfDigSigCryptMemAlloc = 99,
+  kErrorPdfDigSigCryptSignMessage = 100,
+  kErrorPdfDigSigTimeStampMessage = 101,
+  kErrorPdfDigSigTimeStampRequest = 102,
+  kErrorPdfDigSigCryptHash = 103,
+  kErrorPdfDigSigVerifyDetachedMessage = 104,
+  kErrorPdfDigSigUnknownType = 105,
+  kErrorPdfDigSigCallback = 106,
+  kErrorPdsObjectInvalid = 120,
+  kErrorPdfPageInvalidObj = 150,
+  kErrorPdfPageInvalidColorSpace = 151,
+  kErrorPdfPageMapAddElement = 180,
+  kErrorPdfPageMapInvalidTextObj = 181,
+  kErrorPdfPageMapAddTags = 182,
+  kErrorPdfPageMapTagAttributes = 183,
+  kErrorPdfPageMapTagParentTree = 184,
+  kErrorPdeElementMalformed = 210,
+  kErrorPdeTextRunMalformed = 211,
+  kErrorPdeWordMalformed = 212,
+  kErrorPdeLineMalformed = 213,
+  kErrorPdeListMalformed = 214,
+  kErrorPdeTextMalformed = 215,
+  kErrorPdeTextSelectRange = 216,
+  kErrorPdeTableMalformed = 217,
+  kErrorPdeElementCreate = 218,
+  kErrorPdfFontSubstFontMissing = 240,
+  kErrorPdfFontNotEmbedded = 241,
+  kErrorPdfFontSave = 242,
+  kErrorPsImageOpenFile = 270,
+  kErrorPsImageUnsupportedFormat = 271,
+  kErrorPsImageWriteBMP = 272,
+  kErrorPsImageWritePNG = 273,
+  kErrorPsImageWriteJPG = 274,
+  kErrorPsImageInvalidBitmap = 275,
+  kErrorPsImageFormat = 276,
+  kErrorPdfAnnotMalformed = 300,
+  kErrorPdfAnnotInvalidType = 301,
+  kErrorPsRegexDestroy = 330,
+  kErrorPsRegexSearchFail = 331,
+  kErrorPsEventMalformed = 360,
+  kErrorPsEventExists = 361,
+  kErrorPsNoEvent = 362,
+  kErrorPdfBookmarkMalformed = 390,
+  kErrorPdfBookmarkRoot = 391,
+  kErrorPsAuthorizationFailed = 420,
+  kErrorPsAuthorizationNeeded = 421,
+  kErrorPsAuthorizationEmail = 422,
+  kErrorPsAuthorizationPlatform = 423,
+  kErrorPsAuthorizationDate = 424,
+  kErrorPsAuthorizationVersion = 425,
+  kErrorPsAuthorizationNumber = 426,
+  kErrorPsAuthorizationOsCheck = 427,
+  kErrorPsStreamReadProcMissing = 450,
+  kErrorPsStreamWriteProcMissing = 451,
+  kErrorPsStreamGetSizeProcMissing = 452,
+  kErrorPdfAlternateNotFound = 480,
+  kErrorPdfAlternateInvalid = 481,
+  kErrorPdfAlternateResourceNotFound = 482,
+  kErrorPdsStructTreeInvalid = 510,
+  kErrorPdsStructElementNotFound = 511,
+  kErrorPdsStructTreeMissing = 512,
+  kErrorPdfActionInvalid = 540,
 } ;
 
 typedef enum {
@@ -359,7 +220,7 @@ typedef enum {
   kEventPageWillRemoveAnnot = 8,
   kEventPageDidAddAnnot = 9,
   kEventPageDidRemoveAnnot = 10,
-  kEventageContentsDidChange = 11,
+  kEventPageContentsDidChange = 11,
 } PdfEventType;
 
 typedef enum {
@@ -432,9 +293,20 @@ typedef enum {
   kPdeFormField = 13,
   kPdeHeader = 14,
   kPdeFooter = 15,
-  kPdeColumn = 16,
-  kPdeRow = 17,
+  kPdeAnnot = 16,
 } PdfElementType;
+
+typedef enum {
+  kPdeContainerUnknown = 0,
+  kPdeContainerPage = 1,
+  kPdeContainerArt = 2,
+} PdfContainerType;
+
+typedef enum {
+  kTagUnknown = 0,
+  kTagSect = 1,
+  kTagArt = 2,
+} PdfTagType;
 
 typedef enum {
   kPdfLineCapButt = 0,
@@ -530,9 +402,8 @@ enum {
   kTextFlagNoUnicode = 0x020,
   kTextFlagPatternFill = 0x040,
   kTextFlagPatternStroke = 0x080,
-  kTextFlagAngle = 0x100,
-  kTextFlagWhiteSpace = 0x200,
-  kTextFlagUnicode = 0x400,
+  kTextFlagWhiteSpace = 0x100,
+  kTextFlagUnicode = 0x200,
 } ;
 
 enum {
@@ -628,11 +499,6 @@ enum {
 } ;
 
 typedef enum {
-  kRenderElemNone = 0,
-  kRenderElem = 1,
-} PdfRenderMode;
-
-typedef enum {
   kImageFormatPng = 0,
   kImageFormatJpg = 1,
   kImageFormatBmp = 2,
@@ -649,6 +515,17 @@ enum {
   kFontAllCap = 0x10000,
   kFontSmallCap = 0x20000,
   kFontForceBold = 0x40000,
+} ;
+
+enum {
+  kContentImage = 0x00001,
+  kContentText = 0x00002,
+  kContentPath = 0x00004,
+  kContentForm = 0x00008,
+  kContentShading = 0x00020,
+  kContentTextTransparent = 0x00040,
+  kContentTextFill = 0x00080,
+  kContentTextStroke = 0x00100,
 } ;
 
 typedef enum {
@@ -718,21 +595,28 @@ typedef enum {
   kImagePath = 2,
   kImageRect = 3,
   kImageShading = 4,
-  kImageTable = 5,
+  kImageForm = 5,
 } PdfImageType;
 
-typedef enum {
-  kTableGraphic = 0,
-  kTableIsolated = 1,
-  kTableIsolatedCol = 2,
-  kTableIsolatedRow = 3,
-  kTableForm = 4,
-  kTableElement = 5,
-} PdfTableType;
+enum {
+  kTableUnknown = 0x00,
+  kTableGraphic = 0x01,
+  kTableIsolated = 0x02,
+  kTableIsolatedCol = 0x04,
+  kTableIsolatedRow = 0x08,
+  kTableForm = 0x10,
+  kTableElement = 0x20,
+} ;
 
 typedef enum {
-  kListUnordered = 0,
-  kListOrdered = 1,
+  kListNone = 0,
+  kListUnordered = 1,
+  kListOrdered = 2,
+  kListDecimal = 3,
+  kListRomanUpper = 4,
+  kListRomanLower = 5,
+  kListLetterUpper = 6,
+  kListLetterLower = 7,
 } PdfListType;
 
 enum {
@@ -762,35 +646,22 @@ typedef enum {
   kTextH7 = 7,
   kTextH8 = 8,
   kTextNote = 9,
+  kTextTitle = 10,
 } PdfTextStyle;
 
-typedef enum {
-  kRegexHyphen = 0,
-  kRegexBullet = 1,
-  kRegexBulletFont = 2,
-  kRegexBulletLine = 3,
-  kRegexFilling = 4,
-  kRegexToc = 5,
-  kRegexNumber = 6,
-  kRegexAllCaps = 7,
-  kRegexFirstCap = 8,
-  kRegexCurrency = 9,
-  kRegexPercent = 10,
-  kRegexTerminal = 11,
-  kRegexTableCaption = 12,
-  kRegexImageCaption = 13,
-  kRegexChartCaption = 14,
-  kRegexNoteCaption = 15,
-  kRegexNumberedList = 16,
-  kRegexNumberedSplit = 17,
-  kRegexSentences = 18,
-  kRegexAlphaNum = 19,
-  kRegexColon = 20,
-  kRegexPhoneNumber = 21,
-  kRegexDate = 22,
-  kRegexPageNumber = 23,
-  kRegexLast = 24,
-} PdfRegexType;
+enum {
+  kTextFlagTableCaption = 0x0001,
+  kTextFlagImageCaption = 0x0002,
+  kTextFlagChartCaption = 0x0004,
+  kTextFlagFilling = 0x008,
+  kTextFlagLabel = 0x0010,
+} ;
+
+enum {
+  kElemNoJoin = 0x01,
+  kElemNoSplit = 0x02,
+  kElemArtifact = 0x04,
+} ;
 
 typedef enum {
   kPsWrite = 0,
@@ -833,19 +704,6 @@ typedef enum {
   kPdsStructKidObject = 4,
 } PdfStructElementType;
 
-
-typedef struct _PdfEventParams {
-  PdfEventType type;
-  PdfDoc* doc;
-  PdfPage* page;
-  PdfAnnot* annot;
-  _PdfEventParams() {
-    type = kEventUnknown;
-    doc = nullptr;
-    page = nullptr;
-    annot = nullptr;
-  }
-} PdfEventParams;
 
 typedef struct _PdfPageRangeParams {
   int start_page;
@@ -1035,7 +893,7 @@ typedef struct _PdfPageRenderParams {
   void* device;
   PsImage* image;
   PdfMatrix matrix;
-  PdfDevRect clip_rect;
+  PdfRect clip_box;
   PdfRenderFlags render_flags;
   _PdfPageRenderParams() {
     device = 0;
@@ -1120,7 +978,7 @@ typedef struct _PdfAccessibleParams {
 } PdfAccessibleParams;
 
 typedef int (*PdfCancelProc) (void* data);
-typedef void (*PdfEventProc) (PdfEventParams* event, void* data);
+typedef void (*PdfEventProc) (void* data);
 typedef unsigned long (*PdfDigestDataProc) (int buffer_count, const unsigned char* buffer_to_sign[], unsigned long buffer_size[], unsigned char* sign_buff, unsigned long sign_buff_size, void* data);
 typedef int (*PsStreamProc)(char* buffer, int offset, int size, PsStreamData data);
 typedef void (*PsStreamDestroyProc)(PsStreamData data);
@@ -1128,6 +986,7 @@ typedef int (*PsStreamGetSizeProc)(PsStreamData data);
 
 struct PdsObject {
   virtual PdfObjectType GetObjectType() = 0;
+  virtual int GetId() = 0;
 };
 
 struct PdsBoolean : PdsObject {
@@ -1142,16 +1001,26 @@ struct PdsNumber : PdsObject {
 
 struct PdsString : PdsObject {
   virtual int GetValue(_out_ char* buffer, int len) = 0;
-  virtual int GetText(_out_ wchar_t* text, int len) = 0;
+  virtual int GetText(_out_ wchar_t* buffer, int len) = 0;
 };
 
 struct PdsName : PdsObject {
-  virtual int GetValue(_out_ wchar_t* text, int len) = 0;
+  virtual int GetValue(_out_ char* buffer, int len) = 0;
+  virtual int GetText(_out_ wchar_t* buffer, int len) = 0;
 };
 
 struct PdsArray : PdsObject {
   virtual int GetNumObjects() = 0;
   virtual PdsObject* Get(int index) = 0;
+  virtual bool Put(int index, PdsObject* value) = 0;
+  virtual bool Insert(int index, PdsObject* value) = 0;
+  virtual PdsDictionary* GetDictionary(int index) = 0;
+  virtual PdsArray* GetArray(int index) = 0;
+  virtual PdsStream* GetStream(int index) = 0;
+  virtual int GetString(int index, _out_ char* buffer, int len) = 0;
+  virtual int GetText(int index, _out_ wchar_t* buffer, int len) = 0;
+  virtual double GetNumber(int index) = 0;
+  virtual int GetInteger(int index) = 0;
 };
 
 struct PdsDictionary : PdsObject {
@@ -1159,30 +1028,47 @@ struct PdsDictionary : PdsObject {
   virtual int GetNumKeys() = 0;
   virtual int GetKey(int index, _out_ wchar_t* buffer, int len) = 0;
   virtual PdsObject* Get(const wchar_t* key) = 0;
+  virtual bool Put(const wchar_t* key, PdsObject* value) = 0;
+  virtual PdsDictionary* GetDictionary(const wchar_t* key) = 0;
+  virtual PdsArray* GetArray(const wchar_t* key) = 0;
+  virtual PdsStream* GetStream(const wchar_t* key) = 0;
+  virtual int GetString(const wchar_t* key, _out_ char* buffer, int len) = 0;
+  virtual int GetText(const wchar_t* key, _out_ wchar_t* buffer, int len) = 0;
+  virtual double GetNumber(const wchar_t* key) = 0;
+  virtual int GetInteger(const wchar_t* key, int default_value) = 0;
+  virtual bool GetBoolean(const wchar_t* key, bool default_value) = 0;
 };
 
 struct PdsStream : PdsObject {
   virtual PdsDictionary* GetStreamDict() = 0;
   virtual int GetRawDataSize() = 0;
+  virtual bool IsEof() = 0;
+  virtual int GetSize() = 0;
+  virtual bool Read(int offset, _out_ uint8_t* buffer, int size) = 0;
+  virtual int GetPos() = 0;
 };
 
 struct PdsNull : PdsObject {
 };
 
-struct PdsReference : PdsObject {
-  virtual int GetObjectNumber() = 0;
-};
-
 struct PdsPageObject {
   virtual PdfPageObjectType GetObjectType() = 0;
   virtual void GetBBox(_out_ PdfRect* bbox) = 0;
+  virtual int GetId() = 0;
+  virtual void SetRender(bool render) = 0;
+  virtual PdsObject* GetStructObject(bool struct_parent) = 0;
+  virtual PdsContentMark* GetContentMark() = 0;
+  virtual PdfPage* GetPage() = 0;
 };
 
 struct PdsText : PdsPageObject {
   virtual int GetText(_out_ wchar_t* buffer, int len) = 0;
+  virtual bool GetTextState(PdfDoc* doc, _out_ PdfTextState* text_state) = 0;
 };
 
 struct PdsForm : PdsPageObject {
+  virtual int GetNumPageObjects() = 0;
+  virtual PdsPageObject* GetPageObject (int index) = 0;
 };
 
 struct PdsPath : PdsPageObject {
@@ -1194,16 +1080,33 @@ struct PdsImage : PdsPageObject {
 struct PdsShading : PdsPageObject {
 };
 
+struct PdsContentMark {
+  virtual int GetNumTags() = 0;
+  virtual int GetTagName(int index, _out_ wchar_t* buffer, int len) = 0;
+  virtual PdsDictionary* GetTagObject(int index) = 0;
+  virtual int GetTagMcid() = 0;
+  virtual bool GetTagArtifact() = 0;
+  virtual bool AddTag(const char* name, PdsDictionary* object, bool indirect) = 0;
+  virtual bool RemoveTag(int index) = 0;
+};
+
 struct PdeElement {
   virtual PdfElementType GetType() = 0;
   virtual void GetBBox(_out_ PdfRect* bbox) = 0;
+  virtual bool SetBBox(const PdfRect* bbox) = 0;
   virtual int GetId() = 0;
   virtual void GetGraphicState(_out_ PdfGraphicState* g_state) = 0;
   virtual int GetNumChildren() = 0;
   virtual PdeElement* GetChild(int index) = 0;
   virtual PdfAlignment GetAlignment() = 0;
   virtual double GetAngle() = 0;
-  virtual void SetRenderMode(PdfRenderMode mode) = 0;
+  virtual void SetRender(bool render) = 0;
+  virtual void SetData(void* data) = 0;
+  virtual void* GetData() = 0;
+  virtual bool SetAlt(const wchar_t* alt) = 0;
+  virtual bool SetActualText(const wchar_t* text) = 0;
+  virtual int GetFlags() = 0;
+  virtual bool SetFlags(int flags) = 0;
 };
 
 struct PdeContainer : PdeElement {
@@ -1212,7 +1115,7 @@ struct PdeContainer : PdeElement {
 struct PdeList : PdeElement {
 };
 
-struct PdeToc : PdeElement {
+struct PdeToc : PdeContainer {
 };
 
 struct PdeAnnot : PdeElement {
@@ -1261,10 +1164,11 @@ struct PdeWord : PdeElement {
   virtual bool HasTextState() = 0;
   virtual void GetTextState(_out_ PdfTextState* text_state) = 0;
   virtual int GetNumChars() = 0;
+  virtual int GetCharCode(int index) = 0;
   virtual int GetCharText(int index, _out_ wchar_t* buffer, int len) = 0;
   virtual void GetCharTextState(int index, _out_ PdfTextState* text_state) = 0;
   virtual void GetCharBBox(int index, _out_ PdfRect* bbox) = 0;
-  virtual int GetFlags() = 0;
+  virtual int GetWordFlags() = 0;
   virtual PdeElement* GetBackground() = 0;
   virtual void GetOrigin(_out_ PdfPoint* point) = 0;
 };
@@ -1275,7 +1179,7 @@ struct PdeTextLine : PdeElement {
   virtual void GetTextState(_out_ PdfTextState* text_state) = 0;
   virtual int GetNumWords() = 0;
   virtual PdeWord* GetWord(int index) = 0;
-  virtual int GetFlags() = 0;
+  virtual int GetTextLineFlags() = 0;
 };
 
 struct PdeText : PdeElement {
@@ -1289,12 +1193,16 @@ struct PdeText : PdeElement {
   virtual double GetLineSpacing() = 0;
   virtual double GetIndent() = 0;
   virtual PdfTextStyle GetTextStyle() = 0;
+  virtual PdfTextRegexFlags GetTextFlags() = 0;
+  virtual int GetLabelLevel() = 0;
+  virtual bool SetLabelLevel(int level) = 0;
 };
 
 struct PdfAction {
   virtual PdfActionType GetSubtype() = 0;
   virtual int GetJavaScript(_out_ wchar_t* buffer, int len) = 0;
   virtual int GetURI(_out_ wchar_t* buffer, int len) = 0;
+  virtual int GetDestPageNum(PdfDoc* doc) = 0;
 };
 
 struct PdfAnnot {
@@ -1304,6 +1212,7 @@ struct PdfAnnot {
   virtual void GetBBox(_out_ PdfRect* bbox) = 0;
   virtual bool PointInAnnot(PdfPoint* point) = 0;
   virtual bool RectInAnnot(PdfRect* rect) = 0;
+  virtual PdsObject* GetStructObject(bool struct_parent) = 0;
 };
 
 struct PdfLinkAnnot : PdfAnnot {
@@ -1316,9 +1225,9 @@ struct PdfLinkAnnot : PdfAnnot {
 
 struct PdfMarkupAnnot : PdfAnnot {
   virtual int GetContents(_out_ wchar_t* buffer, int len) = 0;
-  virtual bool SetContents(const wchar_t* buffer) = 0;
+  virtual bool SetContents(const wchar_t* contents) = 0;
   virtual int GetAuthor(_out_ wchar_t* buffer, int len) = 0;
-  virtual bool SetAuthor(const wchar_t* buffer) = 0;
+  virtual bool SetAuthor(const wchar_t* author) = 0;
   virtual int GetNumReplies() = 0;
   virtual PdfAnnot* GetReply(int index) = 0;
   virtual PdfAnnot* AddReply(const wchar_t* author, const wchar_t* text) = 0;
@@ -1374,7 +1283,6 @@ struct PdfDoc {
   virtual bool AddWatermarkFromImage(PdfWatermarkParams* params, const wchar_t* path) = 0;
   virtual int GetNumPages() = 0;
   virtual PdfPage* AcquirePage(int page_num) = 0;
-  virtual bool ReleasePage(PdfPage* page) = 0;
   virtual int GetNumDocumentJavaScripts() = 0;
   virtual int GetDocumentJavaScript(int index, _out_ wchar_t* buffer, int len) = 0;
   virtual int GetDocumentJavaScriptName(int index, _out_ wchar_t* buffer, int len) = 0;
@@ -1384,23 +1292,36 @@ struct PdfDoc {
   virtual PdfFormField* GetFormField(int index) = 0;
   virtual PdfFormField* GetFormFieldByName(const wchar_t* buffer) = 0;
   virtual int GetInfo(const wchar_t* key, _out_ wchar_t* buffer, int len) = 0;
-  virtual bool SetInfo(const wchar_t* key, const wchar_t* buffer) = 0;
+  virtual bool SetInfo(const wchar_t* key, const wchar_t* info) = 0;
   virtual PdfBookmark* GetBookmarkRoot() = 0;
   virtual bool FlattenAnnots(PdfFlattenAnnotsParams* params) = 0;
-  virtual void RemoveStructTree() = 0;
   virtual int GetNumAlternates() = 0;
   virtual PdfAlternate* AcquireAlternate(int index) = 0;
   virtual PdsObject* CreatePdsObject(PdfObjectType type, bool indirect) = 0;
   virtual bool AddTags(_callback_ PdfCancelProc cancel_proc, void* cancel_data) = 0;
+  virtual bool RemoveTags(_callback_ PdfCancelProc cancel_proc, void* cancel_data) = 0;
   virtual PdfDocTemplate* GetDocTemplate() = 0;
   virtual PsMetadata* GetMetadata() = 0;
   virtual int GetLang(_out_ wchar_t* buffer, int len) = 0;
-  virtual bool SetLang(const wchar_t* buffer) = 0;
+  virtual bool SetLang(const wchar_t* lang) = 0;
   virtual bool EmbedFonts(bool subset, _callback_ PdfCancelProc cancel_proc, void* cancel_data) = 0;
   virtual bool MakeAccessible(PdfAccessibleParams* params, _callback_ PdfCancelProc cancel_proc, void* cancel_data) = 0;
-  virtual PdsObject* GetRootObject() = 0;
-  virtual PdsObject* GetInfoObject() = 0;
+  virtual PdsDictionary* GetRootObject() = 0;
+  virtual PdsDictionary* GetInfoObject() = 0;
+  virtual PdsDictionary* CreateDictObject(bool indirect) = 0;
+  virtual PdsArray* CreateArrayObject(bool indirect) = 0;
+  virtual PdsName* CreateNameObject(bool indirect, const wchar_t* value) = 0;
+  virtual PdsString* CreateStringObject(bool indirect, const wchar_t* value, bool hex) = 0;
+  virtual PdsNumber* CreateIntObject(bool indirect, int value) = 0;
+  virtual PdsNumber* CreateNumberObject(bool indirect, double value) = 0;
+  virtual PdsStream* CreateStreamObject(bool indirect, PdsDictionary* dict, _in_ const uint8_t* buffer, int size) = 0;
+  virtual PdsObject* GetObjectById(int obj_id) = 0;
+  virtual PdsStructTree* CreateStructTree() = 0;
   virtual PdsStructTree* GetStructTree() = 0;
+  virtual void RemoveStructTree() = 0;
+  virtual void RemoveBookmarks() = 0;
+  virtual bool CreateBookmarks(_callback_ PdfCancelProc cancel_proc, void* cancel_data) = 0;
+  virtual bool AddFontMissingUnicode(_callback_ PdfCancelProc cancel_proc, void* cancel_data) = 0;
 };
 
 struct PdfDocTemplate {
@@ -1408,6 +1329,10 @@ struct PdfDocTemplate {
   virtual bool LoadFromStream(PsStream* stream, PsDataFormat format) = 0;
   virtual bool SaveToStream(PsStream* stream, PsDataFormat format) = 0;
   virtual bool SetDefaults() = 0;
+  virtual double GetProperty(const wchar_t* name) = 0;
+  virtual bool SetProperty(const wchar_t* name, double value) = 0;
+  virtual int GetRegex(const wchar_t* name, _out_ wchar_t* buffer, int len) = 0;
+  virtual bool SetRegex(const wchar_t* name, const wchar_t* pattern) = 0;
 };
 
 struct PdfAlternate {
@@ -1439,7 +1364,7 @@ struct PdfFormField {
   virtual PdfFieldFlags GetFlags() = 0;
   virtual bool SetFlags(PdfFieldFlags flags) = 0;
   virtual int GetValue(_out_ wchar_t* buffer, int len) = 0;
-  virtual bool SetValue(const wchar_t* buffer) = 0;
+  virtual bool SetValue(const wchar_t* value) = 0;
   virtual int GetDefaultValue(_out_ wchar_t* buffer, int len) = 0;
   virtual int GetFullName(_out_ wchar_t* buffer, int len) = 0;
   virtual int GetTooltip(_out_ wchar_t* buffer, int len) = 0;
@@ -1462,15 +1387,16 @@ struct PsImage {
 };
 
 struct PdfPage {
+  virtual void Release() = 0;
   virtual void GetCropBox(_out_ PdfRect* crop_box) = 0;
   virtual void GetMediaBox(_out_ PdfRect* media_box) = 0;
   virtual PdfRotate GetRotate() = 0;
+  virtual PdfRotate GetLogicalRotate() = 0;
   virtual void GetDefaultMatrix(_out_ PdfMatrix* matrix) = 0;
   virtual int GetNumber() = 0;
+  virtual PdePageMap* CreatePageMap() = 0;
   virtual PdePageMap* AcquirePageMap(_callback_ PdfCancelProc cancel_proc, void* cancel_data) = 0;
-  virtual bool ReleasePageMap() = 0;
   virtual PdfPageView* AcquirePageView(double zoom, PdfRotate rotate) = 0;
-  virtual bool ReleasePageView(PdfPageView* page_view) = 0;
   virtual int GetNumAnnots() = 0;
   virtual PdfAnnot* GetAnnot(int index) = 0;
   virtual bool RemoveAnnot(int index, PdfRemoveAnnotFlags flags) = 0;
@@ -1482,17 +1408,28 @@ struct PdfPage {
   virtual int GetNumAnnotsAtRect(PdfRect* rect) = 0;
   virtual PdfAnnot* GetAnnotAtRect(PdfRect* rect, int index) = 0;
   virtual bool DrawContent(PdfPageRenderParams* params, _callback_ PdfCancelProc cancel_proc, void* cancel_data) = 0;
-  virtual int GetNumMcidPageObjects(int mcid) = 0;
-  virtual PdsPageObject* GetMcidPageObject(int mcid, int index) = 0;
+  virtual int GetNumPageObjects() = 0;
+  virtual PdsPageObject* GetPageObject (int index) = 0;
+  virtual PdsDictionary* GetResources(const wchar_t* res_type, bool create) = 0;
+  virtual PdsDictionary* GetObject() = 0;
+  virtual bool FlattenFormXObjects() = 0;
+  virtual PdfPageContentFlags GetContentFlags() = 0;
+  virtual bool SetContent() = 0;
+  virtual PdfDoc* GetDoc() = 0;
 };
 
 struct PdePageMap {
+  virtual void Release() = 0;
   virtual PdeElement* GetElement() = 0;
   virtual bool GetWhitespace(PdfWhitespaceParams* params, int index, _out_ PdfRect* bbox) = 0;
-  virtual void GetBBox(_out_ PdfRect* bbox) = 0;
+  virtual void GetBBox(PdfRect* bbox) = 0;
+  virtual bool AcquireElements(_callback_ PdfCancelProc cancel_proc, void* cancel_data) = 0;
+  virtual PdeElement* CreateElement(PdfElementType type, PdeElement* parent) = 0;
+  virtual bool AddTags(PdsStructElement* element, _callback_ PdfCancelProc cancel_proc, void* cancel_data) = 0;
 };
 
 struct PdfPageView {
+  virtual void Release() = 0;
   virtual int GetDeviceWidth() = 0;
   virtual int GetDeviceHeight() = 0;
   virtual void GetDeviceMatrix(_out_ PdfMatrix* matrix) = 0;
@@ -1547,12 +1484,16 @@ struct PsProcStream : PsStream {
 };
 
 struct PdsStructElement {
-  virtual int GetType(_out_ wchar_t* text, int len) = 0;
+  virtual void Release() = 0;
+  virtual int GetType(bool mapped, _out_ wchar_t* buffer, int len) = 0;
   virtual int GetActualText(_out_ wchar_t* buffer, int len) = 0;
   virtual int GetAlt(_out_ wchar_t* buffer, int len) = 0;
+  virtual bool SetAlt(const wchar_t* alt) = 0;
   virtual int GetAbbreviation(_out_ wchar_t* buffer, int len) = 0;
   virtual int GetPageNumber() = 0;
   virtual PdsObject* GetAttrObject(int index) = 0;
+  virtual bool AddAttrObj(PdsObject* object) = 0;
+  virtual void RemoveAttrObj() = 0;
   virtual PdsObject* GetElementObject() = 0;
   virtual PdsObject* GetKidObject(int index) = 0;
   virtual PdfStructElementType GetKidType(int index) = 0;
@@ -1562,7 +1503,14 @@ struct PdsStructElement {
   virtual int GetNumKids() = 0;
   virtual PdsObject* GetParentObject() = 0;
   virtual int GetTitle(_out_ wchar_t* buffer, int len) = 0;
-  virtual int GetID(_out_ wchar_t* buffer, int len) = 0;
+  virtual int GetId(_out_ wchar_t* buffer, int len) = 0;
+  virtual bool RemoveKid(int index) = 0;
+  virtual PdsStructElement* CreateStructElement(const wchar_t* type, PdsStructElement* parent, int index) = 0;
+  virtual bool SetParent(PdsStructElement* parent, int index) = 0;
+  virtual void AddPageObject(PdsPageObject* object, int index) = 0;
+  virtual void AddAnnot(PdfAnnot* annot, int index) = 0;
+  virtual PdsStructTree* GetStructTree() = 0;
+  virtual bool SetType(const wchar_t* type) = 0;
 };
 
 struct PdsClassMap {
@@ -1576,17 +1524,28 @@ struct PdsRoleMap {
 };
 
 struct PdsStructTree {
+  virtual PdsDictionary* GetObject() = 0;
   virtual PdsClassMap* GetClassMap() = 0;
   virtual PdsObject* GetKidObject(int index) = 0;
   virtual int GetNumKids() = 0;
   virtual PdsRoleMap* GetRoleMap() = 0;
   virtual PdsStructElement* AcquireStructElement(PdsObject* object) = 0;
-  virtual bool ReleaseStructElement(PdsStructElement* element) = 0;
+  virtual bool RemoveKid(int index) = 0;
+  virtual PdsStructElement* CreateStructElement(const wchar_t* type, int index) = 0;
+  virtual PdfDoc* GetDoc() = 0;
+  virtual bool UpdateParentTree() = 0;
 };
 
 struct PsMetadata {
   virtual bool SaveToStream(PsStream* stream) = 0;
   virtual bool LoadFromStream(PsStream* stream) = 0;
+};
+
+struct PsEvent {
+  virtual PdfEventType GetType() = 0;
+  virtual PdfDoc* GetDoc() = 0;
+  virtual PdfPage* GetPage() = 0;
+  virtual PdfAnnot* GetAnnot() = 0;
 };
 
 struct Pdfix {
@@ -1614,8 +1573,10 @@ struct Pdfix {
   virtual PsProcStream* CreateCustomStream(_callback_ PsStreamProc read_proc, PsStreamData client_data) = 0;
   virtual bool RegisterEvent(PdfEventType type, _callback_ PdfEventProc proc, void* data) = 0;
   virtual bool UnregisterEvent(PdfEventType type, PdfEventProc proc, void* data) = 0;
-  virtual void SetRegex(PdfRegexType type, const wchar_t* regex) = 0;
   virtual PsImage* CreateImage(int width, int height, PsImageDIBFormat format) = 0;
+  virtual void RegisterPlugin(PdfixPlugin* plugin, const wchar_t* name) = 0;
+  virtual PdfixPlugin* GetPluginByName(const wchar_t* name) = 0;
+  virtual PsEvent* GetEvent() = 0;
 };
 
 struct PdfixPlugin {
@@ -1624,6 +1585,9 @@ struct PdfixPlugin {
   virtual int GetVersionMajor() = 0;
   virtual int GetVersionMinor() = 0;
   virtual int GetVersionPatch() = 0;
+  virtual int GetPdfixVersionMajor() = 0;
+  virtual int GetPdfixVersionMinor() = 0;
+  virtual int GetPdfixVersionPatch() = 0;
   virtual Pdfix* GetPdfix() = 0;
 };
 

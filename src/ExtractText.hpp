@@ -28,8 +28,28 @@ void GetText(PdeElement* element, std::stringstream& ss, bool eof) {
   if (elem_type == kPdeText) {
     PdeText* text_elem = static_cast<PdeText*>(element);
     std::wstring text;
+#define BY_WORDS 0
+#if BY_WORDS
+    std::vector<int> codes;
+    auto num_words = text_elem->GetNumWords();
+    for (auto i = 0; i < num_words; i++) {
+      auto word = text_elem->GetWord(i);
+      auto num_chars = word->GetNumChars();
+      for (int j = 0; j < num_chars; j++) {
+        std::wstring text;
+        word->GetCharText(j, text);
+        if (text.empty()) {
+          codes.push_back(word->GetCharCode(j));
+          text.push_back(codes.back());
+        }
+      }
+      text += L" ";
+    }
+#else
     text.resize(text_elem->GetText(nullptr, 0));
-    text_elem->GetText((wchar_t*)text.c_str(), text.size());
+    text_elem->GetText((wchar_t*)text.c_str(), (int)text.size());
+#endif
+    
     std::string str = ToUtf8(text);
     ss << str;
     if (eof)
@@ -56,6 +76,8 @@ void ExtractText(
   const std::wstring& save_path,      // output TXT file
   const std::wstring& config_path     // configuration file
 ) {
+  std::cout << "ExtractText " << std::endl;
+
   // initialize Pdfix
   if (!Pdfix_init(Pdfix_MODULE_NAME))
     throw std::runtime_error("Pdfix initialization fail");
@@ -64,11 +86,11 @@ void ExtractText(
   if (!pdfix)
     throw std::runtime_error("GetPdfix fail");
   if (!pdfix->Authorize(email.c_str(), license_key.c_str()))
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), L"");
   if (!doc)
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   std::stringstream ss;
 
@@ -85,27 +107,28 @@ void ExtractText(
 
     PdfPage* page = doc->AcquirePage(i);
     if (!page)
-      throw std::runtime_error(pdfix->GetError());
+      throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
     PdePageMap* page_map = page->AcquirePageMap(nullptr, nullptr);
     if (!page_map)
-      throw std::runtime_error(pdfix->GetError());
+      throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
     PdeElement* container = page_map->GetElement();
     if (!container)
-      throw std::runtime_error(pdfix->GetError());
+      throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
     GetText(container, ss, true);
 
-    doc->ReleasePage(page);
+    page->Release();
   }
   std::cout << std::endl;
 
   // write text to file stream
   PsFileStream* stream = pdfix->CreateFileStream(save_path.c_str(), kPsWrite);
   if (!stream)
-    throw std::runtime_error(pdfix->GetError());
-  stream->Write(stream->GetPos(), 
-    (const uint8_t*)ss.str().c_str(), ss.str().length());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
+  auto str = ss.str();
+  std::vector<unsigned char> data(begin(str), end(str));
+  stream->Write(stream->GetPos(), &data[0], (int)data.size());
   stream->Destroy();
 
   // destroy variables

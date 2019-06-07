@@ -120,7 +120,7 @@ void ContainerToXml(PdfXmlRec& params) {
     child_params.parent = container;
     PdeElement* child = container->GetChild(i);
     if (!child)
-      throw std::runtime_error(pdfix->GetError());
+      throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
     child_params.element = child;
     ElementToXml(child_params);
   }
@@ -151,6 +151,7 @@ void WriteAnnot(PdfXmlRec& params, PdfAnnot* annot) {
       std::wstring link;
       link.resize(action->GetURI(nullptr, 0));
       action->GetURI((wchar_t*)link.c_str(), (int)link.size());
+
       // Link
       params.Write("<Link>\n");
       params.Write(link);
@@ -202,8 +203,8 @@ void WriteTextState(PdfXmlRec& params, PdfTextState& ts) {
     bold = fs.bold == 1;
     italic = fs.italic == 1;
     sys_font_name.resize(font->GetSystemFontName(nullptr, 0));
-    if (sys_font_name.size() > 0)
-      font->GetSystemFontName((wchar_t*)sys_font_name.c_str(), (int)sys_font_name.size());
+    font->GetSystemFontName((wchar_t*)sys_font_name.c_str(), (int)sys_font_name.size());
+
     font_name.resize(font->GetFontName(nullptr, 0));
     font->GetFontName((wchar_t*)font_name.c_str(), (int)font_name.size());
 
@@ -327,15 +328,15 @@ void TextToXml(PdfXmlRec& params) {
   for (int l = 0; l < num_lines; l++) {
     PdeTextLine* line = text->GetTextLine(l);
     if (!line)
-      throw std::runtime_error(pdfix->GetError());
+      throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
     int num_words = line->GetNumWords();
     for (int w = 0; w < num_words; w++) {
       PdeWord* word = line->GetWord(w);
       if (!word)
-        throw std::runtime_error(pdfix->GetError());
+        throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
       // process word flags
-      int word_flags = word->GetFlags();
+      int word_flags = word->GetWordFlags();
       if ((word_flags & kWordImage) == kWordImage) {
         PdeElement* image = word->GetBackground();
         if (image && image->GetType() == kPdeImage) {
@@ -364,6 +365,7 @@ void TextToXml(PdfXmlRec& params) {
           std::wstring char_str;
           char_str.resize(word->GetCharText(i, nullptr, 0));
           word->GetCharText(i, (wchar_t*)char_str.c_str(), (int)char_str.size());
+
 
           // if there where any change in annotations or text syle, start a new span
            // compare annotations
@@ -453,7 +455,7 @@ void ListToXml(PdfXmlRec& params) {
   for (int i = 0; i < children_count; i++) {
     PdeElement* child = list->GetChild(i);
     if (!child)
-      throw std::runtime_error(pdfix->GetError());
+      throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
     PdfElementType child_type = child->GetType();
     if (child_type != kPdeList)
       params.Write("<LI>\n");
@@ -500,7 +502,7 @@ void TableToXml(PdfXmlRec& params) {
     for (int col = 0; col < col_count; col++) {
       PdeCell* cell = (PdeCell*)table->GetCell(row, col);
       if (!cell)
-        throw std::runtime_error(pdfix->GetError());
+        throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
       int row_span = cell->GetRowSpan();
       int col_span = cell->GetColSpan();
@@ -589,7 +591,7 @@ void TableToXml(PdfXmlRec& params) {
         for (int i = 0; i < children_count; i++) {
           PdeElement* child = cell->GetChild(i);
           if (!child)
-            throw std::runtime_error(pdfix->GetError());
+            throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
           PdfXmlRec child_params(params);
           child_params.element = child;
           child_params.parent = cell;
@@ -647,7 +649,7 @@ void RectToXml(PdfXmlRec& params) {
   for (int i = 0; i < count; i++) {
     PdeElement* child = rect->GetChild(i);
     if (!child)
-      throw std::runtime_error(pdfix->GetError());
+      throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
     PdfXmlRec child_params(params);
     child_params.element = child;
     child_params.parent = rect;
@@ -699,7 +701,7 @@ void ImageToXml(PdfXmlRec& params) {
   for (int i = 0; i < children_count; i++) {
     PdeElement* child = image->GetChild(i);
     if (!child)
-      throw std::runtime_error(pdfix->GetError());
+      throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
     PdfXmlRec child_params(params);
     child_params.element = child;
     child_params.parent = image;
@@ -737,7 +739,7 @@ void PageToXml(PdfXmlRec& params, int page_num) {
   Pdfix* pdfix = GetPdfix();
 
   auto deleter = [&](PdfPage* page) { 
-    params.doc->ReleasePage(page);
+    page->Release();
     params.page = nullptr;
     params.page_image = nullptr;
     params.page_map = nullptr;
@@ -746,7 +748,7 @@ void PageToXml(PdfXmlRec& params, int page_num) {
   std::unique_ptr<PdfPage, decltype(deleter)> page(params.doc->AcquirePage(page_num), deleter);  
   params.page = page.get();
   if (!params.page)
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   // set output images quality
   PdfRect crop_box;
@@ -758,19 +760,19 @@ void PageToXml(PdfXmlRec& params, int page_num) {
   // render page
   params.page_view = params.page->AcquirePageView(zoom, kRotate0);
   if (!params.page_view)
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   // create page_map
   params.page_map = params.page->AcquirePageMap(nullptr, nullptr);
   if (!params.page_map)
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   // render page without texts
   params.page_image = pdfix->CreateImage(params.page_view->GetDeviceWidth(),
     params.page_view->GetDeviceHeight(),
     kImageDIBFormatArgb);
   if (!params.page_image)
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
   PdfPageRenderParams render_params;
   render_params.render_flags |= kRenderNoText;
   render_params.image = params.page_image;
@@ -780,7 +782,7 @@ void PageToXml(PdfXmlRec& params, int page_num) {
   // get page container
   params.element = params.page_map->GetElement();
   if (!params.element)
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   // convert page container to XML
   ElementToXml(params);
@@ -804,33 +806,32 @@ void ConvertToXml(
   if (!pdfix)
     throw std::runtime_error("GetPdfix fail");
   if (!pdfix->Authorize(email.c_str(), license_key.c_str()))
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), L"");
   if (!doc)
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   // customize conversion 
   if (!config_path.empty()) {
     PdfDocTemplate* doc_tmpl = doc->GetDocTemplate();
     if (!doc_tmpl)
-      throw std::runtime_error(pdfix->GetError());
+      throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
     // load from 
     PsFileStream* stm = pdfix->CreateFileStream(config_path.c_str(), kPsReadOnly);
     if (stm) {
       if (!doc_tmpl->LoadFromStream(stm, kDataFormatJson))
-        throw std::runtime_error(pdfix->GetError());
+        throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
       stm->Destroy();
     }
   }
 
   // prepare output stream
-  auto path = save_path + L"output.xml";
   auto ofs_deleter = [&](std::ofstream* ofs) {ofs->close(); delete(ofs); };
   std::unique_ptr<std::ofstream, decltype(ofs_deleter)> ofs(new std::ofstream, ofs_deleter);
   if (!ofs)
-    throw std::runtime_error(pdfix->GetError());
-  ofs->open(ToUtf8(path));
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
+  ofs->open(ToUtf8(save_path));
 
   PdfXmlRec params;
   params.doc = doc;
@@ -843,12 +844,14 @@ void ConvertToXml(
 	PsMetadata* metadata = doc->GetMetadata();
 	PsMemoryStream* stream = pdfix->CreateMemStream();
 	if (!metadata->SaveToStream(stream))
-			throw std::runtime_error(pdfix->GetError());
+			throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 	int size = stream->GetSize();
-	uint8_t* data = new uint8_t[size];
-	memset(data, 0, size);
-	stream->Read(0, data, size);
-	std::string metadata_str(data, data + size);
+  
+  std::vector<unsigned char> data;
+  data.resize(size);
+	stream->Read(0, &data[0], size);
+  
+	std::string metadata_str(begin(data), begin(data) + size);
 
 	// remove xml header from metadata stream
 	size_t pos = metadata_str.find(xml_header);

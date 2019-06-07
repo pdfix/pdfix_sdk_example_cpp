@@ -33,26 +33,26 @@ void SetFieldFlags(
   if (!pdfix)
     throw std::runtime_error("GetPdfix fail");
   if (!pdfix->Authorize(email.c_str(), license_key.c_str()))
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), L"");
   if (!doc)
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   for (int i = 0; i < doc->GetNumFormFields(); i++) {
     std::wstring name, value;
     PdfFormField* field = doc->GetFormField(i);
     if (!field)
-      throw std::runtime_error(pdfix->GetError());
+      throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
     auto flags = field->GetFlags();
     flags |= kFieldFlagReadOnly;
     if (!field->SetFlags(flags))
-      throw std::runtime_error(pdfix->GetError());
+      throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
   }
 
   if (!doc->Save(save_path.c_str(), kSaveFull))
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
   doc->Close();
   pdfix->Destroy();
 }

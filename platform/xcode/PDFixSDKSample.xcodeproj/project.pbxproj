@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C4EF7257208E809A00743B48 /* Main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C4EF7246208E809900743B48 /* Main.cpp */; };
-		C4EF7258208E809A00743B48 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C4EF7254208E809A00743B48 /* Utils.cpp */; };
+		C49A554D22AA47C0000AC8E8 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C49A553B22AA47BE000AC8E8 /* Utils.cpp */; };
+		C49A554E22AA47C0000AC8E8 /* Main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C49A554B22AA47C0000AC8E8 /* Main.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,33 +25,50 @@
 
 /* Begin PBXFileReference section */
 		C448F8BD2075997300422D58 /* PDFixSDKSample */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = PDFixSDKSample; sourceTree = BUILT_PRODUCTS_DIR; };
-		C4EF723C208E809900743B48 /* RegexSearch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = RegexSearch.hpp; path = ../../src/RegexSearch.hpp; sourceTree = "<group>"; };
-		C4EF723D208E809900743B48 /* ExtractTables.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ExtractTables.hpp; path = ../../src/ExtractTables.hpp; sourceTree = "<group>"; };
-		C4EF723E208E809900743B48 /* ConvertToHtml.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ConvertToHtml.hpp; path = ../../src/ConvertToHtml.hpp; sourceTree = "<group>"; };
-		C4EF723F208E809900743B48 /* EmbedFonts.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = EmbedFonts.hpp; path = ../../src/EmbedFonts.hpp; sourceTree = "<group>"; };
-		C4EF7240208E809900743B48 /* RenderPage.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = RenderPage.hpp; path = ../../src/RenderPage.hpp; sourceTree = "<group>"; };
-		C4EF7241208E809900743B48 /* SetFieldFlags.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = SetFieldFlags.hpp; path = ../../src/SetFieldFlags.hpp; sourceTree = "<group>"; };
-		C4EF7242208E809900743B48 /* GetWhitespace.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = GetWhitespace.hpp; path = ../../src/GetWhitespace.hpp; sourceTree = "<group>"; };
-		C4EF7243208E809900743B48 /* CertDigitalSignature.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CertDigitalSignature.hpp; path = ../../src/CertDigitalSignature.hpp; sourceTree = "<group>"; };
-		C4EF7244208E809900743B48 /* SetFormFieldValue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = SetFormFieldValue.hpp; path = ../../src/SetFormFieldValue.hpp; sourceTree = "<group>"; };
-		C4EF7245208E809900743B48 /* OcrWithTesseract.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = OcrWithTesseract.hpp; path = ../../src/OcrWithTesseract.hpp; sourceTree = "<group>"; };
-		C4EF7246208E809900743B48 /* Main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Main.cpp; path = ../../src/Main.cpp; sourceTree = "<group>"; };
-		C4EF7247208E809900743B48 /* GetBookmarks.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = GetBookmarks.hpp; path = ../../src/GetBookmarks.hpp; sourceTree = "<group>"; };
-		C4EF7248208E809900743B48 /* ExtractText.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ExtractText.hpp; path = ../../src/ExtractText.hpp; sourceTree = "<group>"; };
-		C4EF7249208E809900743B48 /* MakeAccessible.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = MakeAccessible.hpp; path = ../../src/MakeAccessible.hpp; sourceTree = "<group>"; };
-		C4EF724A208E809900743B48 /* AddWatermark.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = AddWatermark.hpp; path = ../../src/AddWatermark.hpp; sourceTree = "<group>"; };
-		C4EF724B208E809900743B48 /* PrintPage.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = PrintPage.hpp; path = ../../src/PrintPage.hpp; sourceTree = "<group>"; };
-		C4EF724C208E809900743B48 /* DocumentMetadata.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = DocumentMetadata.hpp; path = ../../src/DocumentMetadata.hpp; sourceTree = "<group>"; };
-		C4EF724D208E809A00743B48 /* RegexsetPattern.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = RegexsetPattern.hpp; path = ../../src/RegexsetPattern.hpp; sourceTree = "<group>"; };
-		C4EF724E208E809A00743B48 /* AddComment.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = AddComment.hpp; path = ../../src/AddComment.hpp; sourceTree = "<group>"; };
-		C4EF724F208E809A00743B48 /* RemoveComments.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = RemoveComments.hpp; path = ../../src/RemoveComments.hpp; sourceTree = "<group>"; };
-		C4EF7250208E809A00743B48 /* RegisterEvent.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = RegisterEvent.hpp; path = ../../src/RegisterEvent.hpp; sourceTree = "<group>"; };
-		C4EF7251208E809A00743B48 /* FlattenAnnots.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = FlattenAnnots.hpp; path = ../../src/FlattenAnnots.hpp; sourceTree = "<group>"; };
-		C4EF7252208E809A00743B48 /* AddTags.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = AddTags.hpp; path = ../../src/AddTags.hpp; sourceTree = "<group>"; };
-		C4EF7253208E809A00743B48 /* ExportFormFieldValues.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ExportFormFieldValues.hpp; path = ../../src/ExportFormFieldValues.hpp; sourceTree = "<group>"; };
-		C4EF7254208E809A00743B48 /* Utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Utils.cpp; path = ../../src/Utils.cpp; sourceTree = "<group>"; };
-		C4EF7255208E809A00743B48 /* DigitalSignature.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = DigitalSignature.hpp; path = ../../src/DigitalSignature.hpp; sourceTree = "<group>"; };
-		C4EF7256208E809A00743B48 /* ExtractImages.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ExtractImages.hpp; path = ../../src/ExtractImages.hpp; sourceTree = "<group>"; };
+		C49A551F22AA47BD000AC8E8 /* RegexSearch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RegexSearch.hpp; sourceTree = "<group>"; };
+		C49A552022AA47BD000AC8E8 /* Initialization.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Initialization.hpp; sourceTree = "<group>"; };
+		C49A552122AA47BD000AC8E8 /* TagsEditStructTree.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TagsEditStructTree.hpp; sourceTree = "<group>"; };
+		C49A552222AA47BD000AC8E8 /* EmbedFonts.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EmbedFonts.hpp; sourceTree = "<group>"; };
+		C49A552322AA47BD000AC8E8 /* ExtractTables.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ExtractTables.hpp; sourceTree = "<group>"; };
+		C49A552422AA47BD000AC8E8 /* ExtractImages.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ExtractImages.hpp; sourceTree = "<group>"; };
+		C49A552522AA47BD000AC8E8 /* BookmarksToJson.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BookmarksToJson.hpp; sourceTree = "<group>"; };
+		C49A552622AA47BD000AC8E8 /* ConvertToXml.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ConvertToXml.hpp; sourceTree = "<group>"; };
+		C49A552722AA47BD000AC8E8 /* RenderPage.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RenderPage.hpp; sourceTree = "<group>"; };
+		C49A552822AA47BD000AC8E8 /* TagAsArtifact.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TagAsArtifact.hpp; sourceTree = "<group>"; };
+		C49A552A22AA47BD000AC8E8 /* ConvertToHtmlEx.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ConvertToHtmlEx.hpp; sourceTree = "<group>"; };
+		C49A552B22AA47BD000AC8E8 /* GetBookmarks.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GetBookmarks.hpp; sourceTree = "<group>"; };
+		C49A552C22AA47BD000AC8E8 /* DocumentMetadata.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DocumentMetadata.hpp; sourceTree = "<group>"; };
+		C49A552D22AA47BD000AC8E8 /* SetFormFieldValue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SetFormFieldValue.hpp; sourceTree = "<group>"; };
+		C49A552E22AA47BE000AC8E8 /* TagsReadingOrder.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TagsReadingOrder.hpp; sourceTree = "<group>"; };
+		C49A552F22AA47BE000AC8E8 /* TagsReadStructTree.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TagsReadStructTree.hpp; sourceTree = "<group>"; };
+		C49A553022AA47BE000AC8E8 /* TagAnnotation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TagAnnotation.hpp; sourceTree = "<group>"; };
+		C49A553122AA47BE000AC8E8 /* AddTags.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = AddTags.hpp; sourceTree = "<group>"; };
+		C49A553222AA47BE000AC8E8 /* TagHeadings.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TagHeadings.hpp; sourceTree = "<group>"; };
+		C49A553322AA47BE000AC8E8 /* TagTableAsFigure.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TagTableAsFigure.hpp; sourceTree = "<group>"; };
+		C49A553422AA47BE000AC8E8 /* ParsePdsObjects.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ParsePdsObjects.hpp; sourceTree = "<group>"; };
+		C49A553522AA47BE000AC8E8 /* OcrWithTesseract.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OcrWithTesseract.hpp; sourceTree = "<group>"; };
+		C49A553622AA47BE000AC8E8 /* SetFieldFlags.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SetFieldFlags.hpp; sourceTree = "<group>"; };
+		C49A553722AA47BE000AC8E8 /* OcrPageImagesWithTesseract.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OcrPageImagesWithTesseract.hpp; sourceTree = "<group>"; };
+		C49A553822AA47BE000AC8E8 /* ExportFormFieldValues.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ExportFormFieldValues.hpp; sourceTree = "<group>"; };
+		C49A553922AA47BE000AC8E8 /* DigitalSignature.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DigitalSignature.hpp; sourceTree = "<group>"; };
+		C49A553B22AA47BE000AC8E8 /* Utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Utils.cpp; sourceTree = "<group>"; };
+		C49A553C22AA47BE000AC8E8 /* ExtractText.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ExtractText.hpp; sourceTree = "<group>"; };
+		C49A553D22AA47BE000AC8E8 /* CertDigitalSignature.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CertDigitalSignature.hpp; sourceTree = "<group>"; };
+		C49A553E22AA47BE000AC8E8 /* AddWatermark.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = AddWatermark.hpp; sourceTree = "<group>"; };
+		C49A553F22AA47BF000AC8E8 /* AddComment.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = AddComment.hpp; sourceTree = "<group>"; };
+		C49A554022AA47BF000AC8E8 /* GetWhitespace.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GetWhitespace.hpp; sourceTree = "<group>"; };
+		C49A554122AA47BF000AC8E8 /* ParsePageContent.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ParsePageContent.hpp; sourceTree = "<group>"; };
+		C49A554222AA47BF000AC8E8 /* MakeAccessible.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MakeAccessible.hpp; sourceTree = "<group>"; };
+		C49A554322AA47BF000AC8E8 /* RegexSetPattern.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RegexSetPattern.hpp; sourceTree = "<group>"; };
+		C49A554422AA47BF000AC8E8 /* RemoveComments.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RemoveComments.hpp; sourceTree = "<group>"; };
+		C49A554522AA47BF000AC8E8 /* ExtractHighlightedText.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ExtractHighlightedText.hpp; sourceTree = "<group>"; };
+		C49A554622AA47BF000AC8E8 /* FillForm.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FillForm.hpp; sourceTree = "<group>"; };
+		C49A554722AA47BF000AC8E8 /* RegisterEvent.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RegisterEvent.hpp; sourceTree = "<group>"; };
+		C49A554822AA47C0000AC8E8 /* ConvertToHtml.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ConvertToHtml.hpp; sourceTree = "<group>"; };
+		C49A554922AA47C0000AC8E8 /* FlattenAnnots.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FlattenAnnots.hpp; sourceTree = "<group>"; };
+		C49A554A22AA47C0000AC8E8 /* PrintPage.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PrintPage.hpp; sourceTree = "<group>"; };
+		C49A554B22AA47C0000AC8E8 /* Main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Main.cpp; sourceTree = "<group>"; };
+		C49A554C22AA47C0000AC8E8 /* RenderPageWithoutText.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RenderPageWithoutText.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,33 +85,7 @@
 		C448F8B42075997300422D58 = {
 			isa = PBXGroup;
 			children = (
-				C4EF724E208E809A00743B48 /* AddComment.hpp */,
-				C4EF7252208E809A00743B48 /* AddTags.hpp */,
-				C4EF724A208E809900743B48 /* AddWatermark.hpp */,
-				C4EF7243208E809900743B48 /* CertDigitalSignature.hpp */,
-				C4EF723E208E809900743B48 /* ConvertToHtml.hpp */,
-				C4EF7255208E809A00743B48 /* DigitalSignature.hpp */,
-				C4EF724C208E809900743B48 /* DocumentMetadata.hpp */,
-				C4EF723F208E809900743B48 /* EmbedFonts.hpp */,
-				C4EF7253208E809A00743B48 /* ExportFormFieldValues.hpp */,
-				C4EF7256208E809A00743B48 /* ExtractImages.hpp */,
-				C4EF723D208E809900743B48 /* ExtractTables.hpp */,
-				C4EF7248208E809900743B48 /* ExtractText.hpp */,
-				C4EF7251208E809A00743B48 /* FlattenAnnots.hpp */,
-				C4EF7247208E809900743B48 /* GetBookmarks.hpp */,
-				C4EF7242208E809900743B48 /* GetWhitespace.hpp */,
-				C4EF7246208E809900743B48 /* Main.cpp */,
-				C4EF7249208E809900743B48 /* MakeAccessible.hpp */,
-				C4EF7245208E809900743B48 /* OcrWithTesseract.hpp */,
-				C4EF724B208E809900743B48 /* PrintPage.hpp */,
-				C4EF723C208E809900743B48 /* RegexSearch.hpp */,
-				C4EF724D208E809A00743B48 /* RegexsetPattern.hpp */,
-				C4EF7250208E809A00743B48 /* RegisterEvent.hpp */,
-				C4EF724F208E809A00743B48 /* RemoveComments.hpp */,
-				C4EF7240208E809900743B48 /* RenderPage.hpp */,
-				C4EF7241208E809900743B48 /* SetFieldFlags.hpp */,
-				C4EF7244208E809900743B48 /* SetFormFieldValue.hpp */,
-				C4EF7254208E809A00743B48 /* Utils.cpp */,
+				C49A551C22AA47A2000AC8E8 /* src */,
 				C448F8BE2075997300422D58 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -106,6 +97,58 @@
 			);
 			name = Products;
 			sourceTree = "<group>";
+		};
+		C49A551C22AA47A2000AC8E8 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				C49A553F22AA47BF000AC8E8 /* AddComment.hpp */,
+				C49A553122AA47BE000AC8E8 /* AddTags.hpp */,
+				C49A553E22AA47BE000AC8E8 /* AddWatermark.hpp */,
+				C49A552522AA47BD000AC8E8 /* BookmarksToJson.hpp */,
+				C49A553D22AA47BE000AC8E8 /* CertDigitalSignature.hpp */,
+				C49A554822AA47C0000AC8E8 /* ConvertToHtml.hpp */,
+				C49A552A22AA47BD000AC8E8 /* ConvertToHtmlEx.hpp */,
+				C49A552622AA47BD000AC8E8 /* ConvertToXml.hpp */,
+				C49A553922AA47BE000AC8E8 /* DigitalSignature.hpp */,
+				C49A552C22AA47BD000AC8E8 /* DocumentMetadata.hpp */,
+				C49A552222AA47BD000AC8E8 /* EmbedFonts.hpp */,
+				C49A553822AA47BE000AC8E8 /* ExportFormFieldValues.hpp */,
+				C49A554522AA47BF000AC8E8 /* ExtractHighlightedText.hpp */,
+				C49A552422AA47BD000AC8E8 /* ExtractImages.hpp */,
+				C49A552322AA47BD000AC8E8 /* ExtractTables.hpp */,
+				C49A553C22AA47BE000AC8E8 /* ExtractText.hpp */,
+				C49A554622AA47BF000AC8E8 /* FillForm.hpp */,
+				C49A554922AA47C0000AC8E8 /* FlattenAnnots.hpp */,
+				C49A552B22AA47BD000AC8E8 /* GetBookmarks.hpp */,
+				C49A554022AA47BF000AC8E8 /* GetWhitespace.hpp */,
+				C49A552022AA47BD000AC8E8 /* Initialization.hpp */,
+				C49A554B22AA47C0000AC8E8 /* Main.cpp */,
+				C49A554222AA47BF000AC8E8 /* MakeAccessible.hpp */,
+				C49A553722AA47BE000AC8E8 /* OcrPageImagesWithTesseract.hpp */,
+				C49A553522AA47BE000AC8E8 /* OcrWithTesseract.hpp */,
+				C49A554122AA47BF000AC8E8 /* ParsePageContent.hpp */,
+				C49A553422AA47BE000AC8E8 /* ParsePdsObjects.hpp */,
+				C49A554A22AA47C0000AC8E8 /* PrintPage.hpp */,
+				C49A551F22AA47BD000AC8E8 /* RegexSearch.hpp */,
+				C49A554322AA47BF000AC8E8 /* RegexSetPattern.hpp */,
+				C49A554722AA47BF000AC8E8 /* RegisterEvent.hpp */,
+				C49A554422AA47BF000AC8E8 /* RemoveComments.hpp */,
+				C49A552722AA47BD000AC8E8 /* RenderPage.hpp */,
+				C49A554C22AA47C0000AC8E8 /* RenderPageWithoutText.hpp */,
+				C49A553622AA47BE000AC8E8 /* SetFieldFlags.hpp */,
+				C49A552D22AA47BD000AC8E8 /* SetFormFieldValue.hpp */,
+				C49A553022AA47BE000AC8E8 /* TagAnnotation.hpp */,
+				C49A552822AA47BD000AC8E8 /* TagAsArtifact.hpp */,
+				C49A553222AA47BE000AC8E8 /* TagHeadings.hpp */,
+				C49A552122AA47BD000AC8E8 /* TagsEditStructTree.hpp */,
+				C49A552E22AA47BE000AC8E8 /* TagsReadingOrder.hpp */,
+				C49A552F22AA47BE000AC8E8 /* TagsReadStructTree.hpp */,
+				C49A553322AA47BE000AC8E8 /* TagTableAsFigure.hpp */,
+				C49A553B22AA47BE000AC8E8 /* Utils.cpp */,
+			);
+			name = src;
+			path = ../../src;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -163,8 +206,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C4EF7257208E809A00743B48 /* Main.cpp in Sources */,
-				C4EF7258208E809A00743B48 /* Utils.cpp in Sources */,
+				C49A554E22AA47C0000AC8E8 /* Main.cpp in Sources */,
+				C49A554D22AA47C0000AC8E8 /* Utils.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

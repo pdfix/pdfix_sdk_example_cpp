@@ -33,18 +33,18 @@ void GetWhitespace(
   if (!pdfix)
     throw std::runtime_error("GetPdfix fail");
   if (!pdfix->Authorize(email.c_str(), license_key.c_str()))
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), L"");
   if (!doc)
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   PdfPage* page = doc->AcquirePage(0);
   if (!page)
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
   PdePageMap* page_map = page->AcquirePageMap(nullptr, nullptr);
   if (!page_map)
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   PdfRect bbox;
   PdfWhitespaceParams whitespace_params;
@@ -57,7 +57,7 @@ void GetWhitespace(
     // ...
   }
 
-  doc->ReleasePage(0);
+  page->Release();
   doc->Close();
   pdfix->Destroy();
 }

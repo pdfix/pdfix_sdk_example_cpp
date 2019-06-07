@@ -35,25 +35,24 @@ void DigitalSignature(
   if (!pdfix)
     throw std::runtime_error("GetPdfix fail");
   if (!pdfix->Authorize(email.c_str(), license_key.c_str()))
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   PdfDoc* doc = nullptr;
   doc = pdfix->OpenDoc(open_path.c_str(), L"");
   if (!doc)
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   PdfDigSig* dig_sig = pdfix->CreateDigSig();
-  if (!dig_sig) {
-    throw std::runtime_error(pdfix->GetError());
-  }
+  if (!dig_sig)
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
 
   dig_sig->SetReason(L"Testing PDFix API");
   dig_sig->SetLocation(L"Location");
   dig_sig->SetContactInfo(L"info@pdfix.net");
   if (!dig_sig->SetPfxFile(pfx_path.c_str(), pfx_password.c_str()))
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
   if (!dig_sig->SignDoc(doc, save_path.c_str()))
-    throw std::runtime_error(pdfix->GetError());
+    throw std::runtime_error(std::to_string(GetPdfix()->GetErrorType()));
   dig_sig->Destroy();
 
   doc->Close();
