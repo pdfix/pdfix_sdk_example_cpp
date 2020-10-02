@@ -153,13 +153,13 @@ if(MSVC)
   else()
     set(OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin/x86")
   endif()
-  set(DOWNLOAD_PLATFORM Windows)
+  set(DOWNLOAD_PLATFORM windows.zip)
 elseif(APPLE)
   set(OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin/darwin")
-  set(DOWNLOAD_PLATFORM MacOS)
+  set(DOWNLOAD_PLATFORM macos.zip)
 elseif(UNIX)
   set(OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin/linux")
-  set(DOWNLOAD_PLATFORM Linux)
+  set(DOWNLOAD_PLATFORM linux.tar.gz)
 else()
 endif()
 
@@ -167,7 +167,7 @@ include(FetchContent)
 
 FetchContent_Declare(
   pdfixdist
-  URL "https://github.com/PDFixSDKSample-cpp/releases/download/6.0.0/PDFix_SDK_6.0.0_${DOWNLOAD_PLATFORM}.zip"
+  URL "https://github.com/PDFixSDKSample-cpp/releases/download/6.1.0/pdfix_sdk_6.0.0_${DOWNLOAD_PLATFORM}.zip"
   )
 
 FetchContent_Populate(pdfixdist)
