@@ -1,13 +1,8 @@
+bin/
 build/
 
 .vs/
+*.user
 
 xcuserdata/
 *.xcworkspace/
-
-bin/PDFixSDKSample*
-bin/*.dll
-bin/*.dylib
-bin/output/
-
-include/boost

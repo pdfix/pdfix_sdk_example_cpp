@@ -1,0 +1,211 @@
+cmake_minimum_required(VERSION 3.10)
+
+project(pdfixsdksample)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+set(HEADERS
+  include/pdfixsdksamples/Utils.h
+  include/pdfixsdksamples/ExtractText.h
+  include/pdfixsdksamples/AcroFormExport.h
+  include/pdfixsdksamples/AcroFormImport.h
+  include/pdfixsdksamples/AddComment.h
+  include/pdfixsdksamples/AddTags.h
+  include/pdfixsdksamples/AddWatermark.h
+  include/pdfixsdksamples/ApplyRedaction.h
+  include/pdfixsdksamples/BookmarksToJson.h
+  include/pdfixsdksamples/CertDigitalSignature.h
+  #include/pdfixsdksamples/ConvertTaggedPdf.h
+  include/pdfixsdksamples/ConvertToHtml.h
+  include/pdfixsdksamples/ConvertToHtmlEx.h
+  include/pdfixsdksamples/ConvertToJson.h
+  include/pdfixsdksamples/ConvertToXml.h
+  include/pdfixsdksamples/CreateNewDocument.h
+  include/pdfixsdksamples/CreateNewDocuments.h
+  include/pdfixsdksamples/CreatePage.h
+  include/pdfixsdksamples/DeletePages.h
+  include/pdfixsdksamples/DigitalSignature.h
+  include/pdfixsdksamples/DocumentMetadata.h
+  include/pdfixsdksamples/EmbedFonts.h
+  include/pdfixsdksamples/ExportFormFieldValues.h
+  include/pdfixsdksamples/ExtractHighlightedText.h
+  include/pdfixsdksamples/ExtractImages.h
+  include/pdfixsdksamples/ExtractTables.h
+  include/pdfixsdksamples/ExtractText.h
+  include/pdfixsdksamples/FillForm.h
+  include/pdfixsdksamples/FlattenAnnots.h
+  include/pdfixsdksamples/GetWhitespace.h
+  include/pdfixsdksamples/ImportFormData.h
+  include/pdfixsdksamples/Initialization.h
+  include/pdfixsdksamples/LicenseReset.h
+  include/pdfixsdksamples/LicenseStatus.h
+  include/pdfixsdksamples/MakeAccessible.h
+  include/pdfixsdksamples/MovePage.h
+  include/pdfixsdksamples/NamedDestsToJson.h
+  include/pdfixsdksamples/OcrPageImagesWithTesseract.h
+  include/pdfixsdksamples/OcrWithTesseract.h
+  include/pdfixsdksamples/OpedDocumentFromStream.h
+  include/pdfixsdksamples/PagesToJson.h
+  include/pdfixsdksamples/ParsePageContent.h
+  include/pdfixsdksamples/ParsePdsObjects.h
+  include/pdfixsdksamples/PrintPage.h
+  include/pdfixsdksamples/ReadOCGLayers.h
+  include/pdfixsdksamples/RegexSearch.h
+  include/pdfixsdksamples/RegexSetPattern.h
+  include/pdfixsdksamples/RegisterEvent.h
+  include/pdfixsdksamples/RemoveComments.h
+  include/pdfixsdksamples/RemoveTags.h
+  include/pdfixsdksamples/RenderPage.h
+  include/pdfixsdksamples/RenderPages.h
+  include/pdfixsdksamples/SetAnnotationAppearance.h
+  include/pdfixsdksamples/SetFieldFlags.h
+  include/pdfixsdksamples/SetFormFieldValue.h
+  include/pdfixsdksamples/StandardLicenseActivate.h
+  include/pdfixsdksamples/StandardLicenseDeactivate.h
+  include/pdfixsdksamples/StandardLicenseUpdate.h
+  include/pdfixsdksamples/samples.h
+  )
+
+set(SOURCES
+  #src/RenderPageWithoutText.cpp
+  #src/TagAsArtifact.cpp
+  #src/ExtractTextFromOCGLayer.cpp
+  src/AcroFormExport.cpp
+  src/AcroFormImport.cpp
+  src/AddComment.cpp
+  src/AddTags.cpp
+  src/AddWatermark.cpp
+  src/ApplyRedaction.cpp
+  src/BookmarksToJson.cpp
+  src/CertDigitalSignature.cpp
+  #src/ConvertTaggedPdf.cpp
+  src/ConvertToHtml.cpp
+  src/ConvertToHtmlEx.cpp
+  src/ConvertToJson.cpp
+  src/ConvertToXml.cpp
+  src/CreateNewDocument.cpp
+  src/CreateNewDocuments.cpp
+  src/CreatePage.cpp
+  src/DeletePages.cpp
+  src/DigitalSignature.cpp
+  src/DocumentMetadata.cpp
+  src/EmbedFonts.cpp
+  src/ExportFormFieldValues.cpp
+  src/ExtractHighlightedText.cpp
+  src/ExtractImages.cpp
+  src/ExtractTables.cpp
+  src/ExtractText.cpp
+  src/FillForm.cpp
+  src/FlattenAnnots.cpp
+  src/GetWhitespace.cpp
+  src/ImportFormData.cpp
+  src/Initialization.cpp
+  src/LicenseReset.cpp
+  src/LicenseStatus.cpp
+  src/MakeAccessible.cpp
+  src/MovePage.cpp
+  src/NamedDestsToJson.cpp
+  src/OcrPageImagesWithTesseract.cpp
+  src/OcrWithTesseract.cpp
+  src/OpedDocumentFromStream.cpp
+  src/PagesToJson.cpp
+  src/ParsePageContent.cpp
+  src/ParsePdsObjects.cpp
+  src/PrintPage.cpp
+  src/ReadOCGLayers.cpp
+  src/RegexSearch.cpp
+  src/RegexSetPattern.cpp
+  src/RegisterEvent.cpp
+  src/RemoveComments.cpp
+  src/RemoveTags.cpp
+  src/RenderPage.cpp
+  src/RenderPages.cpp
+  src/SetAnnotationAppearance.cpp
+  src/SetFieldFlags.cpp
+  src/SetFormFieldValue.cpp
+  src/StandardLicenseActivate.cpp
+  src/StandardLicenseDeactivate.cpp
+  src/StandardLicenseUpdate.cpp
+  #src/TagAnnotation.cpp
+  #src/TagHeadings.cpp
+  #src/TagTableAsFigure.cpp
+  #src/TagsEditStructTree.cpp
+  #src/TagsReadStructTree.cpp
+  #src/TagsReadingOrder.cpp
+  src/Utils.cpp
+  )
+
+add_library(pdfixsdksample
+  ${HEADERS}
+  ${SOURCES}
+  )
+
+# idendify project architecture
+if (${CMAKE_SIZEOF_VOID_P} EQUAL "8")
+  set (PROJECTNAME_ARCHITECTURE "x64")
+else ()
+  set (PROJECTNAME_ARCHITECTURE "x86")
+endif ()
+
+# set output directory
+if(MSVC)
+  if (CMAKE_CL_64 OR ${PROJECTNAME_ARCHITECTURE} EQUAL "x64")  # -- 64-bit builds.
+    set(OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin/x64")
+  else()
+    set(OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin/x86")
+  endif()
+  set(DOWNLOAD_PLATFORM Windows)
+elseif(APPLE)
+  set(OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin/darwin")
+  set(DOWNLOAD_PLATFORM MacOS)
+elseif(UNIX)
+  set(OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin/linux")
+  set(DOWNLOAD_PLATFORM Linux)
+else()
+endif()
+
+include(FetchContent)
+
+FetchContent_Declare(
+  pdfixdist
+  URL "https://github.com/PDFixSDKSample-cpp/releases/download/6.0.0/PDFix_SDK_6.0.0_${DOWNLOAD_PLATFORM}.zip"
+  )
+
+FetchContent_Populate(pdfixdist)
+
+file(COPY ${pdfixdist_SOURCE_DIR}/bin/darwin DESTINATION  ${CMAKE_SOURCE_DIR}/bin)
+
+set_target_properties(pdfixsdksample
+  PROPERTIES
+  CXX_STANDARD 17
+  CXX_STANDARD_REQUIRED TRUE
+  RUNTIME_OUTPUT_DIRECTORY "${OUTPUT_DIRECTORY}"
+  RUNTIME_OUTPUT_DIRECTORY_RELEASE ${OUTPUT_DIRECTORY}
+  RUNTIME_OUTPUT_DIRECTORY_DEBUG ${OUTPUT_DIRECTORY}
+  )
+
+target_compile_definitions(pdfixsdksample
+  PUBLIC
+  "$<$<CONFIG:DEBUG>:_DEBUG>"
+  )  
+
+target_include_directories(pdfixsdksample
+  PUBLIC
+  "$<IF:$<TARGET_EXISTS:pdfix_app>,${CMAKE_SOURCE_DIR}/libs/boost/include,${CMAKE_SOURCE_DIR}/external>"
+  "$<IF:$<TARGET_EXISTS:pdfix_app>,${CMAKE_SOURCE_DIR}/include/c++,${pdfixdist_SOURCE_DIR}/include/c++>"
+  "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
+  "$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/${CMAKE_INSTALL_INCLUDEDIR}>"
+  )
+
+set_target_properties(pdfixsdksample 
+  PROPERTIES
+  PUBLIC_HEADER "include/pdfixsdksamples/samples.h"
+  )
+
+install(TARGETS pdfixsdksample
+  EXPORT  ${PROJECT_NAME}
+  LIBRARY       DESTINATION "${CMAKE_INSTALL_LIBDIR}"                            COMPONENT shlib
+  ARCHIVE       DESTINATION "${CMAKE_INSTALL_LIBDIR}"                            COMPONENT lib
+  RUNTIME       DESTINATION "${CMAKE_INSTALL_BINDIR}"                            COMPONENT bin
+  PUBLIC_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${LIBRARY_TARGET_NAME}" COMPONENT dev)
+
+add_subdirectory(example)

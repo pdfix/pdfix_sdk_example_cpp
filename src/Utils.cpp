@@ -3,6 +3,7 @@
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+#include "pdfixsdksamples/Utils.h"
 #include <string>
 #include <iostream>
 #include <locale.h>
@@ -20,22 +21,34 @@ extern HINSTANCE ghInstance;
 #include "PdfToHtml.h"
 #include "OcrTesseract.h"
 
+using namespace PDFixSDK;
+
 Pdfix_statics;
 PdfToHtml_statics;
 OcrTesseract_statics;
 
-#define kPi 3.1415926535897932384626433832795f
-
 // convert UTF-8 string to wstring
 std::wstring FromUtf8(const std::string& str) {
-  std::wstring_convert<std::codecvt_utf8<wchar_t>> myconv;
-  return myconv.from_bytes(str);
+  std::wstring result;
+  try {
+    std::wstring_convert<std::codecvt_utf8<wchar_t>> myconv;
+    result = myconv.from_bytes(str);
+  }
+  catch (std::range_error& e) {
+  }
+  return result;
 }
 
 // convert wstring to UTF-8 string
 std::string ToUtf8(const std::wstring& str) {
-  std::wstring_convert<std::codecvt_utf8<wchar_t>> myconv;
-  return myconv.to_bytes(str);
+  std::string result;
+  try {
+    std::wstring_convert<std::codecvt_utf8<wchar_t>> myconv;
+    result = myconv.to_bytes(str);
+  }
+  catch (std::range_error& e) {
+  }
+  return result;
 }
 
 std::string GetAbsolutePath(const std::string& path) {
@@ -47,7 +60,7 @@ std::string GetAbsolutePath(const std::string& path) {
   else {
     result.resize(PATH_MAX);
     realpath(path.c_str(), (char*)result.c_str());
-  }
+  }  
 #else
   std::string dir;
   dir.resize(_MAX_PATH);
@@ -65,9 +78,9 @@ std::wstring GetAbsolutePath(const std::wstring& path) {
   return FromUtf8(GetAbsolutePath(ToUtf8(path)));
 }
 
-//////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
 // PdfMatrix utils
-
+////////////////////////////////////////////////////////////////////////////////////////////////////
 void PdfMatrixTransform(PdfMatrix& m, PdfPoint& p) {
   PdfPoint ret = {
     m.a * p.x + m.c * p.y + m.e, m.b * p.x + m.d * p.y + m.f
@@ -118,5 +131,5 @@ void PdfMatrixTranslate(PdfMatrix& m, double x, double y, bool prepend) {
     m.f += y * m.d + x * m.b;
   }
   m.e += x;
-  m.f += y;
+  m.f += y; 
 }
