@@ -61,7 +61,7 @@ void ConvertToHtml(
     throw PdfixException();
 
   // initializ edocument template
-  auto doc_template = doc->GetDocTemplate();
+  auto doc_template = doc->GetTemplate();
   if (!doc_template)
     throw PdfixException();
 

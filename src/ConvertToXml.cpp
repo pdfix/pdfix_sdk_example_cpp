@@ -780,7 +780,7 @@ void ConvertToXml(
 
   // customize conversion 
   if (!config_path.empty()) {
-    auto doc_tmpl = doc->GetDocTemplate();
+    auto doc_tmpl = doc->GetTemplate();
     if (!doc_tmpl)
       throw PdfixException();
     // load from 

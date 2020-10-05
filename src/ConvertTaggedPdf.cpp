@@ -58,7 +58,7 @@ void ConvertTaggedPdf(
   
   // customize conversion 
   if (!config_path.empty()) {
-    auto doc_tmpl = doc->GetDocTemplate();
+    auto doc_tmpl = doc->GetTemplate();
     if (!doc_tmpl)
       throw PdfixException();
     PsFileStream* stm = pdfix->CreateFileStream(config_path.c_str(), kPsReadOnly);

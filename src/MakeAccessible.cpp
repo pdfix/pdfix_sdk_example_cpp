@@ -44,7 +44,7 @@ void MakeAccessible(
   if (!doc)
     throw PdfixException();
 
-  auto doc_template = doc->GetDocTemplate();
+  auto doc_template = doc->GetTemplate();
   if (!doc_template)
     throw PdfixException();
 

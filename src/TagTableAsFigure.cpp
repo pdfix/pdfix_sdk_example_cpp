@@ -144,7 +144,7 @@ namespace TagTableAsFigure {
     for (int i = table->GetNumKids() - 1; i >=0; i--)
       table->RemoveKid(i);
     
-    PdfDocTemplate* doc_tmpl = doc->GetDocTemplate();
+    PdfDocTemplate* doc_tmpl = doc->GetTemplate();
     
     // tag page
     auto page_deleter = [](PdfPage* page) {page->Release();};
