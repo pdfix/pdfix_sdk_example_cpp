@@ -1,5 +1,6 @@
 bin/
 build/
+external/pdfix_sdk
 
 .vs/
 *.user
