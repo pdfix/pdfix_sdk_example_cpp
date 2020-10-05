@@ -168,11 +168,12 @@ include(FetchContent)
 FetchContent_Declare(
   pdfixdist
   URL "https://github.com/pdfix/pdfix_sdk_example_cpp/releases/download/6.1.0/pdfix_sdk_6.1.0_${DOWNLOAD_PLATFORM}"
+  SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/pdfix_sdk
   )
 
 FetchContent_Populate(pdfixdist)
 
-file(COPY ${pdfixdist_SOURCE_DIR}/bin/darwin DESTINATION  ${CMAKE_SOURCE_DIR}/bin)
+file(COPY ${pdfixdist_SOURCE_DIR}/bin DESTINATION  ${CMAKE_SOURCE_DIR})
 
 set_target_properties(pdfixsdksample
   PROPERTIES
@@ -193,19 +194,11 @@ target_include_directories(pdfixsdksample
   "$<IF:$<TARGET_EXISTS:pdfix_app>,${CMAKE_SOURCE_DIR}/libs/boost/include,${CMAKE_SOURCE_DIR}/external>"
   "$<IF:$<TARGET_EXISTS:pdfix_app>,${CMAKE_SOURCE_DIR}/include/c++,${pdfixdist_SOURCE_DIR}/include/c++>"
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
-  "$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/${CMAKE_INSTALL_INCLUDEDIR}>"
   )
 
 set_target_properties(pdfixsdksample 
   PROPERTIES
   PUBLIC_HEADER "include/pdfixsdksamples/samples.h"
   )
-
-install(TARGETS pdfixsdksample
-  EXPORT  ${PROJECT_NAME}
-  LIBRARY       DESTINATION "${CMAKE_INSTALL_LIBDIR}"                            COMPONENT shlib
-  ARCHIVE       DESTINATION "${CMAKE_INSTALL_LIBDIR}"                            COMPONENT lib
-  RUNTIME       DESTINATION "${CMAKE_INSTALL_BINDIR}"                            COMPONENT bin
-  PUBLIC_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${LIBRARY_TARGET_NAME}" COMPONENT dev)
 
 add_subdirectory(example)
