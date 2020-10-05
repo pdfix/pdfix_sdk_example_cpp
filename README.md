@@ -17,39 +17,27 @@ Try our autotag feature that recognises all important structures in your documen
 ## Documentation
 For complete SDK documentation see the [PDFix website](https://pdfix.net).
 
-## Features
+## Installation on Windows, MacOS and Linux
 
-* Standard PDF FeaturesHTML5 canvas-like API
-  * Document Metadata (Author, Title, etc.)
-  * Comments / Reviews
-  * Watermarks / Stamps
-  * Links / Actions
-  * Bookmarks
-  * Convert to HTML
-  * Extract, insert and update data from Form fields
-  * Printing
-  * OCR
-  * Access to low-level objects from PDF document (coming soon)
-  * Page manipulation (coming soon)
-  * Digital Signature Support
-  * eSignature Support
-  * Time Stamp Support
-* PDF Forms to HTML Form conversion
-* Logical Content Extraction
-  * PDF to HTML Conversion
-  * PDF to JSON Conversion
-  * PDF to XML Conversion
-* PDF Accessibility
-  * Add Tags to PDF
-  * Read and Edit document structure tree
-  * Edit reading order
-  * PDF to PDF/UA
+To download the PDFix SDK to external/pdfix_sdk folder and build the examples
+run the following commands in the pdfix_sdk_example_cpp folder:
 
-## Installation on Windows, MacOS, Linux
-Copy shared libraries from the bin folder in downloaded PDFix SDK package (https://pdfix.net/download) into the build folder same as the the executable. For 64-bit environment use files with \*64.* suffix.
-* Windows: pdfix.dll, pdf_to_html.dll, ocr_tesseract.dll
-* MacOS: libpdfix.dylib, libpdf_to_html.dylib, libocr_tesseract.dylib
-* Linux: libpdfix.so, libpdf_to_html.so, libocr_tesseract.so
+1. `cmake -S . -B build`  
+2. `cmake --build build`
+
+## Run the example
+
+From pdfix_sdk_exmple_cpp dir:
+
+### MacOS
+ `./bin/darwin/example`
+
+### Linux
+ `./bin/linux/example`
+
+### Windows
+ `./bin/x86/example`  
+ `./bin/x64/example`
 
 ## Have a question? Need help?
 Let us know and we’ll get back to you. Write us to support@pdfix.net or fill the
