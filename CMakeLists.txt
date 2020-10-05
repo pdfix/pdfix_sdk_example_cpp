@@ -167,7 +167,7 @@ include(FetchContent)
 
 FetchContent_Declare(
   pdfixdist
-  URL "https://github.com/PDFixSDKSample-cpp/releases/download/6.1.0/pdfix_sdk_6.0.0_${DOWNLOAD_PLATFORM}.zip"
+  URL "https://github.com/pdfix/PDFixSDKSample-cpp/releases/download/6.1.0/pdfix_sdk_6.1.0_${DOWNLOAD_PLATFORM}"
   )
 
 FetchContent_Populate(pdfixdist)
