@@ -203,4 +203,13 @@ set_target_properties(pdfixsdksample
   PUBLIC_HEADER "include/pdfixsdksamples/samples.h"
   )
 
+if(UNIX)
+  target_link_libraries(${PROJECT_NAME}
+    PRIVATE
+    "-ldl"
+    "-lpthread"
+  )
+endif()
+ 
+
 add_subdirectory(example)

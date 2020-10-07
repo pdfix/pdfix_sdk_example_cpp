@@ -21,6 +21,7 @@ Example how to convert whole PDF document to XML.
 #include <sstream>
 #include <iomanip>
 #include <memory>
+#include <cstring>
 #include <algorithm>
 #include "Pdfix.h"
 

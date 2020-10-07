@@ -26,6 +26,7 @@ Example how to convert whole PDF document to JSON.
 #include <iomanip>
 #include <memory>
 #include <algorithm>
+#include <cstring>
 #include "Pdfix.h"
 
 using namespace PDFixSDK;

@@ -17,6 +17,7 @@ Example how to set a value into a form field.
 //! [SetFormFieldValue_cpp]
 #include <string>
 #include <iostream>
+#include <algorithm>
 #include "Pdfix.h"
 
 using namespace PDFixSDK;

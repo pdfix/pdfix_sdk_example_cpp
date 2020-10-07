@@ -17,6 +17,8 @@ Example how to extract tables from a PDF document and save them to csv format.
 #include <string>
 #include <iostream>
 #include <sstream>
+#include <memory>
+#include <algorithm>
 #include "Pdfix.h"
 
 using namespace PDFixSDK;
