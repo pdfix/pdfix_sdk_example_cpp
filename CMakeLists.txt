@@ -171,7 +171,8 @@ FetchContent_Declare(
   SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/pdfix_sdk
   )
 
-if(TARGET pdfix_app)
+if(TARGET pdfix)
+  message(Downloading from pdfix_sdk_builds)
   FetchContent_Populate(pdfixdist)
   file(COPY ${pdfixdist_SOURCE_DIR}/bin DESTINATION  ${CMAKE_SOURCE_DIR})
 endif()
