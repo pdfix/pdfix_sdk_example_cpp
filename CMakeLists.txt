@@ -171,9 +171,10 @@ FetchContent_Declare(
   SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/pdfix_sdk
   )
 
-FetchContent_Populate(pdfixdist)
-
-file(COPY ${pdfixdist_SOURCE_DIR}/bin DESTINATION  ${CMAKE_SOURCE_DIR})
+if(TARGET pdfix_app)
+  FetchContent_Populate(pdfixdist)
+  file(COPY ${pdfixdist_SOURCE_DIR}/bin DESTINATION  ${CMAKE_SOURCE_DIR})
+endif()
 
 set_target_properties(pdfixsdksample
   PROPERTIES
