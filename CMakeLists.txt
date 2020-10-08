@@ -172,7 +172,7 @@ FetchContent_Declare(
   )
 
 if(NOT TARGET pdfix_app)
-  message(Downloading from pdfix_sdk_builds)
+  message("Downloading from https://github.com/pdfix/pdfix_sdk_builds")
   FetchContent_Populate(pdfixdist)
   file(COPY ${pdfixdist_SOURCE_DIR}/bin DESTINATION  ${CMAKE_SOURCE_DIR})
 endif()
