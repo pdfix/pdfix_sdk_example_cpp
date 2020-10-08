@@ -12,7 +12,7 @@ Example how to import form data from json.
 \snippet /ImportFormData.hpp ImportFormData_cpp
 */
 
-#import "pdfixsdksamples/ImportFormData.h"
+#include "pdfixsdksamples/ImportFormData.h"
 
 //! [ImportFormData_cpp]
 #include <string>

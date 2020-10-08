@@ -1,6 +1,13 @@
 #pragma once
 
 #include <string>
+#ifdef _WIN32
+#include <windows.h>
+#include <Cryptuiapi.h>
+#include <WinCrypt.h>
+#include <Cryptdlg.h>
+#endif
+
 
 #ifdef WIN32
 static UINT_PTR CALLBACK CertHookCallback(HWND hDlg, UINT uiMsg, WPARAM wParam, LPARAM lParam);

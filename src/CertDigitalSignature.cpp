@@ -51,7 +51,7 @@ void CertDigitalSignature(
   // open a certificate store.
   if (!(cert_store = CertOpenSystemStore(NULL, TEXT("MY"))))
     throw std::runtime_error("Open retificate store failed!");
-  HMODULE hLib = LoadLibrary(L"cryptdlg.dll");
+  HMODULE hLib = LoadLibraryA("cryptdlg.dll");
   BOOL(WINAPI *pCertSelectCertificate)(PCERT_SELECT_STRUCT) = NULL;
   pCertSelectCertificate = (BOOL(WINAPI *)(PCERT_SELECT_STRUCT))GetProcAddress(hLib, "CertSelectCertificateW");
   CERT_SELECT_STRUCT certSelect;

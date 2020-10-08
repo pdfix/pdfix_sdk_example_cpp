@@ -13,8 +13,8 @@ set(HEADERS
   include/pdfixsdksamples/AddWatermark.h
   include/pdfixsdksamples/ApplyRedaction.h
   include/pdfixsdksamples/BookmarksToJson.h
-  include/pdfixsdksamples/CertDigitalSignature.h
-  #include/pdfixsdksamples/ConvertTaggedPdf.h
+  # include/pdfixsdksamples/CertDigitalSignature.h
+  # include/pdfixsdksamples/ConvertTaggedPdf.h
   include/pdfixsdksamples/ConvertToHtml.h
   include/pdfixsdksamples/ConvertToHtmlEx.h
   include/pdfixsdksamples/ConvertToJson.h
@@ -76,7 +76,7 @@ set(SOURCES
   src/AddWatermark.cpp
   src/ApplyRedaction.cpp
   src/BookmarksToJson.cpp
-  src/CertDigitalSignature.cpp
+  # src/CertDigitalSignature.cpp
   #src/ConvertTaggedPdf.cpp
   src/ConvertToHtml.cpp
   src/ConvertToHtmlEx.cpp
@@ -171,7 +171,7 @@ FetchContent_Declare(
   SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/pdfix_sdk
   )
 
-if(TARGET pdfix)
+if(NOT TARGET pdfix_app)
   message(Downloading from pdfix_sdk_builds)
   FetchContent_Populate(pdfixdist)
   file(COPY ${pdfixdist_SOURCE_DIR}/bin DESTINATION  ${CMAKE_SOURCE_DIR})
@@ -188,6 +188,9 @@ set_target_properties(pdfixsdksample
 
 target_compile_definitions(pdfixsdksample
   PUBLIC
+  NOMINMAX 
+  UNICODE
+  _UNICODE
   "$<$<CONFIG:DEBUG>:_DEBUG>"
   )  
 
