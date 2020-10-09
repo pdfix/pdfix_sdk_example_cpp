@@ -18,7 +18,7 @@ Try our autotag feature that recognises all important structures in your
 documents like tables, lists, reading order.
 
 ## Code integration
-```
+```cpp
 #include "Pdfix.h" // main header
 
 Pdfix_statics;     // static definitions 
