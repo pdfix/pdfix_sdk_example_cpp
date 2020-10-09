@@ -17,6 +17,27 @@ submit or email data for further processing.
 Try our autotag feature that recognises all important structures in your
 documents like tables, lists, reading order.
 
+## Code integration
+```
+#include "Pdfix.h" // main header
+
+Pdfix_statics;     // static definitions 
+
+int main() {
+    // initialize Pdfix
+    if (!Pdfix_init(Pdfix_MODULE_NAME))
+      throw std::runtime_error("Pdfix library not found. Copy pdfix binaries into application directory.");
+    
+    // get the main object
+    Pdfix* pdfix = GetPdfix();
+    
+    // your code ...
+    
+    pdfix->Destroy();
+    return 0;
+}
+```
+
 ## Prerequisites
 ### All platforms
 - CMake 3.10.0
