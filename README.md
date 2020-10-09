@@ -24,7 +24,7 @@ documents like tables, lists, reading order.
 Pdfix_statics;     // static definitions 
 
 int main() {
-    // initialize Pdfix
+    // initialize Pdfix. You can change the Pdfix_MODULE_NAME macro to path to the pdfix dll/dylib/so
     if (!Pdfix_init(Pdfix_MODULE_NAME))
       throw std::runtime_error("Pdfix library not found. Copy pdfix binaries into application directory.");
     
