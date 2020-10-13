@@ -63,6 +63,7 @@ set(HEADERS
   include/pdfixsdksamples/StandardLicenseDeactivate.h
   include/pdfixsdksamples/StandardLicenseUpdate.h
   include/pdfixsdksamples/samples.h
+  include/pdfixsdksamples/CreateRedactionMark.h
   )
 
 set(SOURCES
@@ -132,6 +133,7 @@ set(SOURCES
   #src/TagsReadStructTree.cpp
   #src/TagsReadingOrder.cpp
   src/Utils.cpp
+  src/CreateRedactionMark.cpp
   )
 
 add_library(pdfixsdksample
