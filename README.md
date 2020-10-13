@@ -40,7 +40,7 @@ int main() {
 
 ## Prerequisites
 ### All platforms
-- CMake 3.10.0
+- CMake 3.10.0+
 
 ### Linux
 Supported linux distributions:
