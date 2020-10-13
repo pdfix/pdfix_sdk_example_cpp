@@ -18,6 +18,7 @@ Example how to read all documents objects in the document catalog.
 #include <string>
 #include <map>
 #include <iostream>
+#include <algorithm>
 #include "pdfixsdksamples/Utils.h"
 #include "Pdfix.h"
 
