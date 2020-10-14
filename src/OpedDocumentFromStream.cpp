@@ -17,6 +17,7 @@ Example how to open a PDF from memory.
 //! [OpedDocumentFromStream_cpp]
 #include <string>
 #include <iostream>
+#include <algorithm>
 #include "Pdfix.h"
 
 using namespace PDFixSDK;
