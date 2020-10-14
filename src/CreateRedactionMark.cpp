@@ -22,27 +22,37 @@ Example how to create redaction mark in a document.
 using namespace PDFixSDK;
 
 
-void CreteRedactionMark(PdfPage* page, PdfRect& redaction_rect) {
-  auto redact_annot = page->CreateAnnot(PdfAnnotSubtype::kAnnotRedact, &redaction_rect);
+static void CreteRedactionMark(PdfPage* page, PdfRect& redaction_rect) {
+  // Create empty redact annotation and add it to the page
+  auto redact_annot = page->AddNewAnnot(-1, &redaction_rect, PdfAnnotSubtype::kAnnotRedact);
+
+  // Notify before editing
   redact_annot->NotifyWillChange(L"IC");
 
   auto redact_dict = redact_annot->GetObject();
   
-  // Normal appearance outline color
+  // Normal appearance
+
+  // Outline color (red)
   auto outline_color = redact_dict->PutArray(L"OC");
   outline_color->PutNumber(0, 1.0);
   outline_color->PutNumber(1, 0.0);
   outline_color->PutNumber(2, 0.0);
 
   // Redaction overlay appearance
+
+  // Inner color (black)
   auto inner_color = redact_dict->PutArray(L"IC");
   inner_color->PutNumber(0, 0.0);
   inner_color->PutNumber(1, 0.0);
   inner_color->PutNumber(2, 0.0);
 
-  redact_dict->PutString(L"DA", L"1 1 0 RG 0 g 0 Tc 0 Tw 100 Tz 0 TL 0 Ts 0 Tr /Helv 10 Tf");
+  // Font style
+  redact_dict->PutString(L"DA", L"1 1 0 RG 1 1 0 rg 0 Tc 0 Tw 100 Tz 0 TL 0 Ts 0 Tr /Helv 10 Tf");
   redact_dict->PutString(L"OverlayText", L"THIS WAS REDACTED ");
+  redact_dict->PutNumber(L"Q", 0);
 
+  // Notify after editing - this will regenerate redaction appearance from given settings
   redact_annot->NotifyDidChange(L"IC", 0);
 }
 
@@ -50,7 +60,8 @@ void CreteRedactionMark(PdfPage* page, PdfRect& redaction_rect) {
 void CreateReactionMark(
   const std::wstring& open_file,                // source PDF document
   const std::wstring& save_file,                // file path where to save PDF docuemnt
-  int page_num                                  // index of page where to create redaction mark
+  int page_num,                                 // index of page where to create redaction mark
+  PdfRect& redaction_rect                       // redaction mark rectangle
 ){
   // initialize Pdfix
   if (!Pdfix_init(Pdfix_MODULE_NAME))
@@ -70,14 +81,6 @@ void CreateReactionMark(
     throw PdfixException();
 
   auto page = doc->AcquirePage(page_num);
-
-  PdfRect redaction_rect;
-  
-  // TODO:
-  redaction_rect.left = 0;
-  redaction_rect.bottom = 0;
-  redaction_rect.right = 10;
-  redaction_rect.top = 10;
  
   CreteRedactionMark(page, redaction_rect);
 
