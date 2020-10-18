@@ -70,9 +70,6 @@ From pdfix_sdk_exmple_cpp dir:
  `./bin/x86/example`  
  `./bin/x64/example`
 
-## Documentation
-For complete SDK documentation see the [PDFix website](https://pdfix.net).
-
 ## Have a question? Need help?
 Let us know and we’ll get back to you. Write us to support@pdfix.net or fill the
 [contact form](https://pdfix.net/support/).
