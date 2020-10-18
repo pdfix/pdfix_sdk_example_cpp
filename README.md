@@ -4,18 +4,7 @@ language.
 
 ## Description
 
-Our PDF library analyses the key components of the PDF and make it easily
-available for you. With the ability to sign PDF's with both eSignatures and
-Digital Signatures we have your digital transactions covered.  
-We turn your simple PDF into a fully responsive document with semantic content
-and logical reading order built for you. You can search texts, you can save all
-images, you can export table values into your database or you can use exported
-elements for conversions – to HTML, JSON, Word, Excel, etc.  
-PDF form filling using AcroForm is an important part of many workflows. It
-allows data entry directly on print ready media with ability to import, export,
-submit or email data for further processing.  
-Try our autotag feature that recognises all important structures in your
-documents like tables, lists, reading order.
+For more information please visit [https://pdfix.net](https://pdfix.net).
 
 ## Code integration
 ```cpp
