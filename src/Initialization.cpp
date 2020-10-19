@@ -2,19 +2,9 @@
 // Initialization.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage Initialization_cpp
-*/
-/*!
-\page Initialization_cpp Initialization Sample
-Example how to initialize PDFix SDK in c++.
-\snippet /Initialization.hpp Initialization_cpp
-*/
 
 #include "pdfixsdksamples/Initialization.h"
 
-//! [Initialization_cpp]
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
@@ -40,4 +30,3 @@ void Initialization(
 
   pdfix->Destroy();
 }
-//! [Initialization_cpp]

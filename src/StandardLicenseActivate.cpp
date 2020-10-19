@@ -2,19 +2,8 @@
 // StandardLicenseActivate.cpp
 // Copyright (c) 2019 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage StandardLicenseActivate_cpp
-*/
-/*!
-\page StandardLicenseActivate_cpp Activate the license
-Example how to activate product with the standard license.
-\snippet /StandardLicenseActivate.hpp StandardLicenseActivate_cpp
-*/
 
 #include "pdfixsdksamples/StandardLicenseActivate.h"
-
-//! [StandardLicenseActivate_cpp]
 // system
 #include <string>
 #include <iostream>
@@ -46,5 +35,3 @@ namespace StandardLicenseActivate {
     pdfix->Destroy();
   }
 }
-
-//! [StandardLicenseActivate_cpp]

@@ -2,19 +2,8 @@
 // TagAsArtifact.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage TagAsArtifact_cpp
-*/
-/*!
-\page TagAsArtifact_cpp Mark tagged page objects as artifact
-Example how to remove paragraph from a structure tree and mark all contained page objects as artifact.
-\snippet /TagAsArtifact.hpp TagAsArtifact_cpp
-*/
 
 #pragma once
-
-//! [TagAsArtifact_cpp]
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
@@ -138,6 +127,4 @@ namespace TagAsArtifact {
     pdfix->Destroy();
   }
   
-} //  namespace TagAsArtifact
-
-//! [TagAsArtifact_cpp]
+}

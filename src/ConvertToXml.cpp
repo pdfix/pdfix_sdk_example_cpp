@@ -2,19 +2,9 @@
 // ConvertToXml.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage ConvertToXml_cpp
-*/
-/*!
-\page ConvertToXml_cpp Pdf To XML Sample
-Example how to convert whole PDF document to XML.
-\snippet /ConvertToXml.hpp ConvertToXml_cpp
-*/
 
 #include "pdfixsdksamples/ConvertToXml.h"
 
-//! [ConvertToXml_cpp]
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -843,4 +833,3 @@ void ConvertToXml(
   doc->Close();
   pdfix->Destroy();
 }
-//! [ConvertToXml_cpp]

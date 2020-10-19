@@ -2,19 +2,9 @@
 // ImportFormData.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage ImportFormData_cpp
-*/
-/*!
-\page ImportFormData_cpp Set Form Field Value Sample
-Example how to import form data from json.
-\snippet /ImportFormData.hpp ImportFormData_cpp
-*/
 
 #include "pdfixsdksamples/ImportFormData.h"
 
-//! [ImportFormData_cpp]
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
@@ -71,4 +61,3 @@ namespace ImportFormData {
     pdfix->Destroy();
   }
 }
-//! [ImportFormData_cpp]

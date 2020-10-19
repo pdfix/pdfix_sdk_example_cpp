@@ -2,18 +2,9 @@
 // ExtractText.h
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage ExtractText_cpp
-*/
-/*!
-\page ExtractText_cpp Pdf To Text Sample
-Example how to extract tables from a PDF document and save them to csv format.
-\snippet /ExtractText.hpp ExtractText_cpp
-*/
 
 #include "pdfixsdksamples/ExtractText.h"
-//! [ExtractText_cpp]
+
 #include <string>
 #include <iostream>
 #include <sstream>
@@ -107,4 +98,3 @@ namespace ExtractText {
     pdfix->Destroy();
   }
 }
-//! [ExtractText_cpp]

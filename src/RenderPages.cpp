@@ -2,19 +2,9 @@
 // RenderPages.cpp
 // Copyright (c) 2020 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage RenderPages_cpp
-*/
-/*!
-\page RenderPage_cpp Render Pages Sample
-Example how to render a PDF document pages into an images.
-\snippet /RenderPages.hpp RenderPages_cpp
-*/
 
 #include "pdfixsdksamples/RenderPages.h"
 
-//! [RenderPages_cpp]
 #include <string>
 #include <iostream>
 #include <thread>
@@ -122,4 +112,3 @@ void RenderPages(
 
   pdfix->Destroy();
 }
-//! [RenderPages_cpp]

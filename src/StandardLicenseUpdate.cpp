@@ -2,19 +2,8 @@
 // StandardLicenseUpdate.cpp
 // Copyright (c) 2019 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage StandardLicenseUpdate_cpp
-*/
-/*!
-\page StandardLicenseUpdate_cpp Activate the license
-Example how to update product standard license.
-\snippet /StandardLicenseUpdate.hpp StandardLicenseUpdate_cpp
-*/
 
 #include "pdfixsdksamples/StandardLicenseUpdate.h"
-
-//! [StandardLicenseUpdate_cpp]
 // system
 #include <string>
 #include <iostream>
@@ -43,5 +32,3 @@ namespace StandardLicenseUpdate {
     pdfix->Destroy();
   }
 }
-
-//! [StandardLicenseUpdate_cpp]

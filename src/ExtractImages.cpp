@@ -2,19 +2,9 @@
 // ExtractImages.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage ExtractImages_cpp
-*/
-/*!
-\page ExtractImages_cpp Pdf To Image Sample
-Example how to extract images from a PDF document.
-\snippet /ExtractImages.hpp ExtractImages_cpp
-*/
 
 #include "pdfixsdksamples/ExtractImages.h"
 
-//! [ExtractImages_cpp]
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
@@ -132,5 +122,3 @@ void ExtractImages(
   doc->Close();
   pdfix->Destroy();
 }
-
-//! [ExtractImages_cpp]

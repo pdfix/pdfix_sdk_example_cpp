@@ -2,19 +2,9 @@
 // AddTags.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage AddTags_cpp
-*/
-/*!
-\page AddTags_cpp Add Tags Sample
-Example how to automatically add tags into the document.
-\snippet /AddTags.hpp AddTags_cpp
-*/
 
 #include "pdfixsdksamples/AddTags.h"
 
-//! [AddTags_cpp]
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
@@ -77,4 +67,3 @@ void AddTags(
   doc->Close();
   pdfix->Destroy();
 }
-//! [AddTags_cpp]

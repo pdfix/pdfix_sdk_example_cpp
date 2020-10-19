@@ -2,19 +2,9 @@
 // SetFieldFlags.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage SetFieldFlags_cpp
-*/
-/*!
-\page SetFieldFlags_cpp Set Field Flags Sample
-Sets form fields flags as readonly.
-\snippet /SetFieldFlags.hpp SetFieldFlags_cpp
-*/
 
 #include "pdfixsdksamples/SetFieldFlags.h"
 
-//! [SetFieldFlags_cpp]
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
@@ -54,4 +44,3 @@ void SetFieldFlags(
   doc->Close();
   pdfix->Destroy();
 }
-//! [SetFieldFlags_cpp]

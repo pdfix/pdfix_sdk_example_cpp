@@ -2,21 +2,11 @@
 // ApplyRedaction.hpp
 // Copyright (c) 2020 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage ApplyRedaction_cpp
-*/
-/*!
-\page ApplyRedaction_cpp Apply Redaction Sample
-Example how to redact content.
-\snippet /ApplyRedaction.hpp ApplyRedaction_cpp
-*/
 
 #include "pdfixsdksamples/ApplyRedaction.h"
 
 // #define GENERATE_REDAC_APP
 
-//! [ApplyRedaction_cpp]
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
@@ -60,4 +50,3 @@ void ApplyRedaction(
   doc->Close();
   pdfix->Destroy();
 }
-//! [ApplyRedaction_cpp]

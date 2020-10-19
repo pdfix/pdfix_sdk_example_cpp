@@ -2,19 +2,9 @@
 // ConvertTaggedPdf.hpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage ConvertTaggedPdf_cpp
-*/
-/*!
-\page ConvertTaggedPdf_cpp Tagged Pdf To JSON, XML and HTML Sample
-Example how to convert Tagged PDF document to different structured formats.
-\snippet /ConvertTaggedPdf.hpp ConvertTaggedPdf_cpp
-*/
 
 #include "pdfixsdksamples/ConvertTaggedPdf.h"
 
-//! [ConvertTaggedPdf_cpp]
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
@@ -92,4 +82,3 @@ void ConvertTaggedPdf(
   tagged_pdf->Destroy();
   pdfix->Destroy();
 }
-//! [ConvertTaggedPdf_cpp]

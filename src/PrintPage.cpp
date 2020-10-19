@@ -2,19 +2,9 @@
 // PrintPage.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage PrintPage_cpp
-*/
-/*!
-\page PrintPage_cpp Print Page Sample
-Example how to print page.
-\snippet /PrintPage.hpp PrintPage_cpp
-*/
 
 #include "pdfixsdksamples/PrintPage.h"
 
-//! [PrintPage_cpp]
 #include <string>
 #include <iostream>
 #include <memory>
@@ -137,4 +127,3 @@ void PrintPage(
   pdfix->Destroy();
 #endif
 }
-//! [PrintPage_cpp]

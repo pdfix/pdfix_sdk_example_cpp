@@ -2,19 +2,8 @@
 // TagTableAsFigure.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage TagTableAsFigure_cpp
-*/
-/*!
-\page TagTableAsFigure_cpp Tag elements as Figure
-Example how to manually change table structure element to a figure using initial elements.
-\snippet /TagTableAsFigure.hpp TagTableAsFigure_cpp
-*/
 
 #pragma once
-
-//! [TagTableAsFigure_cpp]
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
@@ -174,5 +163,4 @@ namespace TagTableAsFigure {
     pdfix->Destroy();
   }
   
-} // namespace TagTableAsFigure
-//! [TagTableAsFigure_cpp]
+}

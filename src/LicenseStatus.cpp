@@ -2,19 +2,9 @@
 // LicenseStatus.cpp
 // Copyright (c) 2019 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage LicenseStatus_cpp
-*/
-/*!
-\page LicenseStatus_cpp Activate the license
-Example how to update product standard license.
-\snippet /LicenseStatus.hpp LicenseStatus_cpp
-*/
 
 #include "pdfixsdksamples/LicenseStatus.h"
 
-//! [LicenseStatus_cpp]
 // system
 #include <string>
 #include <iostream>
@@ -54,5 +44,3 @@ namespace LicenseStatus {
     pdfix->Destroy();
   }
 }
-
-//! [LicenseStatus_cpp]

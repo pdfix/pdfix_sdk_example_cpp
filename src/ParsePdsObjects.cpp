@@ -2,19 +2,9 @@
 // ParsePdsObjects.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage ParsePdsObjects_cpp
-*/
-/*!
-\page ParsePdsObjects_cpp Parse PDF document objects
-Example how to read all documents objects in the document catalog.
-\snippet /ParsePdsObjects.hpp ParsePdsObjects_cpp
-*/
 
 #include "pdfixsdksamples/ParsePdsObjects.h"
 
-//! [ParsePdsObjects_cpp]
 #include <string>
 #include <map>
 #include <iostream>
@@ -139,4 +129,3 @@ namespace ParsePdsObjects {
     pdfix->Destroy();
   }
 }
-//! [ParsePdsObjects_cpp]

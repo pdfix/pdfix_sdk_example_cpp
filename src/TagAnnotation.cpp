@@ -2,19 +2,8 @@
 // TagAnnotation.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage TagAnnotation_cpp
-*/
-/*!
-\page TagAnnotation_cpp Tag annotation added on a page
-Example how to manually tag link annotation added on top of the text object.
-\snippet /TagAnnotation.hpp TagAnnotation_cpp
-*/
 
 #pragma once
-
-//! [TagAnnotation_cpp]
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
@@ -164,5 +153,4 @@ namespace TagAnnotation {
     pdfix->Destroy();
   }
   
-} // namespace TagAnnotation
-//! [TagAnnotation_cpp]
+}

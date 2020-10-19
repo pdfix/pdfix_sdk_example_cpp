@@ -2,19 +2,9 @@
 // DocumentMetadata.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage EmbedFonts_cpp
-*/
-/*!
-\page EmbedFonts_cpp EmbedFonts Sample
-Example how to Embed Fonts.
-\snippet /EmbedFonts.hpp EmbedFonts_cpp
-*/
 
 #include "pdfixsdksamples/EmbedFonts.h"
 
-//! [EmbedFonts_cpp]
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
@@ -47,4 +37,3 @@ void EmbedFonts(
   doc->Close();
   pdfix->Destroy();
 }
-//! [EmbedFonts_cpp]

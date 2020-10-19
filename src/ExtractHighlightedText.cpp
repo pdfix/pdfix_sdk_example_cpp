@@ -2,19 +2,9 @@
 // ExtractHighlightedText.h
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage ExtractHighlightedText_cpp
-*/
-/*!
-\page ExtractHighlightedText_cpp Pdf To Text Sample
-Example how to extract tables from a PDF document and save them to csv format.
-\snippet /ExtractHighlightedText.hpp ExtractHighlightedText_cpp
-*/
 
 #include "pdfixsdksamples/ExtractHighlightedText.h"
 
-//! [ExtractHighlightedText_cpp]
 #include <string>
 #include <iostream>
 #include <sstream>
@@ -179,5 +169,3 @@ void ExtractHighlightedText(
   doc->Close();
   pdfix->Destroy();
 }
-
-//! [ExtractHighlightedText_cpp]

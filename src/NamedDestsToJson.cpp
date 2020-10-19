@@ -2,19 +2,9 @@
 // NamedDestsToJson.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage NamedDestsToJson_cpp
-*/
-/*!
-\page NamedDestsToJson_cpp Save Named Destinations to JSON Sample
-Example how to extract all named destinations in documnent into json.
-\snippet /NamedDestsToJson.hpp NamedDestsToJson_cpp
-*/
 
 #include "pdfixsdksamples/NamedDestsToJson.h"
 
-//! [NamedDestsToJson_cpp]
 // system
 #include <string>
 #include <iostream>
@@ -106,4 +96,3 @@ namespace NamedDestsToJson {
     pdfix->Destroy();
   }
 }
-//! [NamedDestsToJson_cpp]

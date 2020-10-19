@@ -2,19 +2,9 @@
 // MakeAccessible.h
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage MakeAccessible_cpp
-*/
-/*!
-\page MakeAccessible_cpp Make PDF Accessible Sample
-Example how to make PDF Accessible.
-\snippet /MakeAccessible.hpp MakeAccessible_cpp
-*/
 
 #include "pdfixsdksamples/MakeAccessible.h"
 
-//! [MakeAccessible_cpp]
 #include <string>
 #include <iostream>
 #include <memory>
@@ -92,4 +82,3 @@ void MakeAccessible(
   doc->Close();
   pdfix->Destroy();
 }
-//! [MakeAccessible_cpp]

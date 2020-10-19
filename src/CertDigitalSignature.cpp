@@ -2,19 +2,9 @@
 // CertDigitalSignature.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*! 
-\page CPP_Samples C++ Samples
-- \subpage CertDigitalSignature_cpp
-*/
-/*! 
-\page CertDigitalSignature_cpp Certificate Store Digital Signature Sample
-Example how to apply a digital signature from Certificate stores.
-\snippet /CertDigitalSignature.hpp CertDigitalSignature_cpp
-*/
 
 #include "pdfixsdksamples/CertDigitalSignature.h"
 
-//! [CertDigitalSignature_cpp]
 #include <string>
 #include <iostream>
 #ifdef _WIN32
@@ -111,4 +101,3 @@ void CertDigitalSignature(
   DestroyPdfix();
 #endif
 }
-//! [CertDigitalSignature_cpp]

@@ -2,19 +2,9 @@
 // LicenseReset.cpp
 // Copyright (c) 2019 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage LicenseReset_cpp
-*/
-/*!
-\page LicenseReset_cpp Reset the license
-Example how to reset standard license.
-\snippet /LicenseReset.hpp LicenseReset_cpp
-*/
 
 #include "pdfixsdksamples/LicenseReset.h"
 
-//! [LicenseReset_cpp]
 // system
 #include <string>
 #include <iostream>
@@ -43,5 +33,3 @@ namespace LicenseReset {
     pdfix->Destroy();
   }
 }
-
-//! [LicenseReset_cpp]

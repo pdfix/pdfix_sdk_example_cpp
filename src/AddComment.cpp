@@ -2,19 +2,9 @@
 // AddComment.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage AddComment_cpp
-*/
-/*!
-\page AddComment_cpp Add Comment Sample
-Example how to add a text annotation with a reply.
-\snippet /AddComment.hpp AddComment_cpp
-*/
 
 #include "pdfixsdksamples/AddComment.h"
 
-//! [AddComment_cpp]
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
@@ -69,4 +59,3 @@ void AddComment(
 
   pdfix->Destroy();
 }
-//! [AddComment_cpp]

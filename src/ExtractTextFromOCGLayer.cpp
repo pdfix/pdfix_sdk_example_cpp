@@ -2,19 +2,9 @@
 // ExtractTextFromOCGLayer.cpp
 // Copyright (c) 2019 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage ExtractTextFromOCGLayer_cpp
-*/
-/*!
-\page ExtractTextFromOCGLayer_cpp Extract text from OCG Layer Sample
-Example how to extract text from specific OCG Layer.
-\snippet /ExtractTextFromOCGLayer.hpp ExtractTextFromOCGLayer_cpp
-*/
 
 #pragma once
 
-//! [ExtractTextFromOCGLayer_cpp]
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
@@ -118,5 +108,4 @@ namespace ExtractTextFromOCGLayer {
     doc->Close();
     pdfix->Destroy();
   }
-} //namespace ExtractTextFromOCGLayer
-//! [ExtractTextFromOCGLayer_cpp]
+}

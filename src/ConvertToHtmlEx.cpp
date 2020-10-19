@@ -2,19 +2,9 @@
 // ConvertToHtmlEx.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage ConvertToHtmlEx_cpp
-*/
-/*!
- \page ConvertToHtmlEx_cpp Pdf To Html Sample #2
-Example how to convert PDF to HTML by pages for REST API service.
-\snippet /ConvertToHtmlEx.hpp ConvertToHtmlEx_cpp
-*/
 
 #include "pdfixsdksamples/ConvertToHtmlEx.h"
 
-//! [ConvertToHtmlEx_cpp]
 #include <string>
 #include <cstdlib>
 #include <iostream>
@@ -99,4 +89,3 @@ void ConvertToHtmlEx(
   pdf_to_html->Destroy();
   pdfix->Destroy();
 }
-//! [ConvertToHtmlEx_cpp]

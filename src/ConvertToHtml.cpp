@@ -2,19 +2,9 @@
 // ConvertToHtml.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage ConvertToHtml_cpp
-*/
-/*!
-\page ConvertToHtml_cpp Pdf To Html Sample
-Example how to convert whole PDF document to HTML.
-\snippet /ConvertToHtml.hpp ConvertToHtml_cpp
-*/
 
 #include "pdfixsdksamples/ConvertToHtml.h"
 
-//! [ConvertToHtml_cpp]
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
@@ -104,4 +94,3 @@ void ConvertToHtml(
   pdf_to_html->Destroy();
   pdfix->Destroy();
 }
-//! [ConvertToHtml_cpp]

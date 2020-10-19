@@ -2,19 +2,9 @@
 // RegisterEvent.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage RegisterEvent_cpp
-*/
-/*!
-\page RegisterEvent_cpp Register Event Sample
-// Example how to register events/callbacks.
-\snippet /RegisterEvent.hpp RegisterEvent_cpp
-*/
 
 #include "pdfixsdksamples/RegisterEvent.h"
 
-//! [RegisterEvent_cpp]
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
@@ -78,4 +68,3 @@ void RegisterEvent(
   doc->Close();
   pdfix->Destroy();
 }
-//! [RegisterEvent_cpp]

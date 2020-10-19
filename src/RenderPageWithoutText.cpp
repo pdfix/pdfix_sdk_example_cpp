@@ -2,19 +2,8 @@
 // RenderPageWithoutText.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage RenderPageWithoutText_cpp
-*/
-/*!
-\page RenderPageWithoutText_cpp Render Page Sample
-Example how to render a PDF document page without text into an image.
-\snippet /RenderPageWithoutText.hpp RenderPageWithoutText_cpp
-*/
 
 #pragma once
-
-//! [RenderPageWithoutText_cpp]
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
@@ -99,4 +88,3 @@ void RenderPageWithoutText(
 
   pdfix->Destroy();
 }
-//! [RenderPageWithoutText_cpp]
