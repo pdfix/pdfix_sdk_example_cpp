@@ -31,7 +31,7 @@ namespace BookmarksToJson {
       case kActionGoTo: {
         json.put("type", "GoTo");
         auto view_dest = action->GetViewDestination();
-        if (view_dest && (view_dest = view_dest->Resolve(doc)) && view_dest)
+        if (view_dest != nullptr)
           json.put("page_num", view_dest->GetPageNum(doc) + 1);
         break;
       }

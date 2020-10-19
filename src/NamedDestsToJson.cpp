@@ -20,7 +20,7 @@ extern std::string ToUtf8(const std::wstring& wstr);
 
 namespace NamedDestsToJson {
   bool ProcessViewDestination(PdfViewDestination* view_dest, PdfDoc* doc, ptree& json) {
-    if (view_dest && (view_dest = view_dest->Resolve(doc)) && view_dest) {
+    if (view_dest != nullptr) {
       auto page_num = view_dest->GetPageNum(doc);
       if (page_num != -1) {
         // process only valid named destinations pointing to existing pages
