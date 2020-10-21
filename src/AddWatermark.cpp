@@ -2,19 +2,9 @@
 // AddWatermark.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*! 
-\page CPP_Samples C++ Samples
-- \subpage AddWatermark_cpp
-*/
-/*! 
-\page AddWatermark_cpp Add Watermark Sample
-// Example how to add a watermark.
-\snippet /AddWatermark.hpp AddWatermark_cpp
-*/
 
 #include "pdfixsdksamples/AddWatermark.h"
 
-//! [AddWatermark_cpp]
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
@@ -69,5 +59,3 @@ void AddWatermark(
   doc->Close();
   pdfix->Destroy();
 }
-
-//! [AddWatermark_cpp]

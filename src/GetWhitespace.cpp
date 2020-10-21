@@ -2,20 +2,9 @@
 // GetWhitespace.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage GetWhitespace_cpp
-*/
-/*!
-\page GetWhitespace_cpp Get Whitespace Sample
-Example how to get a white space with the expected width and height.
-It can be used when you search for the best place where to put a watermark.
-\snippet /GetWhitespace.hpp GetWhitespace_cpp
-*/
 
 #include "pdfixsdksamples/GetWhitespace.h"
 
-//! [GetWhitespace_cpp]
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
@@ -59,4 +48,3 @@ void GetWhitespace(
   doc->Close();
   pdfix->Destroy();
 }
-//! [GetWhitespace_cpp]

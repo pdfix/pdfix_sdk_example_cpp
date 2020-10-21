@@ -2,19 +2,9 @@
 // CreatePage.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage CreatePage_cpp
-*/
-/*!
-\page CreatePage_cpp Create New Page Sample
-Example how to create new page in document.
-\snippet /CreatePage.hpp CreatePage_cpp
-*/
 
 #include "pdfixsdksamples/CreatePage.h"
 
-//! [CreatePage_cpp]
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
@@ -56,4 +46,3 @@ void CreatePage(
 
   pdfix->Destroy();
 }
-//! [CreatePage_cpp]

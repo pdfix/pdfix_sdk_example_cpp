@@ -2,19 +2,9 @@
 // FlattenAnnots.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage FlattenAnnots_cpp
-*/
-/*!
-\page FlattenAnnots_cpp Flatten Annots Sample
-Example how to flatten annotations into the PDF content.
-\snippet /FlattenAnnots.hpp FlattenAnnots_cpp
-*/
 
 #include "pdfixsdksamples/FlattenAnnots.h"
 
-//! [FlattenAnnots_cpp]
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
@@ -47,4 +37,3 @@ void FlattenAnnots(
   doc->Close();
   pdfix->Destroy();
 }
-//! [FlattenAnnots_cpp]

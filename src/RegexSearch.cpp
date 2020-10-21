@@ -2,19 +2,9 @@
 // RegexSearch.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage RegexSearch_cpp
-*/
-/*!
-\page RegexSearch_cpp Regex Search Sample
-Example how to search the regex pattern at the first page of the document.
-\snippet /RegexSearch.hpp RegexSearch_cpp
-*/
 
 #include "pdfixsdksamples/RegexSearch.h"
 
-//! [RegexSearch_cpp]
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
@@ -79,4 +69,3 @@ void RegexSearch(
   doc->Close();
   pdfix->Destroy();
 }
-//! [RegexSearch_cpp]

@@ -2,20 +2,9 @@
 // OcrPageImagesWithTesseract.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage OcrPageImagesWithTesseract_cpp
-*/
-/*!
-\page OcrPageImagesWithTesseract_cpp Ocr Page Images With Tesseract Sample
-Example how to ocr page images and add searchable content on the page.
-NOTE: If your tessdata dir is in the /usr/share/tesseract-ocr dir, data_path should be set to /usr/share/tesseract-ocr.
-\snippet /OcrPageImagesWithTesseract.hpp OcrPageImagesWithTesseract_cpp
-*/
 
 #include "pdfixsdksamples/OcrPageImagesWithTesseract.h"
 
-//! [OcrPageImagesWithTesseract_cpp]
 #include <string>
 #include <iostream>
 #include <vector>
@@ -151,4 +140,3 @@ void OcrPageImagesWithTesseract(
   doc->Close();
   pdfix->Destroy();
 }
-//! [OcrPageImagesWithTesseract_cpp]

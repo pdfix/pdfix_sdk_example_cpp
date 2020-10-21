@@ -2,19 +2,9 @@
 // DeletePages.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage DeletePages_cpp
-*/
-/*!
-\page DeletePages_cpp Delete Pages Sample
-Example how to delete pages. 
-\snippet /DeletePages.hpp DeletePages_cpp
-*/
 
 #include "pdfixsdksamples/DeletePages.h"
 
-//! [DeletePages_cpp]
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
@@ -46,4 +36,3 @@ void DeletePages(
 
   pdfix->Destroy();
 }
-//! [DeletePages_cpp]

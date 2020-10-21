@@ -2,19 +2,9 @@
 // PagesToJson.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage PagesToJson_cpp
-*/
-/*!
-\page PagesToJson_cpp Save pages to JSON Sample
-Example how to extract masic pag information into json.
-\snippet /PagesToJson.hpp PagesToJson_cpp
-*/
 
 #include "pdfixsdksamples/PagesToJson.h"
 
-//! [PagesToJson_cpp]
 // system
 #include <string>
 #include <iostream>
@@ -89,4 +79,3 @@ namespace PagesToJson {
     pdfix->Destroy();
   }
 }
-//! [PagesToJson_cpp]

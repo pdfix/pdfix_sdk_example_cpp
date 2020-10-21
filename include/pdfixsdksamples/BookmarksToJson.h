@@ -3,6 +3,7 @@
 // system
 #include <string>
 #include <iostream>
+#include <map>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 // project

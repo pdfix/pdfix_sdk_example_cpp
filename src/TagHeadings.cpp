@@ -2,19 +2,8 @@
 // TagHeadings.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage TagHeadings_cpp
-*/
-/*!
-\page TagHeadings_cpp Tag paragraph as Heading
-Example how to manually edit tags tagged P struct element to H1 based on the text prperties.
-\snippet /TagHeadings.hpp TagHeadings_cpp
-*/
 
 #pragma once
-
-//! [TagHeadings_cpp]
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
@@ -153,5 +142,4 @@ void Run(
   pdfix->Destroy();
 }
   
-} // namespace TagHeadings
-//! [TagHeadings_cpp]
+}

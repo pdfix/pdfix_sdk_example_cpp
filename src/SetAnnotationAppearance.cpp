@@ -2,19 +2,9 @@
 // SetAnnotationAppearance.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*! 
-\page CPP_Samples C++ Samples
-- \subpage SetAnnotationAppearance_cpp
-*/
-/*! 
-\page SetAnnotationAppearance_cpp Add Watermark Sample
-// Example how to add a watermark.
-\snippet /SetAnnotationAppearance.hpp SetAnnotationAppearance_cpp
-*/
 
 #include "pdfixsdksamples/SetAnnotationAppearance.h"
 
-//! [SetAnnotationAppearance_cpp]
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
@@ -83,5 +73,4 @@ namespace SetAnnotationAppearance {
     doc->Close();
     pdfix->Destroy();
   }
-} // namespace
-//! [SetAnnotationAppearance_cpp]
+}

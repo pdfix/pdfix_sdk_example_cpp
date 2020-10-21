@@ -2,20 +2,9 @@
 // OcrWithTesseract.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage OcrWithTesseract_cpp
-*/
-/*!
-\page OcrWithTesseract_cpp Ocr With Tesseract Sample
-Example how to convert an image based PDF to searchable document.
-NOTE: If your tessdata dir is in the /usr/share/tesseract-ocr dir, data_path should be set to /usr/share/tesseract-ocr.
-\snippet /OcrWithTesseract.hpp OcrWithTesseract_cpp
-*/
 
 #include "pdfixsdksamples/OcrWithTesseract.h"
 
-//! [OcrWithTesseract_cpp]
 #include <string>
 #include <iostream>
 #include "pdfixsdksamples/Utils.h"
@@ -115,4 +104,3 @@ void OcrWithTesseract(
   doc->Close();
   pdfix->Destroy();
 }
-//! [OcrWithTesseract_cpp]

@@ -2,19 +2,9 @@
 // ParsePageContent.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage ParsePageContent_cpp
-*/
-/*!
-\page ParsePageContent_cpp Parse PDF page content
-Example how to read all page content objects.
-\snippet /ParsePageContent.hpp ParsePageContent_cpp
-*/
 
 #include "pdfixsdksamples/ParsePageContent.h"
 
-//! [ParsePageContent_cpp]
 // system
 #include <string>
 #include <iostream>
@@ -165,4 +155,3 @@ namespace ParsePageContent {
     pdfix->Destroy();
   }
 }
-//! [ParsePageContent_cpp]

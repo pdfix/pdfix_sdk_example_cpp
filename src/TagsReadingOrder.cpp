@@ -2,19 +2,8 @@
 // TagsReadingOrder.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage TagsReadingOrder_cpp
-*/
-/*!
-\page TagsReadingOrder_cpp Edit structure tree reading order
-Example how to manually modify order of struct elements in a structure tree.
-\snippet /TagsReadingOrder.hpp TagsReadingOrder_cpp
-*/
 
 #pragma once
-
-//! [TagsReadingOrder_cpp]
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
@@ -112,5 +101,4 @@ namespace TagsReadingOrder {
     pdfix->Destroy();
   }
   
-} // namespace TagsReadingOrder
-//! [TagsReadingOrder_cpp]
+}

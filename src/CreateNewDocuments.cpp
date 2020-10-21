@@ -2,19 +2,9 @@
 // CreateNewDocuments.cpp
 // Copyright (c) 2020 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage CreateNewDocuments_cpp
-*/
-/*!
-\page CreateNewDocuments_cpp Create New Documents Sample
-Example how to create new documents.
-\snippet /CreateNewDocuments.hpp CreateNewDocuments_cpp
-*/
 
 #include "pdfixsdksamples/CreateNewDocuments.h"
 
-//! [CreateNewDocuments_cpp]
 #include <string>
 #include <iostream>
 #include <vector>
@@ -88,4 +78,3 @@ void CreateNewDocuments(
 
   pdfix->Destroy();
 }
-//! [CreateNewDocuments_cpp]

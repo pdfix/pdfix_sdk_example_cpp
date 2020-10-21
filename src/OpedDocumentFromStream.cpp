@@ -2,21 +2,12 @@
 // OpedDocumentFromStream.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage OpedDocumentFromStream_cpp
-*/
-/*!
-\page OpedDocumentFromStream_cpp Open PDF from stream Sample
-Example how to open a PDF from memory.
-\snippet /OpedDocumentFromStream.hpp OpedDocumentFromStream_cpp
-*/
 
 #include "pdfixsdksamples/OpedDocumentFromStream.h"
 
-//! [OpedDocumentFromStream_cpp]
 #include <string>
 #include <iostream>
+#include <algorithm>
 #include "Pdfix.h"
 
 using namespace PDFixSDK;
@@ -62,4 +53,3 @@ void OpedDocumentFromStream(
   mem_stm->Destroy();
   pdfix->Destroy();
 }
-//! [OpedDocumentFromStream_cpp]

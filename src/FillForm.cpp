@@ -2,19 +2,9 @@
 // FillForm.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage FillForm_cpp
-*/
-/*!
-\page FillForm_cpp Add Comment Sample
-Example how to add a text annotation with a reply.
-\snippet /FillForm.hpp FillForm_cpp
-*/
 
 #include "pdfixsdksamples/FillForm.h"
 
-//! [FillForm_cpp]
 // system
 #include <string>
 #include <iostream>
@@ -72,4 +62,3 @@ void FillForm(
 
   pdfix->Destroy();
 }
-//! [FillForm_cpp]

@@ -2,21 +2,12 @@
 // SetFormFieldValue.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage SetFormFieldValue_cpp
-*/
-/*!
-\page SetFormFieldValue_cpp Set Form Field Value Sample
-Example how to set a value into a form field.
-\snippet /SetFormFieldValue.hpp SetFormFieldValue_cpp
-*/
 
 #include "pdfixsdksamples/SetFormFieldValue.h"
 
-//! [SetFormFieldValue_cpp]
 #include <string>
 #include <iostream>
+#include <algorithm>
 #include "Pdfix.h"
 
 using namespace PDFixSDK;
@@ -50,4 +41,3 @@ void SetFormFieldValue(
   doc->Close();
   pdfix->Destroy();
 }
-//! [SetFormFieldValue_cpp]

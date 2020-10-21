@@ -1,26 +1,57 @@
-
-
-
-# PDFix SDK
-A multi-platform PDF Library SDK.
+# PDFix SDK example C++
+Example project demonstrating the capabilities of PDFix SDK written in C++
+language.
 
 ## Description
 
-Our PDF library analyses the key components of the PDF and make it easily available for you. With the ability to sign PDF's with both eSignatures and Digital Signatures we have your digital transactions covered.
+For more information please visit [https://pdfix.net](https://pdfix.net).
 
-We turn your simple PDF into a fully responsive document with semantic content and logical reading order built for you. You can search texts, you can save all images, you can export table values into your database or you can use exported elements for conversions – to HTML, JSON, Word, Excel, etc.
+## Code integration
+```cpp
+#include "Pdfix.h" // main header
 
-PDF form filling using AcroForm is an important part of many workflows. It allows data entry directly on print ready media with ability to import, export, submit or email data for further processing.
+Pdfix_statics;     // static definitions 
 
-Try our autotag feature that recognises all important structures in your documents like tables, lists, reading order.
+int main() {
+    // initialize Pdfix. You can change the Pdfix_MODULE_NAME macro to path to the pdfix dll/dylib/so
+    if (!Pdfix_init(Pdfix_MODULE_NAME))
+      throw std::runtime_error("Pdfix library not found. Copy pdfix binaries into application directory.");
+    
+    // get the main object
+    Pdfix* pdfix = GetPdfix();
+    
+    // your code ...
+    
+    pdfix->Destroy();
+    return 0;
+}
+```
 
-## Documentation
-For complete SDK documentation see the [PDFix website](https://pdfix.net).
+## Prerequisites
+### All platforms
+- CMake 3.10.0+
 
-## Installation on Windows, MacOS and Linux
+### Linux
+Supported linux distributions:
+- Ubuntu 16.04
+- CentOS
+- Debian
 
-To download the PDFix SDK to external/pdfix_sdk folder and build the examples
-run the following commands in the pdfix_sdk_example_cpp folder:
+### MacOS
+- Xcode 12.0+
+
+### Windows
+- MS Visual Studio 2017 or latest
+
+## Download
+Clone the repository:  
+`git clone https://github.com/pdfix/pdfix_sdk_example_cpp`  
+
+...or download as .zip:  
+[Download as .zip](https://github.com/pdfix/pdfix_sdk_example_cpp/archive/master.zip)
+
+## Build
+Run the following commands in the pdfix_sdk_example_cpp folder:
 
 1. `cmake -S . -B build`  
 2. `cmake --build build`

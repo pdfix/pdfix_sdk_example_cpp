@@ -2,19 +2,9 @@
 // MovePage.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage MovePage_cpp
-*/
-/*!
-\page MovePage Move Page Sample
-Example how to move pages.
-\snippet /MovePage.hpp MovePage_cpp
-*/
 
 #include "pdfixsdksamples/MovePage.h"
 
-//! [MovePage_cpp]
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
@@ -52,4 +42,3 @@ void MovePage(
   doc->Close();
   pdfix->Destroy();
 }
-//! [MovePage_cpp]

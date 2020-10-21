@@ -2,19 +2,8 @@
 // TagsEditStructTree.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage TagsEditStructTree_cpp
-*/
-/*!
-\page TagsEditStructTree_cpp Edit Structure Tree Sample
-Example how to manually edit tags in a structur tree.
-\snippet /TagsEditStructTree.hpp TagsEditStructTree_cpp
-*/
 
 #pragma once
-
-//! [TagsEditStructTree_cpp]
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
@@ -173,4 +162,3 @@ void TagsEditStructTree(
   doc->Close();
   pdfix->Destroy();
 }
-//! [TagsEditStructTree_cpp]

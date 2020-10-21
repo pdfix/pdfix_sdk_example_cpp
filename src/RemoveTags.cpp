@@ -2,19 +2,9 @@
 // RemoveTags.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage RemoveTags_cpp
-*/
-/*!
-\page RemoveTags_cpp Remove Tags Sample
-Example how to automatically remove tags from the document.
-\snippet /RemoveTags.hpp RemoveTags_cpp
-*/
 
 #include "pdfixsdksamples/RemoveTags.h"
 
-//! [RemoveTags_cpp]
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
@@ -45,4 +35,3 @@ void RemoveTags(
   doc->Close();
   pdfix->Destroy();
 }
-//! [RemoveTags_cpp]

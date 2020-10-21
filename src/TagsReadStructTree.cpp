@@ -2,19 +2,8 @@
 // TagsReadStructTree.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage GetTags_cpp
-*/
-/*!
-\page GetTags_cpp Get Tags Sample
-Example how to automatically get tags from the document.
-\snippet /GetTags.hpp GetTags_cpp
-*/
 
 #pragma once
-
-//! [GetTags_cpp]
 #include <string>
 #include <iostream>
 #include <boost/property_tree/ptree.hpp>
@@ -134,4 +123,3 @@ void TagsReadStructTree(
   doc->Close();
   pdfix->Destroy();
 }
-//! [GetTags_cpp]

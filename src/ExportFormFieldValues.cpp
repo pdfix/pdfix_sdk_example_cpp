@@ -2,19 +2,9 @@
 // ExportFormFieldValues.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage ExportFormFieldValues_cpp
-*/
-/*!
-\page ExportFormFieldValues_cpp Export Form Field Values Sample
-Example how to export form fields values into a txt file.
-\snippet /ExportFormFieldValues.hpp ExportFormFieldValues_cpp
-*/
 
 #include "pdfixsdksamples/ExportFormFieldValues.h"
 
-//! [ExportFormFieldValues_cpp]
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -59,5 +49,3 @@ void ExportFormFieldValues(
 
   pdfix->Destroy();
 }
-
-//! [ExportFormFieldValues_cpp]

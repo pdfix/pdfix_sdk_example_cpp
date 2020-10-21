@@ -2,20 +2,9 @@
 // RegexSetPattern.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage RegexSetPattern_cpp
-*/
-/*!
-\page RegexSetPattern_cpp Set Regex Pattern Sample
-// Example how to use PsRegex::SetPattern method.
-// It uses ECMAScript regular expressions pattern syntax.
-\snippet /RegexSetPattern.hpp RegexSetPattern_cpp
-*/
 
 #include "pdfixsdksamples/RegexSetPattern.h"
 
-//! [RegexSetPattern_cpp]
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
@@ -74,4 +63,3 @@ void RegexSetPattern(
   regex->Destroy();
   pdfix->Destroy();
 }
-//! [RegexSetPattern_cpp]

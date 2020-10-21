@@ -2,19 +2,9 @@
 // NamedDestsToJson.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage NamedDestsToJson_cpp
-*/
-/*!
-\page NamedDestsToJson_cpp Save Named Destinations to JSON Sample
-Example how to extract all named destinations in documnent into json.
-\snippet /NamedDestsToJson.hpp NamedDestsToJson_cpp
-*/
 
 #include "pdfixsdksamples/NamedDestsToJson.h"
 
-//! [NamedDestsToJson_cpp]
 // system
 #include <string>
 #include <iostream>
@@ -30,7 +20,7 @@ extern std::string ToUtf8(const std::wstring& wstr);
 
 namespace NamedDestsToJson {
   bool ProcessViewDestination(PdfViewDestination* view_dest, PdfDoc* doc, ptree& json) {
-    if (view_dest && (view_dest = view_dest->Resolve(doc)) && view_dest) {
+    if (view_dest != nullptr) {
       auto page_num = view_dest->GetPageNum(doc);
       if (page_num != -1) {
         // process only valid named destinations pointing to existing pages
@@ -106,4 +96,3 @@ namespace NamedDestsToJson {
     pdfix->Destroy();
   }
 }
-//! [NamedDestsToJson_cpp]

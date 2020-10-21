@@ -2,15 +2,6 @@
 // ConvertToJson.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage ConvertToJson_cpp
-*/
-/*!
-\page ConvertToJson_cpp Pdf To JSON Sample
-Example how to convert whole PDF document to JSON.
-\snippet /ConvertToJson.hpp ConvertToJson_cpp
-*/
 
 #include "pdfixsdksamples/ConvertToJson.h"
 
@@ -18,7 +9,6 @@ Example how to convert whole PDF document to JSON.
 // Helpful links: http://json.parser.online.fr/, https://jsonlint.com/
 // Sample is not finished, need to implement mechanism to write json syntax to file
 
-//! [ConvertToJson_cpp]
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -26,6 +16,7 @@ Example how to convert whole PDF document to JSON.
 #include <iomanip>
 #include <memory>
 #include <algorithm>
+#include <cstring>
 #include "Pdfix.h"
 
 using namespace PDFixSDK;
@@ -840,4 +831,3 @@ void ConvertToJson(
   doc->Close();
   pdfix->Destroy();
 }
-//! [ConvertToJson_cpp]

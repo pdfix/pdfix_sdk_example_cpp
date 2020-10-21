@@ -2,19 +2,9 @@
 // DocumentMetadata.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage DocumentMetadata_cpp
-*/
-/*!
-\page DocumentMetadata_cpp Get/Set Document Metadata Sample
-Example how to get or set document metadata.
-\snippet /DocumentMetadata.hpp DocumentMetadata_cpp
-*/
 
 #include "pdfixsdksamples/DocumentMetadata.h"
 
-//! [DocumentMetadata_cpp]
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
@@ -64,5 +54,3 @@ void DocumentMetadata(
   doc->Close();
   pdfix->Destroy();
 }
-
-//! [DocumentMetadata_cpp]

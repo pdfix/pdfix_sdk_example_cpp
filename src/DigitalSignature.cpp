@@ -2,19 +2,9 @@
 // DigitalSignature.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage DigitalSignature_cpp
-*/
-/*!
-\page DigitalSignature_cpp PFX Digital Signature Sample
-Example how to apply a digital signature from the PFX file.
-\snippet /DigitalSignature.hpp DigitalSignature_cpp
-*/
 
 #include "pdfixsdksamples/DigitalSignature.h"
 
-//! [DigitalSignature_cpp]
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
@@ -56,4 +46,3 @@ void DigitalSignature(
   doc->Close();
   pdfix->Destroy();
 }
-//! [DigitalSignature_cpp]

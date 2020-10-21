@@ -2,19 +2,9 @@
 // AcroFormImport.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage AcroFormImport_cpp
-*/
-/*!
-\page AcroFormImport_cpp Export Form Field from PDF Sample
-Example how to export information about form fields into a JSON.
-\snippet /AcroFormImport.hpp AcroFormImport_cpp
-*/
 
 #include "pdfixsdksamples/AcroFormImport.h"
 
-//! [AcroFormImport_cpp]
 //system
 #include <string>
 #include <iostream>
@@ -100,5 +90,3 @@ namespace AcroFormImport {
     pdfix->Destroy();
   }
 }
-
-//! [AcroFormImport_cpp]

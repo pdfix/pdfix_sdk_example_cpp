@@ -2,19 +2,9 @@
 // CertDigitalSignature.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*! 
-\page CPP_Samples C++ Samples
-- \subpage CertDigitalSignature_cpp
-*/
-/*! 
-\page CertDigitalSignature_cpp Certificate Store Digital Signature Sample
-Example how to apply a digital signature from Certificate stores.
-\snippet /CertDigitalSignature.hpp CertDigitalSignature_cpp
-*/
 
 #include "pdfixsdksamples/CertDigitalSignature.h"
 
-//! [CertDigitalSignature_cpp]
 #include <string>
 #include <iostream>
 #ifdef _WIN32
@@ -51,7 +41,7 @@ void CertDigitalSignature(
   // open a certificate store.
   if (!(cert_store = CertOpenSystemStore(NULL, TEXT("MY"))))
     throw std::runtime_error("Open retificate store failed!");
-  HMODULE hLib = LoadLibrary(L"cryptdlg.dll");
+  HMODULE hLib = LoadLibraryA("cryptdlg.dll");
   BOOL(WINAPI *pCertSelectCertificate)(PCERT_SELECT_STRUCT) = NULL;
   pCertSelectCertificate = (BOOL(WINAPI *)(PCERT_SELECT_STRUCT))GetProcAddress(hLib, "CertSelectCertificateW");
   CERT_SELECT_STRUCT certSelect;
@@ -111,4 +101,3 @@ void CertDigitalSignature(
   DestroyPdfix();
 #endif
 }
-//! [CertDigitalSignature_cpp]

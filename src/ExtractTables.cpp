@@ -2,19 +2,9 @@
 // ExtractTables.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage ExtractTables_cpp
-*/
-/*!
-\page ExtractTables_cpp Pdf To Table Sample
-Example how to extract images from a PDF document.
-\snippet /ExtractTables.hpp ExtractTables_cpp
-*/
 
 #include "pdfixsdksamples/ExtractTables.h"
 
-//! [ExtractTables_cpp]
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -137,4 +127,3 @@ void ExtractTables(
   doc->Close();
   pdfix->Destroy();
 }
-//! [ExtractTables_cpp]

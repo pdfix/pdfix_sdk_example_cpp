@@ -2,19 +2,9 @@
 // BookmarksToJson.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage BookmarksToJson_cpp
-*/
-/*!
-\page BookmarksToJson_cpp Save Bookmarks to JSON Sample
-Example how to extract all documents bookmarks into json.
-\snippet /BookmarksToJson.hpp BookmarksToJson_cpp
-*/
 
 #include "pdfixsdksamples/BookmarksToJson.h"
 
-//! [BookmarksToJson_cpp]
 // system
 #include <string>
 #include <iostream>
@@ -41,7 +31,7 @@ namespace BookmarksToJson {
       case kActionGoTo: {
         json.put("type", "GoTo");
         auto view_dest = action->GetViewDestination();
-        if (view_dest && (view_dest = view_dest->Resolve(doc)) && view_dest)
+        if (view_dest != nullptr)
           json.put("page_num", view_dest->GetPageNum(doc) + 1);
         break;
       }
@@ -122,4 +112,3 @@ namespace BookmarksToJson {
     pdfix->Destroy();
   }
 }
-//! [BookmarksToJson_cpp]

@@ -2,19 +2,9 @@
 // RemoveComments.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage RemoveComments_cpp
-*/
-/*!
-\page RemoveComments_cpp Remove Comments Sample
-Example how to remove from a first text annot with it's popup and all replies,
-\snippet /RemoveComments.hpp RemoveComments_cpp
-*/
 
 #include "pdfixsdksamples/RemoveComments.h"
 
-//! [RemoveComments_cpp]
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
@@ -51,4 +41,3 @@ void RemoveComments(
   doc->Close();
   pdfix->Destroy();
 }
-//! [RemoveComments_cpp]

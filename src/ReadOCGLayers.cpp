@@ -2,19 +2,9 @@
 // ReadOCGLayers.cpp
 // Copyright (c) 2019 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage ReadOCGLayers_cpp
-*/
-/*!
-\page ReadOCGLayers_cpp Read OCG Layers Sample
-Example how to read optional content groups - OCG Layers.
-\snippet /ReadOCGLayers.hpp ReadOCGLayers_cpp
-*/
 
 #include "pdfixsdksamples/ReadOCGLayers.h"
 
-//! [ReadOCGLayers_cpp]
 #include <string>
 #include <map>
 #include <iostream>
@@ -67,5 +57,4 @@ namespace ReadOCGLayers {
     doc->Close();
     pdfix->Destroy();
   }
-} //namespace ReadOCGLayers
-//! [ReadOCGLayers_cpp]
+}

@@ -2,19 +2,9 @@
 // RenderPage.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage RenderPage_cpp
-*/
-/*!
-\page RenderPage_cpp Render Page Sample
-Example how to render a PDF document page into an image.
-\snippet /RenderPage.hpp RenderPage_cpp
-*/
 
 #include "pdfixsdksamples/RenderPage.h"
 
-//! [RenderPage_cpp]
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
@@ -85,4 +75,3 @@ void RenderPage(
 
   pdfix->Destroy();
 }
-//! [RenderPage_cpp]

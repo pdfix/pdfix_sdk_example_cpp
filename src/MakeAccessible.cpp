@@ -2,19 +2,9 @@
 // MakeAccessible.h
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*!
-\page CPP_Samples C++ Samples
-- \subpage MakeAccessible_cpp
-*/
-/*!
-\page MakeAccessible_cpp Make PDF Accessible Sample
-Example how to make PDF Accessible.
-\snippet /MakeAccessible.hpp MakeAccessible_cpp
-*/
 
 #include "pdfixsdksamples/MakeAccessible.h"
 
-//! [MakeAccessible_cpp]
 #include <string>
 #include <iostream>
 #include <memory>
@@ -27,8 +17,8 @@ using namespace PDFixSDK;
 void MakeAccessible(
   const std::wstring& open_path,           // source PDF document
   const std::wstring& save_path,           // output PDF/UA document
-  std::optional<std::wstring> language,    // document reading language
-  std::optional<std::wstring> title,       // document title
+  std::pair<bool, std::wstring> language,  // document reading language
+  std::pair<bool, std::wstring> title,     // document title
   const std::wstring& config_path,         // configuration file
   const bool preflight                     // preflight document template before processing
   ) {
@@ -79,12 +69,12 @@ void MakeAccessible(
     throw PdfixException();
 
   // set document language
-  if (language)
-    doc->SetLang(language.value().c_str());
+  if (language.first)
+    doc->SetLang(language.second.c_str());
 
   // set documnt title
-  if (title)
-    doc->SetInfo(L"Title", title.value().c_str());
+  if (title.first)
+    doc->SetInfo(L"Title", title.second.c_str());
 
   if (!doc->Save(save_path.c_str(), kSaveFull))
     throw PdfixException();
@@ -92,4 +82,3 @@ void MakeAccessible(
   doc->Close();
   pdfix->Destroy();
 }
-//! [MakeAccessible_cpp]
