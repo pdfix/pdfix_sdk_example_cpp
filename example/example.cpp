@@ -9,110 +9,99 @@ extern std::wstring GetAbsolutePath(const std::wstring& path);
 
 int main()
 {
-  std::wstring email = L"YOUR_EMAIL";                                     // authorization email   
-  std::wstring key = L"LICENSE_KEY";                                      // authorization license key
-  
   std::wstring resources_dir = GetAbsolutePath(L"../../resources");
   std::wstring output_dir = GetAbsolutePath(L"../../output");
 
   std::wstring open_path = resources_dir + L"/test.pdf";        // source PDF document
-  std::wstring save_path = output_dir + L"/test.pdf";        // source PDF document
+  //std::wstring save_path = output_dir + L"/test.pdf";        // source PDF document
   std::wstring config_path = resources_dir + L"/config.json";   // configuration file
 
   try {
     Initialization();
     
-    std::wcout << open_path << "\n";
-    std::wcout << save_path << "\n";
+    // Accessibility and PDF Tagging samples
+    MakeAccessible(open_path, output_dir + L"/MakeAccessible.pdf", 
+      std::make_pair(false, L""), std::make_pair(true, L"Document title"), 
+      config_path,
+      false);
+
+    AddTags(open_path, output_dir + L"/AddTags.pdf", config_path, true);
+
+    // TagsReadStructTree(open_path, output_dir + L"/TagsReadStructTree.txt", config_path);
+    // TagTableAsFigure::Run(open_path, output_dir + L"/TagTableAsFigure.pdf");
+    // TagsReadingOrder::Run(open_path, output_dir + L"/TagsReadingOrder.pdf");
+    // TagAnnotation::Run(open_path, output_dir + L"/TagAnnotation.pdf");
+    // TagHeadings::Run(open_path, output_dir + L"/TagHeadings.pdf");
+    // TagAsArtifact::Run(open_path, output_dir + L"/TagAsArtifact.pdf");
+    // TagsEditStructTree(open_path, output_dir + L"/TagsEditStructTree.pdf");
+
+    // Data Extraction samples
+    ExtractData::DataType extract_data; 
+    extract_data.doc_info = true;       // extract document info
+    extract_data.page_map = true;       // extract page map data for data scraping
+    extract_data.extract_text = true;   // extract text
+    ExtractData::Run(open_path, config_path, std::cout, extract_data, true, kDataFormatJson);
+
+    PdfImageParams image_params;
+    ExtractImages(open_path, output_dir + L"/", 800, image_params);
+    ExtractTables(open_path, output_dir + L"/");
+    ExtractHighlightedText(open_path, output_dir + L"/ExtractHighlightedText.txt", config_path);
+
+    // PDF to HTML samples
+    PdfHtmlParams html_params;
+    html_params.flags |= (kHtmlNoExternalCSS | kHtmlNoExternalIMG | kHtmlNoExternalJS);
+    ConvertToHtml(open_path, output_dir + L"/fixed.html", config_path, html_params, true);
+    html_params.type = kPdfHtmlResponsive;
+    ConvertToHtml(open_path, output_dir + L"/responsive.html", config_path, html_params, true);
+
+    PdfHtmlParams html_params_ex;
+    html_params_ex.flags |= (kHtmlNoExternalCSS | kHtmlNoExternalIMG | kHtmlNoExternalJS);
+    ConvertToHtmlEx(open_path, output_dir + L"/ConvertToHtmlPage_script.js", config_path,
+                   html_params_ex, L"js", L"");
+    ConvertToHtmlEx(open_path, output_dir + L"/ConvertToHtmlPage_style.css", config_path,
+                   html_params_ex, L"css", L"");
+    ConvertToHtmlEx(open_path, output_dir + L"/ConvertToHtmlPage_doc.html", config_path,
+                   html_params_ex, L"document", L"");
+    ConvertToHtmlEx(open_path, output_dir + L"/ConvertToHtmlPage_page_1.html", config_path,
+                   html_params_ex, L"page", L"1");
+
     // Markup & Comment
-    AddComment(open_path, save_path);
-    //RemoveComments(email, key, open_path, output_dir + L"/RemoveComments.pdf");
+    AddComment(open_path, output_dir + L"/AddComment.pdf");
     
-    //// Convert to HTML
-    //PdfHtmlParams html_params;
-    //html_params.flags |= (kHtmlNoExternalCSS | kHtmlNoExternalIMG | kHtmlNoExternalJS);
-    //ConvertToHtml(email, key, open_path, output_dir + L"/fixed.html", config_path,
-    //              html_params);
-    //html_params.type = kPdfHtmlResponsive;
-    //ConvertToHtml(email, key, open_path, output_dir + L"/responsive.html", config_path,
-    //              html_params);
-    //PdfHtmlParams html_params_ex;
-    //html_params.flags |= (kHtmlNoExternalCSS | kHtmlNoExternalIMG | kHtmlNoExternalJS);
-    //
-    //// Convert to HTML by parts
-    //ConvertToHtmlEx(email, key, open_path, output_dir + L"/ConvertToHtmlPage_script.js", config_path,
-    //                html_params_ex, L"js", L"");
-    //ConvertToHtmlEx(email, key, open_path, output_dir + L"/ConvertToHtmlPage_style.css", config_path,
-    //                html_params_ex, L"css", L"");
-    //ConvertToHtmlEx(email, key, open_path, output_dir + L"/ConvertToHtmlPage_doc.html", config_path,
-    //                html_params_ex, L"document", L"");
-    //ConvertToHtmlEx(email, key, open_path, output_dir + L"/ConvertToHtmlPage_page_1.html", config_path,
-    //                html_params_ex, L"page", L"1");
-    //
-    ////PdfTaggedParams tagged_params;
-    ////ConvertTaggedPdf(email, key, open_path, GetAbsolutePath(L"output/fixed.html"), config_path,
-    ////  tagged_params);
-    //DigitalSignature(email, key, open_path, output_dir + L"/DigitalSignature.pdf",
-    //                 resources_dir + L"/test.pfx", L"TEST_PASSWORD");
-    //DocumentMetadata(email, key, open_path, output_dir + L"/DocumentMetadata.pdf",
-    //                 output_dir + L"/metadata.xml");
-    //EmbedFonts(email, key, open_path, output_dir + L"/EmbedFonts.pdf");
-    //
-    //// Data Extraction
-    //ExtractHighlightedText(email, key, open_path,
-    //                       output_dir + L"/ExtractHighlightedText.txt", config_path);
-    //PdfImageParams image_params;
-    //ExtractImages(email, key, open_path, output_dir + L"/", 800, image_params);
-    //ExtractTables(email, key, open_path, output_dir + L"/");
-    //ExtractText(email, key, open_path, output_dir + L"/ExtractText.txt", config_path);
-    //ConvertToXml(email, key, open_path, output_dir + L"/ConvertToXml.xml", config_path);
-    //
-    //// OCR Tesseract
-    //OcrWithTesseract(email, key, open_path, output_dir + L"/OcrTesseract.pdf",
-    //                 resources_dir + L"/tessdata", L"eng", 2., kRotate0);
-    //OcrPageImagesWithTesseract(email, key, open_path, output_dir + L"/OcrPageImagesWithTesseract.pdf",
-    //                           resources_dir + L"/tessdata", L"eng", 2., kRotate0);
-    //
-    //// Regex
-    //RegexSearch(email, key, open_path, L"(\\d{4}[- ]){3}\\d{4}");
-    //RegexSetPattern(email, key, open_path);
-    //
-    //RegisterEvent(email, key, open_path);
-    //
-    //// Render & Print
-    //RenderPage(email, key, open_path, output_dir + L"/RenderPage.jpg", 2.0, kRotate0);
-    //RenderPageWithoutText(email, key, open_path, output_dir + L"/RenderPageWithoutText.jpg", 2.0, kRotate0);
-    ////PrintPage(email, key, open_path);
-    //
-    //// Tags & Accessibility
-    //AddTags(email, key, open_path, output_dir + L"/AddTags.pdf", config_path);
-    //TagsReadStructTree(email, key, open_path, output_dir + L"/TagsReadStructTree.txt", config_path);
-    //TagTableAsFigure::Run(email, key, open_path, output_dir + L"/TagTableAsFigure.pdf");
-    //TagsReadingOrder::Run(email, key, open_path, output_dir + L"/TagsReadingOrder.pdf");
-    //TagAnnotation::Run(email, key, open_path, output_dir + L"/TagAnnotation.pdf");
-    //TagHeadings::Run(email, key, open_path, output_dir + L"/TagHeadings.pdf");
-    //TagAsArtifact::Run(email, key, open_path, output_dir + L"/TagAsArtifact.pdf");
-    //TagsEditStructTree(email, key, open_path, output_dir + L"/TagsEditStructTree.pdf");
-    //MakeAccessible(email, key, open_path, output_dir + L"/MakeAccessible.pdf", L"", L"", config_path);
-    //
-    //// Form fields
-    //ExportFormFieldValues(email, key, open_path,
-    //                      output_dir + L"/ExportFormFieldValues.txt");
-    //SetFieldFlags(email, key, open_path, output_dir + L"/SetFieldFlags.pdf");
-    //SetFormFieldValue(email, key, open_path, output_dir + L"/SetFormFieldValue.pdf");
-    //
-    //// Misc
-    //PdfFlattenAnnotsParams flatten_annots_params;
-    //FlattenAnnots(email, key, open_path, output_dir + L"/FlattenAnnots.pdf",
-    //              flatten_annots_params);
-    //BookmarksToJson(email, key, open_path, output_dir + L"/BookmarksToJson.json");
-    //GetWhitespace(email, key, open_path);
-    //PdfWatermarkParams watermark_params;
-    //AddWatermark(email, key, open_path, output_dir + L"/AddWatermark.pdf",
-    //             resources_dir + L"/watermark.png", watermark_params);
-    ////      OpedDocumentFromStream(email, key, open_path);
-    //ParsePdsObjects(email, key, open_path, output_dir + L"/ParsePdsObjects.txt");
-    //ParsePageContent(email, key, open_path, output_dir + L"/ParsePageContent.txt");
+    RemoveComments(open_path, output_dir + L"/RemoveComments.pdf");
+
+    PdfFlattenAnnotsParams flatten_annots_params;
+    FlattenAnnots(open_path, output_dir + L"/FlattenAnnots.pdf", flatten_annots_params);
+
+    // Render & Print
+    PdfDevRect clip_area;
+    RenderPage(open_path, output_dir + L"/RenderPage.jpg", image_params, 1, 1.0, kRotate0, clip_area);
+
+    // Signing and form-filling
+    DigitalSignature(open_path, output_dir + L"/DigitalSignature.pdf", resources_dir + L"/test.pfx", L"TEST_PASSWORD");
+    PdfWatermarkParams watermark_params;
+    AddWatermark(open_path, output_dir + L"/AddWatermark.pdf", resources_dir + L"/watermark.png", watermark_params);
+    ExportFormFieldValues(open_path, output_dir + L"/ExportFormFieldValues.txt");
+    SetFormFieldValue(open_path, output_dir + L"/SetFormFieldValue.pdf");
+    SetFieldFlags(open_path, output_dir + L"/SetFieldFlags.pdf");
+
+    // OCR Tesseract
+    OcrWithTesseract(open_path, output_dir + L"/OcrTesseract.pdf", resources_dir + L"/tessdata", L"eng", 2., kRotate0);
+    OcrPageImagesWithTesseract(open_path, output_dir + L"/OcrPageImagesWithTesseract.pdf", resources_dir + L"/tessdata", L"eng", 2., kRotate0);
+
+    // Miscelaneous
+    BookmarksToJson::Run(open_path, std::cout);
+    GetWhitespace::Run(open_path);
+    OpedDocumentFromStream::Run(open_path);
+    ParsePdsObjects::Run(open_path, std::cout);
+    ParsePageContent::Run(open_path, std::cout, 0);
+    DocumentMetadata::Run(open_path, output_dir + L"/DocumentMetadata.pdf", output_dir + L"/metadata.xml");
+    EmbedFonts::Run(open_path, output_dir + L"/EmbedFonts.pdf");
+    RegisterEvent(open_path);
+
+    // Regex
+    RegexSearch(open_path, L"(\\d{4}[- ]){3}\\d{4}");
+    RegexSetPattern(open_path);
   }
   catch (std::exception& ex) {
     std::cout << "Error: " << ex.what() << std::endl;

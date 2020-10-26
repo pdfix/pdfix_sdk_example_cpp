@@ -2,6 +2,8 @@
 
 #include <string>
 
-void GetWhitespace(
-  const std::wstring& open_path                  // source PDF document
+namespace GetWhitespace {
+  void Run(
+    const std::wstring& open_path                  // source PDF document
     );
+}

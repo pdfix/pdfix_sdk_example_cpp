@@ -3,6 +3,8 @@
 #include <string>
 
 // Iterates all documents bookmars.
-void OpedDocumentFromStream(
-    const std::wstring& open_path                        // source PDF document
-    );
+namespace OpedDocumentFromStream {
+    void Run(
+        const std::wstring& open_path                        // source PDF document
+        );
+}
