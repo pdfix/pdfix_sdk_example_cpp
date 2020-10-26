@@ -83,7 +83,7 @@ namespace ExtractText {
     auto from_page = page_number == -1 ? 0 : page_number;
     auto to_page = page_number == -1 ? num_pages - 1 : page_number;
     
-    for (auto i = from_page; i < to_page; i++) {
+    for (auto i = from_page; i <= to_page; i++) {
       std::unique_ptr<PdfPage, decltype(page_deleter)> page(doc->AcquirePage(i), page_deleter);
       if (!page)
         throw PdfixException();

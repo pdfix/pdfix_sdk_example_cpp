@@ -17,8 +17,7 @@ set(HEADERS
   # include/pdfixsdksamples/ConvertTaggedPdf.h
   include/pdfixsdksamples/ConvertToHtml.h
   include/pdfixsdksamples/ConvertToHtmlEx.h
-  include/pdfixsdksamples/ConvertToJson.h
-  include/pdfixsdksamples/ConvertToXml.h
+  include/pdfixsdksamples/ExtractData.h
   include/pdfixsdksamples/CreateNewDocument.h
   include/pdfixsdksamples/CreateNewDocuments.h
   include/pdfixsdksamples/CreatePage.h
@@ -81,8 +80,12 @@ set(SOURCES
   #src/ConvertTaggedPdf.cpp
   src/ConvertToHtml.cpp
   src/ConvertToHtmlEx.cpp
-  src/ConvertToJson.cpp
-  src/ConvertToXml.cpp
+  src/ExtractPdfData.cpp
+  src/ExtractPdfUtils.cpp
+  src/ExtractPageData.cpp
+  src/ExtractPageContent.cpp
+  src/ExtractPageMap.cpp
+  src/ExtractAnnot.cpp
   src/CreateNewDocument.cpp
   src/CreateNewDocuments.cpp
   src/CreatePage.cpp
