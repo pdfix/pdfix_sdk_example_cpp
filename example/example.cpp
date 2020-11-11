@@ -13,6 +13,7 @@ int main()
   std::wstring output_dir = GetAbsolutePath(L"../../output");
 
   std::wstring open_path = resources_dir + L"/test.pdf";        // source PDF document
+  std::wstring password = L"";                                  // open password
   //std::wstring save_path = output_dir + L"/test.pdf";        // source PDF document
   std::wstring config_path = resources_dir + L"/config.json";   // configuration file
 
@@ -40,7 +41,7 @@ int main()
     extract_data.doc_info = true;       // extract document info
     extract_data.page_map = true;       // extract page map data for data scraping
     extract_data.extract_text = true;   // extract text
-    ExtractData::Run(open_path, config_path, std::cout, extract_data, true, kDataFormatJson);
+    ExtractData::Run(open_path, password, config_path, std::cout, extract_data, true, kDataFormatJson);
 
     PdfImageParams image_params;
     ExtractImages(open_path, output_dir + L"/", 800, image_params);
@@ -50,19 +51,19 @@ int main()
     // PDF to HTML samples
     PdfHtmlParams html_params;
     html_params.flags |= (kHtmlNoExternalCSS | kHtmlNoExternalIMG | kHtmlNoExternalJS);
-    ConvertToHtml(open_path, output_dir + L"/fixed.html", config_path, html_params, true);
+    ConvertToHtml::Run(open_path, password, output_dir + L"/fixed.html", config_path, html_params, true);
     html_params.type = kPdfHtmlResponsive;
-    ConvertToHtml(open_path, output_dir + L"/responsive.html", config_path, html_params, true);
+    ConvertToHtml::Run(open_path, password, output_dir + L"/responsive.html", config_path, html_params, true);
 
     PdfHtmlParams html_params_ex;
     html_params_ex.flags |= (kHtmlNoExternalCSS | kHtmlNoExternalIMG | kHtmlNoExternalJS);
-    ConvertToHtmlEx(open_path, output_dir + L"/ConvertToHtmlPage_script.js", config_path,
+    ConvertToHtmlEx::Run(open_path, password, output_dir + L"/ConvertToHtmlPage_script.js", config_path,
                    html_params_ex, L"js", L"");
-    ConvertToHtmlEx(open_path, output_dir + L"/ConvertToHtmlPage_style.css", config_path,
+    ConvertToHtmlEx::Run(open_path, password, output_dir + L"/ConvertToHtmlPage_style.css", config_path,
                    html_params_ex, L"css", L"");
-    ConvertToHtmlEx(open_path, output_dir + L"/ConvertToHtmlPage_doc.html", config_path,
+    ConvertToHtmlEx::Run(open_path, password, output_dir + L"/ConvertToHtmlPage_doc.html", config_path,
                    html_params_ex, L"document", L"");
-    ConvertToHtmlEx(open_path, output_dir + L"/ConvertToHtmlPage_page_1.html", config_path,
+    ConvertToHtmlEx::Run(open_path, password, output_dir + L"/ConvertToHtmlPage_page_1.html", config_path,
                    html_params_ex, L"page", L"1");
 
     // Markup & Comment
@@ -75,7 +76,7 @@ int main()
 
     // Render & Print
     PdfDevRect clip_area;
-    RenderPage(open_path, output_dir + L"/RenderPage.jpg", image_params, 1, 1.0, kRotate0, clip_area);
+    RenderPage::Run(open_path, password, output_dir + L"/RenderPage.jpg", image_params, 1, 1.0, kRotate0, clip_area);
 
     // Signing and form-filling
     DigitalSignature(open_path, output_dir + L"/DigitalSignature.pdf", resources_dir + L"/test.pfx", L"TEST_PASSWORD");
