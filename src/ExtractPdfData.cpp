@@ -35,6 +35,14 @@ namespace ExtractData {
       node.add_child("pages", pages_node);
   }
 
+  void ExtractDocumentStructTree(PdfDoc *doc, ptree &node, const DataType &data_types) {
+    ptree struct_tree_node;
+    auto struct_tree = doc->GetStructTree(); 
+    if (struct_tree) 
+      ExtractStructTree(struct_tree, struct_tree_node, data_types);
+    node.add_child("struct_tree", struct_tree_node);
+  }
+
   // extract general document information (metadata, page count, is tagged, is form)
   void ExtractDocumentInfo(PdfDoc* doc, ptree& node, const DataType& data_types) {
     node.put("title", EncodeText(doc->GetInfo(L"Title")));
@@ -50,8 +58,8 @@ namespace ExtractData {
     if (data_types.doc_info)
       ExtractDocumentInfo(doc, node, data_types);
 
-    // if (data_types.doc_struct_tree)
-    //   ExtractDocumentStructTree(doc, ptree & node, data_types);
+    if (data_types.doc_struct_tree)
+      ExtractDocumentStructTree(doc, node, data_types);
 
     // if (data_types.doc_acroform)
     //   ExtractDocumentAcroForm(doc, ptree & node, data_types);
@@ -63,6 +71,7 @@ namespace ExtractData {
   ////////////////////////////////////////////////////////////////////////////////////////////////////
   void Run(
     const std::wstring &open_path,
+    const std::wstring &password,
     const std::wstring &config_path,
     std::ostream &output,
     const DataType &data_types,

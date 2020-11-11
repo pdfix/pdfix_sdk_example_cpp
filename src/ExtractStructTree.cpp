@@ -13,18 +13,16 @@
 namespace ExtractData {
 
   void ExtractStructElement(PdsStructElement* elem, ptree &node, const DataType& data_types) {
-    node.put("type", EncodeText(elem->GetType(true)));
-    node.put("title", EncodeText(elem->GetTitle()));
-    node.put("lang", EncodeText(elem->GetLang()));
-    node.put("id", EncodeText(elem->GetId()));
-    node.put("alt", EncodeText(elem->GetAlt()));
-    node.put("actual_text", EncodeText(elem->GetActualText()));
-
-              // test
-          elem->SetActualText(L"actual_text");
-          elem->SetAlt(L"alt");
-          elem->SetId(L"id");
-
+    auto put_non_empty = [&](const auto &key, const auto &value) {
+      if (!value.length()) return;
+      node.put(key, EncodeText(value));  
+    };
+    put_non_empty("type", elem->GetType(true));
+    put_non_empty("title", elem->GetTitle());
+    put_non_empty("lang", elem->GetLang());
+    put_non_empty("id", elem->GetId());
+    put_non_empty("alt", elem->GetAlt());
+    put_non_empty("actual_text", elem->GetActualText());
 
     ptree kids_node;
     for (int i = 0; i < elem->GetNumKids(); i++) {
@@ -32,18 +30,27 @@ namespace ExtractData {
       switch (elem->GetKidType(i)) {
         case kPdsStructKidElement: {
           // structure element reference
-          auto kid_obj = elem->GetKidObject(i);  
+          kid_node.put("kid_type", "element");
+          auto kid_obj = elem->GetKidObject(i);
           ExtractStructObject(elem->GetStructTree(), kid_obj, kid_node, data_types);
           break;
         }
-        case kPdsStructKidStreamContent:
+        case kPdsStructKidStreamContent: {
+          kid_node.put("kid_type", "stream_content");
+          // object reference
+          auto kid_obj = elem->GetKidObject(i);
+          kid_node.put("obj", kid_obj->GetId());
+          break;
+        }
         case kPdsStructKidObject: {
+          kid_node.put("kid_type", "object");
           // object reference
           auto kid_obj = elem->GetKidObject(i);
           kid_node.put("obj", kid_obj->GetId());
           break;
         }
         case kPdsStructKidPageContent: {
+          kid_node.put("kid_type", "page_content");
           // content element reference
           kid_node.put("mcid", elem->GetKidMcid(i));
           kid_node.put("page_num", elem->GetKidPageNumber(i));

@@ -96,6 +96,7 @@ set(SOURCES
   src/ExportFormFieldValues.cpp
   src/ExtractHighlightedText.cpp
   src/ExtractImages.cpp
+  src/ExtractStructTree.cpp
   src/ExtractTables.cpp
   src/ExtractText.cpp
   src/FillForm.cpp

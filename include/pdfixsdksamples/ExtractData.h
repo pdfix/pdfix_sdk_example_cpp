@@ -38,7 +38,7 @@ namespace ExtractData {
     bool extract_bbox = false;           // extract element or object bbox
 
     // structure tree
-    // bool struct_tree_content = false;     // extract content when listing structure tree using doc_struct_tree
+    bool struct_tree_content = false;     // extract content when listing structure tree using doc_struct_tree
 
     // rendering and images
     double render_zoom = 1.;              // page rasterizing zoom of image extraction
@@ -73,10 +73,16 @@ namespace ExtractData {
   void ExtractPageMapData(PdfPage *page, ptree &node, const DataType &data_types);
   void ExtractPageContentData(PdfPage *page, ptree &node, const DataType &data_types);
 
+  // struct tree
+  void ExtractStructObject(PdsStructTree *struct_tree, PdsObject *object, ptree &node,
+                           const DataType &data_types);
+  void ExtractStructTree(PdsStructTree *struct_tree, ptree &node, const DataType &data_types);
+
   // document
   void ExtractDocumentPages(PdfDoc *doc, ptree &node, const DataType &data_types);
   void ExtractDocumentInfo(PdfDoc *doc, ptree &node, const DataType &data_types);
   void ExtractDocumentData(PdfPage *page, ptree &node, const DataType &data_types);
+  void ExtractDocumentStructTree(PdfDoc *doc, ptree &node, const DataType &data_types);
 
   // utils
   std::string EncodeText(const std::wstring &text);
@@ -86,6 +92,7 @@ namespace ExtractData {
 
   void Run(
       const std::wstring &open_path,    // source PDF document
+      const std::wstring &password,     // open password
       const std::wstring &config_path,  // configuration file
       std::ostream &output,             // output stream
       const DataType& data_types,       // structure containing data types to extract
