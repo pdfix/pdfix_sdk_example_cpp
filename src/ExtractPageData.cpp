@@ -35,7 +35,7 @@ namespace ExtractData {
     ExtractPageMap(page_map.get(), page_map_node, data_types);
     page_map_node.put_child("bbox", bbox_node);
 
-    node.put_child("content", page_map_node);
+    node.put_child("page_map", page_map_node);
   }
 
   void ExtractPageContentData(PdfPage* page, ptree &node, const DataType &data_types) {    
