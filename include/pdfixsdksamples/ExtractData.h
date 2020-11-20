@@ -32,10 +32,12 @@ namespace ExtractData {
 
     // page map and page content extraction
     bool extract_text = false;           // extract text when extracting page map or page content
+    bool extract_text_state = false;     // extract text state information for each text object or element
     bool extract_tables = false;         // extract table strecture extracting page map
     bool extract_images = false;         // extract images when extracting page map or page content
     bool extract_paths = false;          // extract images when extracting page content
     bool extract_bbox = false;           // extract element or object bbox
+    bool extract_graphic_state = false;  // extract object's graphic state
 
     // structure tree
     bool struct_tree_content = false;     // extract content when listing structure tree using doc_struct_tree
@@ -44,9 +46,6 @@ namespace ExtractData {
     double render_zoom = 1.;              // page rasterizing zoom of image extraction
     PdfRotate render_rotate = kRotate0;   // page rasterizing rotation of image extraction
     PdfImageFormat image_format = kImageFormatJpg;  // format of the image
-
-    // text
-    bool text_state = false;              // extract text state information for each text object or element
   };
 
   // annotations
@@ -88,6 +87,7 @@ namespace ExtractData {
   std::string EncodeText(const std::wstring &text);
   void ExtractBBox(PdfRect bbox, ptree &node, const DataType& data_types);
   void ExtractTextState(PdfTextState *text_state, ptree &node, const DataType &data_types);
+  void ExtractGraphicState(const PdfGraphicState &graphics_state, ptree &node, const DataType &data_types);
   void RenderPageArea(PdfPage *page, PdfRect &bbox, ptree &node, const DataType &data_types);
 
   void Run(

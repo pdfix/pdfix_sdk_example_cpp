@@ -14,6 +14,12 @@ extern std::string ToUtf8(const std::wstring& wstr);
 extern std::string PsStreamEncodeBase64(PsStream *stream);
 
 namespace ExtractData {
+  auto put_array_node = [](auto &node, auto &value) {
+    ptree value_node;
+    value_node.put("", value);
+    node.push_back(std::make_pair("", value_node));
+  };
+
   void ExtractBBox(PdfRect bbox, ptree& node, const DataType& data_types) {
     ptree left_node, bottom_node, right_node, top_node;
     left_node.put("", bbox.left);
@@ -26,9 +32,56 @@ namespace ExtractData {
     node.push_back(std::make_pair("", top_node));
   }
 
+  void ExtractMatrix(const PdfMatrix &matrix, ptree& node, const DataType& data_types) {
+    put_array_node(node, matrix.a);
+    put_array_node(node, matrix.b);
+    put_array_node(node, matrix.c);
+    put_array_node(node, matrix.d);
+    put_array_node(node, matrix.e);
+    put_array_node(node, matrix.f);
+  }  
+
+  void ExtractColorState(const PdfColorState &color_state, ptree &node, const DataType &data_types) {
+    ptree color_state_node;
+    
+    node.put("fill_color_space", "rgb");
+    node.put("fill_color_opacity", color_state.fill_opacity);
+    ptree fill_color_node;
+    put_array_node(fill_color_node, color_state.fill_color.r);
+    put_array_node(fill_color_node, color_state.fill_color.g);
+    put_array_node(fill_color_node, color_state.fill_color.b);
+    node.put_child("fill_color", fill_color_node);
+
+    node.put("stroke_color_space", "rgb");
+    node.put("stroke_color_opacity", color_state.stroke_opacity);
+    ptree stroke_color_node;
+    put_array_node(stroke_color_node, color_state.stroke_color.r);
+    put_array_node(stroke_color_node, color_state.stroke_color.g);
+    put_array_node(stroke_color_node, color_state.stroke_color.b);
+    node.put_child("stroke_color", stroke_color_node);
+  }
 
   void ExtractTextState(PdfTextState *text_state, ptree &node, const DataType &data_types) {
-    // todo
+    ptree color_state_node;
+    ExtractColorState(text_state->color_state, color_state_node, data_types);
+    node.put_child("color_state", color_state_node);
+
+    if (text_state->font) {
+      node.put("font_name", EncodeText(text_state->font->GetFontName()));
+    }
+    node.put("font_size", text_state->font_size);
+  }
+
+  void ExtractGraphicState(const PdfGraphicState &graphic_state, ptree &node, const DataType &data_types) {  
+    ptree matrix_node;
+    ExtractMatrix(graphic_state.matrix, matrix_node, data_types);
+    node.put_child("matrix", matrix_node);
+
+    ptree color_state_node;
+    ExtractColorState(graphic_state.color_state, color_state_node, data_types);
+    node.put_child("color_state", color_state_node);
+
+    node.put("line_width", graphic_state.line_width);
   }
 
   // render page are into an image
