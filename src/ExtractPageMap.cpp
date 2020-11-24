@@ -10,7 +10,7 @@ namespace ExtractData {
   void ExtractTextElement(PdeText* text, ptree& node, const DataType& data_types) {
     node.put("text", EncodeText(text->GetText()));
 
-    if (data_types.text_state) {
+    if (data_types.extract_text_state) {
       ptree text_state_node;
       PdfTextState ts;
       text->GetTextState(&ts);

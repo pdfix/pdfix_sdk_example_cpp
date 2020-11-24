@@ -10,12 +10,12 @@ namespace ExtractData {
   void ExtractTextObject(PdsText *text, ptree &node, const DataType &data_types) {
     node.put("text", EncodeText(text->GetText()));
 
-    if (data_types.text_state) {
-      // ptree text_state_node;
-      // PdfTextState ts;
-      // text->GetTextState(doc, &ts);
-      // ExtractTextState(&ts, text_state_node, data_types);
-      // node.put_child("text_state", text_state_node);
+    if (data_types.extract_text_state) {
+      ptree text_state_node;
+      PdfTextState ts;
+      text->GetTextState(text->GetPage()->GetDoc(), &ts);
+      ExtractTextState(&ts, text_state_node, data_types);
+      node.put_child("text_state", text_state_node);
     }
   }
 
@@ -67,6 +67,12 @@ namespace ExtractData {
       ptree bbox_node;
       ExtractBBox(object->GetBBox(), bbox_node, data_types);
       node.put_child("bbox", bbox_node);
+    }
+
+    if (data_types.extract_graphic_state) {
+      ptree gs_node;
+      ExtractGraphicState(object->GetGState(), gs_node, data_types);
+      node.put_child("graphic_state", gs_node);
     }
 
     switch (object->GetObjectType()) {

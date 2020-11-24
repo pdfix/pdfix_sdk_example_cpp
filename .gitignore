@@ -3,6 +3,7 @@ build/
 external/pdfix_sdk
 
 .vs/
+.vscode/
 *.user
 
 xcuserdata/
