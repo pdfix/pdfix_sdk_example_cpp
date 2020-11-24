@@ -58,7 +58,7 @@ namespace ExtractData {
   void ExtractPathObject(PdsPath *path, ptree &node, const DataType &data_types);
   void ExtractImageObject(PdsImage *image, ptree &node, const DataType &data_types);
   void ExtractPageObject(PdsPageObject *page_object, ptree &node, const DataType &data_types);
-  void ExtractPageContent(PdsContent *content, ptree &node, const DataType &data_types);
+  void ExtractContent(PdsContent *content, ptree &node, const DataType &data_types);
 
   // page map - data scraping
   void ExtractTextElement(PdeText *text, ptree &node, const DataType& data_types);
@@ -70,8 +70,8 @@ namespace ExtractData {
   // page 
   void ExtractPageAnnots(PdfPage *page, ptree &node, const DataType& data_types);
   void ExtractPageData(PdfPage *page, ptree &node, const DataType &data_types);
-  void ExtractPageMapData(PdfPage *page, ptree &node, const DataType &data_types);
-  void ExtractPageContentData(PdfPage *page, ptree &node, const DataType &data_types);
+  void ExtractPageMap(PdfPage *page, ptree &node, const DataType &data_types);
+  void ExtractPageContent(PdfPage *page, ptree &node, const DataType &data_types);
 
   // struct tree
   void ExtractStructObject(PdsStructTree *struct_tree, PdsObject *object, ptree &node,

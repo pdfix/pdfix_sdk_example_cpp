@@ -17,4 +17,19 @@ namespace ExtractData {
       node.put_child("bbox", bbox_node);
     }
   }
+
+  void ExtractPageAnnots(PdfPage* page, ptree& node, const DataType& data_types) {
+    // annotations
+    ptree annots_node;
+    for (int i = 0; i < page->GetNumAnnots(); i++) {
+      auto annot = page->GetAnnot(i);
+      if (!annot)
+        continue;
+      ptree annot_node;
+      ExtractAnnot(annot, annot_node, data_types);
+      annots_node.push_back(std::make_pair("", annot_node));
+    }
+    if (annots_node.size())
+      node.put_child("annots", annots_node);
+  }  
 }

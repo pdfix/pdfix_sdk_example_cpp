@@ -39,7 +39,7 @@ namespace ExtractData {
       throw PdfixException();
 
     ptree content_node;
-    ExtractPageContent(content.get(), content_node, data_types);
+    ExtractContent(content.get(), content_node, data_types);
     node.put_child("content", content_node);
   }
 
@@ -90,7 +90,7 @@ namespace ExtractData {
   }
 
   // extract data from a PdsContnet object
-  void ExtractPageContent(PdsContent *content, ptree &node, const DataType &data_types) {
+  void ExtractContent(PdsContent *content, ptree &node, const DataType &data_types) {
     ptree objects_node;
     for (int i = 0; i < content->GetNumObjects(); i++) {
       ptree object_node;
@@ -99,4 +99,13 @@ namespace ExtractData {
     }
     node.put_child("kids", objects_node);
   }
+
+  void ExtractPageContent(PdfPage* page, ptree &node, const DataType &data_types) {    
+    auto content = page->GetContent();
+
+    ptree contnet_node;
+    ExtractContent(content, contnet_node, data_types);
+    node.put_child("content", contnet_node);
+  }
+
 }

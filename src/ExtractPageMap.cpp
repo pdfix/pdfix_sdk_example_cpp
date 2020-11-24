@@ -120,4 +120,20 @@ namespace ExtractData {
     ExtractPageElement(element, element_node, data_types);
     node.put_child("elements", element_node);
   }
+
+  void ExtractPageMap(PdfPage *page, ptree &node, const DataType &data_types) {
+    auto page_map_deleter = [&](PdePageMap* page_map) { page_map->Release(); };
+    std::unique_ptr<PdePageMap, decltype(page_map_deleter)> 
+      page_map(page->AcquirePageMap(nullptr, nullptr), page_map_deleter);  
+    if (!page_map)
+      throw PdfixException();
+
+    ptree page_map_node;
+
+    ptree bbox_node;
+    ExtractPageMap(page_map.get(), page_map_node, data_types);
+    page_map_node.put_child("bbox", bbox_node);
+
+    node.put_child("page_map", page_map_node);
+  }  
 }
