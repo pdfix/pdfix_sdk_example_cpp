@@ -64,6 +64,7 @@ namespace NamedDestsToJson {
   // Extract all documents bookmars into json.
   void Run(
     const std::wstring& open_path,                       // source PDF document
+    const std::wstring& password,                        // open document password
     std::ostream& output                                 // output stream
   ) {
     // initialize Pdfix
@@ -75,7 +76,7 @@ namespace NamedDestsToJson {
       throw std::runtime_error("GetPdfix fail");
 
     PdfDoc* doc = nullptr;
-    doc = pdfix->OpenDoc(open_path.c_str(), L"");
+    doc = pdfix->OpenDoc(open_path.c_str(), password.c_str());
     if (!doc)
       throw PdfixException();
 

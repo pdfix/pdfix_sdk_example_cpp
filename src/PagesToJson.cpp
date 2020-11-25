@@ -38,6 +38,7 @@ namespace PagesToJson {
   // Extract all documents bookmars into json.
   void Run(
     const std::wstring& open_path,                      // source PDF document
+    const std::wstring& password,                       // open document password
     std::ostream& output,                               // output stream
     int export_flags,                                   // export flags
     int page_num                                        // page number to process
@@ -51,7 +52,7 @@ namespace PagesToJson {
       throw std::runtime_error("GetPdfix fail");
 
     PdfDoc* doc = nullptr;
-    doc = pdfix->OpenDoc(open_path.c_str(), L"");
+    doc = pdfix->OpenDoc(open_path.c_str(), password.c_str());
     if (!doc)
       throw PdfixException();
       

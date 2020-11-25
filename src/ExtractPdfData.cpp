@@ -86,7 +86,7 @@ namespace ExtractData {
     if (!pdfix)
       throw std::runtime_error("GetPdfix fail");
 
-    PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), L"");
+    PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), password.c_str());
     if (!doc)
       throw PdfixException();
  

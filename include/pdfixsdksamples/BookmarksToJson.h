@@ -24,6 +24,7 @@ void ProcessBookmark(PdfBookmark* bmk, PdfDoc* doc, ptree& json);
 // Extract all documents bookmars into json.
 void Run(
     const std::wstring& open_path,                       // source PDF document
+    const std::wstring& password,                        // open document password
     std::ostream& output                                 // output stream
     );
 }

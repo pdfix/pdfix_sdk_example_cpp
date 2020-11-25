@@ -23,6 +23,7 @@ void ProcessPage(PdfPage* page, ptree& json, int flags);
 // Extract all documents bookmars into json.
 void Run(
     const std::wstring& open_path,                      // source PDF document
+    const std::wstring& password,                       // open password
     std::ostream& output,                               // output stream
     int export_flags,                                   // export flags
     int page_num                                        // page number to process
