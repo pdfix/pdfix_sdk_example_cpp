@@ -6,16 +6,51 @@
 #include "pdfixsdksamples/ExtractData.h"
 
 namespace ExtractData {
-  
+
+  // extract widget annotation data
+  void ExtractWidgetAnnot(PdfWidgetAnnot* widget, ptree& node, const DataType& data_types) {
+
+    auto widget_object = 
+
+    auto form_field = widget->GetFormField();
+    if (form_field) {
+      node.put("field_name", EncodeText(form_field->GetFullName()));
+      PdfFieldType field_type = kFieldUnknown;
+      switch (field_type) {
+      case kFieldButton: node.put("field_type", "button");
+        break;
+      case kFieldText: node.put("field_type", "text");
+        break;
+      case kFieldCombo: node.put("field_type", "dropdown");
+        break;
+      case kFieldCheck: node.put("field_type", "checkbox");
+        break;
+      case kFieldRadio: node.put("field_type", "radio");
+        break;
+      case kFieldList: node.put("field_type", "list");
+        break;
+      case kFieldSignature: node.put("field_type", "signature");
+        break;
+      default:
+        break;
+      }
+    }
+  }
+
   // Extract annotation data
   void ExtractAnnot(PdfAnnot* annot, ptree& node, const DataType& data_types) {
     auto annot_dict = annot->GetObject();
-    node.put("subtype", EncodeText(annot_dict->GetText(L"Subtype")));
+    auto subtype = annot_dict->GetText(L"Subtype");
+    node.put("subtype", EncodeText(subtype));
     if (data_types.extract_bbox) {
       ptree bbox_node;
       ExtractBBox(annot->GetBBox(), bbox_node, data_types);
       node.put_child("bbox", bbox_node);
     }
+
+    if (subtype == L"Widget")
+      ExtractWidgetAnnot((PdfWidgetAnnot *)annot, node, data_types);
+
   }
 
   void ExtractPageAnnots(PdfPage* page, ptree& node, const DataType& data_types) {
