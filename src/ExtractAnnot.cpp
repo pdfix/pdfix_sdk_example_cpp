@@ -10,8 +10,6 @@ namespace ExtractData {
   // extract widget annotation data
   void ExtractWidgetAnnot(PdfWidgetAnnot* widget, ptree& node, const DataType& data_types) {
 
-    auto widget_object = 
-
     auto form_field = widget->GetFormField();
     if (form_field) {
       node.put("field_name", EncodeText(form_field->GetFullName()));
