@@ -6,7 +6,8 @@
 #pragma once
 #include <string>
 #include <iostream>
-#include "Pdfix.h"
+
+#include "pdfixsdksamples/TagAsArtifact.h"
 
 using namespace PDFixSDK;
 
@@ -16,9 +17,10 @@ namespace TagAsArtifact {
   void MarkUntaggedObjectsAsArtifact(PdfPage* page) {
     PdfDoc* doc = page->GetDoc();
     
-    for (int i = 0; i < page->GetNumPageObjects(); i++) {
-      PdsPageObject* page_obj = page->GetPageObject(i);
-      
+    auto content = page->GetContent();
+    for (int i = 0; i < content->GetNumObjects(); i++) {
+      PdsPageObject* page_obj = content->GetObject(i);
+
       PdsContentMark* content_mark = page_obj->GetContentMark();
       if (!content_mark->GetTagArtifact() && content_mark->GetTagMcid() == -1) {
         PdsDictionary* artifact_dict = doc->CreateDictObject(false);

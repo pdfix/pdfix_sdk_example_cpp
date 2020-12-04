@@ -67,7 +67,7 @@ set(HEADERS
 
 set(SOURCES
   #src/RenderPageWithoutText.cpp
-  #src/TagAsArtifact.cpp
+  src/TagAsArtifact.cpp
   #src/ExtractTextFromOCGLayer.cpp
   src/AcroFormExport.cpp
   src/AcroFormImport.cpp

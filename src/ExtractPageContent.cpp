@@ -32,14 +32,12 @@ namespace ExtractData {
 
   // extract form page object data
   void ExtractFormObject(PdsForm *form, ptree &node, const DataType &data_types) {
-    auto page_content_deleter = [&](PdsContent* content) { content->Release(); };
-    std::unique_ptr<PdsContent, decltype(page_content_deleter)> 
-      content(form->AcquireContent(), page_content_deleter);  
+    auto content = form->GetContent();
     if (!content)
       throw PdfixException();
 
     ptree content_node;
-    ExtractContent(content.get(), content_node, data_types);
+    ExtractContent(content, content_node, data_types);
     node.put_child("content", content_node);
   }
 

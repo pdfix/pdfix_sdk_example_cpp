@@ -67,7 +67,7 @@ namespace ParsePageContent {
       case kPdsPageForm: {
         ss << "form" << std::endl;
         auto form = (PdsForm*)obj;
-        auto content = form->AcquireContent();
+        auto content = form->GetContent();
         auto objects_num = content->GetNumObjects();
         if (objects_num > 0) {
           ss << indent << "/kids" << std::endl;
