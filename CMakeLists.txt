@@ -48,6 +48,7 @@ set(HEADERS
   include/pdfixsdksamples/PagesToJson.h
   include/pdfixsdksamples/ParsePageContent.h
   include/pdfixsdksamples/ParsePdsObjects.h
+  include/pdfixsdksamples/PreflightDocTemplate.h
   include/pdfixsdksamples/PrintPage.h
   include/pdfixsdksamples/ReadOCGLayers.h
   include/pdfixsdksamples/RegexSearch.h
@@ -117,6 +118,7 @@ set(SOURCES
   src/PagesToJson.cpp
   src/ParsePageContent.cpp
   src/ParsePdsObjects.cpp
+  src/PreflightDocTemplate.cpp
   src/PrintPage.cpp
   src/ReadOCGLayers.cpp
   src/RegexSearch.cpp
