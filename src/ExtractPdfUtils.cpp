@@ -47,17 +47,19 @@ namespace ExtractData {
     node.put("fill_color_space", "rgb");
     node.put("fill_color_opacity", color_state.fill_opacity);
     ptree fill_color_node;
-    put_array_node(fill_color_node, color_state.fill_color.r);
-    put_array_node(fill_color_node, color_state.fill_color.g);
-    put_array_node(fill_color_node, color_state.fill_color.b);
+    PdfRGB fill_color = color_state.fill_color->GetRGB();
+    put_array_node(fill_color_node, fill_color.r);
+    put_array_node(fill_color_node, fill_color.g);
+    put_array_node(fill_color_node, fill_color.b);
     node.put_child("fill_color", fill_color_node);
 
     node.put("stroke_color_space", "rgb");
     node.put("stroke_color_opacity", color_state.stroke_opacity);
     ptree stroke_color_node;
-    put_array_node(stroke_color_node, color_state.stroke_color.r);
-    put_array_node(stroke_color_node, color_state.stroke_color.g);
-    put_array_node(stroke_color_node, color_state.stroke_color.b);
+    PdfRGB stroke_color = color_state.stroke_color->GetRGB();
+    put_array_node(stroke_color_node, stroke_color.r);
+    put_array_node(stroke_color_node, stroke_color.g);
+    put_array_node(stroke_color_node, stroke_color.b);
     node.put_child("stroke_color", stroke_color_node);
   }
 
