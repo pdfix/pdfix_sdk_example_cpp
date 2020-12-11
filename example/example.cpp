@@ -5,6 +5,8 @@
 
 #include "pdfixsdksamples/samples.h"
  
+#include "pdfixsdksamples/ConvertRGBToCMYK.h"
+
 extern std::wstring GetAbsolutePath(const std::wstring& path);
 
 int main()
@@ -19,7 +21,10 @@ int main()
 
   try {
     Initialization();
+
+    ConvertRGBToCMYK(open_path, output_dir + L"RGB2CMYK.pdf");
     
+    /*
     // Accessibility and PDF Tagging samples
     MakeAccessible(open_path, output_dir + L"/MakeAccessible.pdf", 
       std::make_pair(false, L""), std::make_pair(true, L"Document title"), 
@@ -103,6 +108,7 @@ int main()
     // Regex
     RegexSearch(open_path, L"(\\d{4}[- ]){3}\\d{4}");
     RegexSetPattern(open_path);
+    */
   }
   catch (std::exception& ex) {
     std::cout << "Error: " << ex.what() << std::endl;
