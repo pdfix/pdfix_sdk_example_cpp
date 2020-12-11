@@ -19,8 +19,41 @@ inline PdfCMYK MakeCMYK(int c, int m, int y, int k) {
   return value;
 }
 
+static void ConvertRGBToCMYK(PdfColor* color, const ColorMap& color_map) {
+    // TODO:
+}
+
+static void ConvertRGBToCMYK(PdfColorState& color_state, const ColorMap& color_map) {
+  // TODO: ConvertRGBToCMYK(color_state.fill_color, color_map);
+  // TODO: ConvertRGBToCMYK(color_state.stroke_color, color_map);
+}
+
+static void ConvertRGBToCMYK(PdfPage* page, const ColorMap& color_map) {
+  auto content = page->GetContent();
+  auto num_objects = content->GetNumObjects();
+  for (int i = 0; i < num_objects; i++) {
+    auto page_object = content->GetObject(i);
+    auto g_state = page_object->GetGState();
+    auto& color_state = g_state.color_state;
+    ConvertRGBToCMYK(color_state, color_map);
+
+    if (page_object->GetObjectType() == PdfPageObjectType::kPdsPageText) {
+      auto text_object = (PdsText*)page_object;
+      auto text_state = text_object->GetTextState(page->GetDoc());
+      auto& t_color_state = text_state.color_state;
+
+      ConvertRGBToCMYK(t_color_state, color_map);
+    }
+  }
+}
+
 static void ConvertRGBToCMYK(PdfDoc* doc, const ColorMap& color_map) {
-  // TODO:
+  auto num_pages = doc->GetNumPages();
+  for (int i = 0; i < num_pages; i++) {
+    auto page = doc->AcquirePage(i);
+    ConvertRGBToCMYK(page, color_map);
+    page->Release();
+  }
 }
 
 void ConvertRGBToCMYK(
