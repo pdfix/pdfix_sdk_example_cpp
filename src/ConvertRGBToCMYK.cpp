@@ -33,32 +33,41 @@ inline PdfRGB MakeRGB(int r, int g, int b) {
   return value;
 }
 
+inline std::array<float, 4> CMYKToValues(PdfCMYK& cmyk_color) {
+  const float divisor = 1.0f / 255.0f;
+  std::array<float, 4> result;
+  result[0] = (float)(cmyk_color.c) * divisor;
+  result[1] = (float)(cmyk_color.m) * divisor;
+  result[2] = (float)(cmyk_color.y) * divisor;
+  result[3] = (float)(cmyk_color.k) * divisor;
+  return result;
+}
+
 const PdfCMYK kDefaultCMYKColor = MakeCMYK(0, 100, 0, 0);
+PdfColorSpace* gCMYKColorSpace = nullptr;
 
 static void ConvertRGBToCMYK(PdfColor* color, const ColorMap& color_map) {
+  assert(gCMYKColorSpace != nullptr);
+
   auto color_space = color->GetColorSpace();
-  if (color_space->GetType() == kColorSpaceDeviceRGB) {
+  if (color_space->GetFamily() == kColorSpaceDeviceRGB) {
+
+    // find color mapping
     auto rgb = color->GetRGB();
     auto color_pair = color_map.find(rgb);
     PdfCMYK cmyk_color = kDefaultCMYKColor;
     if (color_pair != color_map.end()) {
       cmyk_color = color_pair->second;
     }
-    // TODO: set cmyk color sapce
-    // color->SetColorspaceByType(PdfColorSpaceType::kColorSpaceDeviceCMYK);
-    
-    // set cmyk color value
-    // TODO: make function out of this
-    const float divisor = 1.0f / 255.0f;
-    float cyan = (float)(cmyk_color.c) * divisor;
-    float magenta = (float)(cmyk_color.m) * divisor;
-    float yellow = (float)(cmyk_color.y) * divisor;
-    float black = (float)(cmyk_color.k) * divisor;
 
-    color->SetValue(0, cyan);
-    color->SetValue(1, magenta);
-    color->SetValue(2, yellow);
-    color->SetValue(3, black);
+    // set cmyk color space
+    color->SetColorSpace(gCMYKColorSpace);
+    
+    // set cmyk color values
+    auto values = CMYKToValues(cmyk_color);
+    for (int i = 0; i < values.size(); i++) {
+      color->SetValue(i, values[i]);
+    }
   }
 }
 
@@ -111,6 +120,8 @@ void ConvertRGBToCMYK(
   PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), L"");
   if (!doc)
     throw PdfixException();
+
+  gCMYKColorSpace = doc->CreateColorSpace(PdfColorSpaceFamily::kColorSpaceDeviceCMYK);
 
   //ptree template_tree;
   //read_json(ss, template_tree);
