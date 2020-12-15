@@ -50,7 +50,7 @@ static void ConvertRGBToCMYK(PdfColor* color, const ColorMap& color_map) {
   assert(gCMYKColorSpace != nullptr);
 
   auto color_space = color->GetColorSpace();
-  if (color_space->GetFamily() == kColorSpaceDeviceRGB) {
+  if (color_space->GetFamilyType() == kColorSpaceDeviceRGB) {
 
     // find color mapping
     auto rgb = color->GetRGB();
