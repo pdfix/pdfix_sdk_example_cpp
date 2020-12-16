@@ -34,7 +34,7 @@ inline PdfRGB MakeRGB(int r, int g, int b) {
 }
 
 inline std::array<float, 4> CMYKToValues(PdfCMYK& cmyk_color) {
-  const float divisor = 1.0f / 255.0f;
+  const float divisor = 1.0f / 100.0f;
   std::array<float, 4> result;
   result[0] = (float)(cmyk_color.c) * divisor;
   result[1] = (float)(cmyk_color.m) * divisor;
@@ -43,11 +43,14 @@ inline std::array<float, 4> CMYKToValues(PdfCMYK& cmyk_color) {
   return result;
 }
 
-const PdfCMYK kDefaultCMYKColor = MakeCMYK(0, 100, 0, 0);
 PdfColorSpace* gCMYKColorSpace = nullptr;
 
 static void ConvertRGBToCMYK(PdfColor* color, const ColorMap& color_map) {
   assert(gCMYKColorSpace != nullptr);
+
+  // nothing to do here
+  if (!color)
+    return;
 
   auto color_space = color->GetColorSpace();
   if (color_space->GetFamilyType() == kColorSpaceDeviceRGB) {
@@ -55,25 +58,26 @@ static void ConvertRGBToCMYK(PdfColor* color, const ColorMap& color_map) {
     // find color mapping
     auto rgb = color->GetRGB();
     auto color_pair = color_map.find(rgb);
-    PdfCMYK cmyk_color = kDefaultCMYKColor;
     if (color_pair != color_map.end()) {
-      cmyk_color = color_pair->second;
-    }
-
-    // set cmyk color space
-    color->SetColorSpace(gCMYKColorSpace);
-    
-    // set cmyk color values
-    auto values = CMYKToValues(cmyk_color);
-    for (int i = 0; i < values.size(); i++) {
-      color->SetValue(i, values[i]);
+      auto cmyk_color = color_pair->second;
+      // set cmyk color space
+      color->SetColorSpace(gCMYKColorSpace);
+      // set cmyk color values
+      auto values = CMYKToValues(cmyk_color);
+      for (int i = 0; i < values.size(); i++) {
+        color->SetValue(i, values[i]);
+      }
     }
   }
 }
 
 static void ConvertRGBToCMYK(PdfColorState& color_state, const ColorMap& color_map) {
-  ConvertRGBToCMYK(color_state.fill_color, color_map);
-  ConvertRGBToCMYK(color_state.stroke_color, color_map);
+  if (color_state.fill_type != kFillTypeNone) {
+    ConvertRGBToCMYK(color_state.fill_color, color_map);
+  }
+  if (color_state.stroke_type != kFillTypeNone) {
+    ConvertRGBToCMYK(color_state.stroke_color, color_map);
+  }
 }
 
 static void ConvertRGBToCMYK(PdfPage* page, const ColorMap& color_map) {
@@ -84,7 +88,7 @@ static void ConvertRGBToCMYK(PdfPage* page, const ColorMap& color_map) {
     auto g_state = page_object->GetGState();
     auto& color_state = g_state.color_state;
     ConvertRGBToCMYK(color_state, color_map);
-    page_object->SetGState(&g_state);
+    //page_object->SetGState(&g_state);
 
     if (page_object->GetObjectType() == PdfPageObjectType::kPdsPageText) {
       auto text_object = (PdsText*)page_object;
@@ -101,6 +105,7 @@ static void ConvertRGBToCMYK(PdfDoc* doc, const ColorMap& color_map) {
   for (int i = 0; i < num_pages; i++) {
     auto page = doc->AcquirePage(i);
     ConvertRGBToCMYK(page, color_map);
+    page->SetContent();
     page->Release();
   }
 }
@@ -135,8 +140,8 @@ void ConvertRGBToCMYK(
   ColorMap color_map;
   color_map[MakeRGB(0, 0, 0)] = MakeCMYK(0, 0, 0, 100);
   color_map[MakeRGB(0, 85, 34)] = MakeCMYK(92, 14, 98, 55);
-  color_map[MakeRGB(21, 125, 71)] = MakeCMYK(93, 0, 100, 3);
-  color_map[MakeRGB(35, 170, 70)] = MakeCMYK(77, 0, 88, 0);
+  color_map[MakeRGB(21, 152, 71)] = MakeCMYK(93, 0, 100, 3);
+  color_map[MakeRGB(35, 170, 77)] = MakeCMYK(77, 0, 88, 0);
   color_map[MakeRGB(15, 123, 63)] = MakeCMYK(90, 70, 96, 28);
   color_map[MakeRGB(22, 159, 80)] = MakeCMYK(88, 0, 94, 0);
 
