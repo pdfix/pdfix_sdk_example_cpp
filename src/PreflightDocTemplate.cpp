@@ -6,7 +6,9 @@
 #include "pdfixsdksamples/PreflightDocTemplate.h"
 
 #include <string>
+#include <cstring>
 #include <iostream>
+#include <memory>
 #include "Pdfix.h"
 
 using namespace PDFixSDK;
