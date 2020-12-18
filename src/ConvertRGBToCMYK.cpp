@@ -33,50 +33,50 @@ inline PdfRGB MakeRGB(int r, int g, int b) {
   return value;
 }
 
-inline std::array<float, 4> CMYKToValues(PdfCMYK& cmyk_color) {
-  const float divisor = 1.0f / 100.0f;
-  std::array<float, 4> result;
-  result[0] = (float)(cmyk_color.c) * divisor;
-  result[1] = (float)(cmyk_color.m) * divisor;
-  result[2] = (float)(cmyk_color.y) * divisor;
-  result[3] = (float)(cmyk_color.k) * divisor;
+inline std::array<double, 4> CMYKToValues(PdfCMYK& cmyk_color) {
+  const double divisor = 1.0 / 100.0;
+  std::array<double, 4> result;
+  result[0] = (double)(cmyk_color.c) * divisor;
+  result[1] = (double)(cmyk_color.m) * divisor;
+  result[2] = (double)(cmyk_color.y) * divisor;
+  result[3] = (double)(cmyk_color.k) * divisor;
   return result;
 }
 
 PdfColorSpace* gCMYKColorSpace = nullptr;
 
-static void ConvertRGBToCMYK(PdfColor* color, const ColorMap& color_map) {
+static PdfColor* ConvertRGBToCMYK(PdfColor* color, const ColorMap& color_map) {
   assert(gCMYKColorSpace != nullptr);
 
-  // nothing to do here
-  if (!color)
-    return;
+  PdfColor* result = color;
 
   auto color_space = color->GetColorSpace();
-  if (color_space->GetFamilyType() == kColorSpaceDeviceRGB) {
+  if (color_space && (color_space->GetFamilyType() == kColorSpaceDeviceRGB)) {
 
     // find color mapping
-    auto rgb = color->GetRGB();
+    PdfRGB rgb = color->GetRGB();
     auto color_pair = color_map.find(rgb);
     if (color_pair != color_map.end()) {
       auto cmyk_color = color_pair->second;
-      // set cmyk color space
-      color->SetColorSpace(gCMYKColorSpace);
+      // create color in cmyk color space
+      result = gCMYKColorSpace->CreateColor();
       // set cmyk color values
       auto values = CMYKToValues(cmyk_color);
       for (int i = 0; i < values.size(); i++) {
-        color->SetValue(i, values[i]);
+        result->SetValue(i, values[i]);
       }
     }
   }
+
+  return result;
 }
 
 static void ConvertRGBToCMYK(PdfColorState& color_state, const ColorMap& color_map) {
-  if (color_state.fill_type != kFillTypeNone) {
-    ConvertRGBToCMYK(color_state.fill_color, color_map);
-  }
   if (color_state.stroke_type != kFillTypeNone) {
-    ConvertRGBToCMYK(color_state.stroke_color, color_map);
+    color_state.stroke_color = ConvertRGBToCMYK(color_state.stroke_color, color_map);
+  }
+  if (color_state.fill_type != kFillTypeNone) {
+    color_state.fill_color = ConvertRGBToCMYK(color_state.fill_color, color_map);
   }
 }
 
@@ -85,17 +85,25 @@ static void ConvertRGBToCMYK(PdfPage* page, const ColorMap& color_map) {
   auto num_objects = content->GetNumObjects();
   for (int i = 0; i < num_objects; i++) {
     auto page_object = content->GetObject(i);
-    auto g_state = page_object->GetGState();
-    auto& color_state = g_state.color_state;
-    ConvertRGBToCMYK(color_state, color_map);
-    //page_object->SetGState(&g_state);
-
-    if (page_object->GetObjectType() == PdfPageObjectType::kPdsPageText) {
+    if (page_object->GetObjectType() != PdfPageObjectType::kPdsPageText) {
+      auto g_state = page_object->GetGState();
+      auto& color_state = g_state.color_state;
+      ConvertRGBToCMYK(color_state, color_map);
+      page_object->SetGState(&g_state);
+      if (color_state.stroke_color)
+        color_state.stroke_color->Destroy();
+      if (color_state.fill_color)
+        color_state.fill_color->Destroy();
+    } else {
       auto text_object = (PdsText*)page_object;
-      auto text_state = text_object->GetTextState(page->GetDoc());
-      auto& t_color_state = text_state.color_state;
-      ConvertRGBToCMYK(t_color_state, color_map);
-      // TODO: text_object->SetTextState(&g_state);
+      auto t_state = text_object->GetTextState(page->GetDoc());
+      auto& color_state = t_state.color_state;
+      ConvertRGBToCMYK(color_state, color_map);
+      text_object->SetTextState(&t_state);
+      if (color_state.stroke_color)
+        color_state.stroke_color->Destroy();
+      if (color_state.fill_color)
+        color_state.fill_color->Destroy();
     }
   }
 }
