@@ -22,9 +22,8 @@ int main()
   try {
     Initialization();
 
-    ConvertRGBToCMYK(open_path, output_dir + L"RGB2CMYK.pdf");
+    ConvertRGBToCMYK(open_path, output_dir + L"/Rgb2Cmyk.pdf");
     
-    /*
     // Accessibility and PDF Tagging samples
     MakeAccessible(open_path, output_dir + L"/MakeAccessible.pdf", 
       std::make_pair(false, L""), std::make_pair(true, L"Document title"), 
@@ -108,7 +107,6 @@ int main()
     // Regex
     RegexSearch(open_path, L"(\\d{4}[- ]){3}\\d{4}");
     RegexSetPattern(open_path);
-    */
   }
   catch (std::exception& ex) {
     std::cout << "Error: " << ex.what() << std::endl;
