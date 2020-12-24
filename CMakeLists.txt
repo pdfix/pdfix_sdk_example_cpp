@@ -17,6 +17,7 @@ set(HEADERS
   include/pdfixsdksamples/BookmarksToJson.h
   # include/pdfixsdksamples/CertDigitalSignature.h
   # include/pdfixsdksamples/ConvertTaggedPdf.h
+  include/pdfixsdksamples/ConvertRGBToCMYK.h
   include/pdfixsdksamples/ConvertToHtml.h
   include/pdfixsdksamples/ConvertToHtmlEx.h
   include/pdfixsdksamples/ExtractData.h
@@ -81,6 +82,7 @@ set(SOURCES
   src/BookmarksToJson.cpp
   # src/CertDigitalSignature.cpp
   #src/ConvertTaggedPdf.cpp
+  src/ConvertRGBToCMYK.cpp
   src/ConvertToHtml.cpp
   src/ConvertToHtmlEx.cpp
   src/ExtractPdfData.cpp

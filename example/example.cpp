@@ -5,6 +5,8 @@
 
 #include "pdfixsdksamples/samples.h"
  
+#include "pdfixsdksamples/ConvertRGBToCMYK.h"
+
 extern std::wstring GetAbsolutePath(const std::wstring& path);
 
 int main()
@@ -19,6 +21,8 @@ int main()
 
   try {
     Initialization();
+
+    ConvertRGBToCMYK(open_path, output_dir + L"/Rgb2Cmyk.pdf");
     
     // Accessibility and PDF Tagging samples
     MakeAccessible(open_path, output_dir + L"/MakeAccessible.pdf", 
