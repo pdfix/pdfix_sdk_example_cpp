@@ -23,7 +23,7 @@ static PdfColor* ConvertRGBToCMYK(PdfColor* color) {
     auto b = color->GetValue(2);
 
     auto k = 1.0 - std::max(r, std::max(g, b));
-    auto k_inv_recip = 1.0 / (1.0 - k);
+    auto k_inv_recip = (k == 1.0) ? 0.0 : (1.0 / (1.0 - k));
     auto c = (1.0 - r - k) * k_inv_recip;
     auto m = (1.0 - g - k) * k_inv_recip;
     auto y = (1.0 - b - k) * k_inv_recip;
