@@ -1,6 +1,6 @@
 
 #include "pdfixsdksamples/ConvertRGBToCMYK.h"
-
+#include  <cassert>
 #include "Pdfix.h"
 
 using namespace PDFixSDK;
