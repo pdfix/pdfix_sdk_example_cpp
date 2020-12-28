@@ -209,6 +209,7 @@ target_compile_definitions(pdfixsdksample
 target_include_directories(pdfixsdksample
   PUBLIC
   "$<IF:$<TARGET_EXISTS:pdfix_app>,${CMAKE_SOURCE_DIR}/libs/boost/include,${CMAKE_SOURCE_DIR}/external>"
+  "$<IF:$<TARGET_EXISTS:pdfix_app>,${CMAKE_SOURCE_DIR}/libs/boost_1_75_0,${CMAKE_SOURCE_DIR}/external>"
   "$<IF:$<TARGET_EXISTS:pdfix_app>,${CMAKE_SOURCE_DIR}/include/c++,${pdfixdist_SOURCE_DIR}/include/c++>"
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
   )
