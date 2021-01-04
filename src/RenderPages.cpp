@@ -37,6 +37,8 @@ void RenderPages(
     throw PdfixException();
 
   auto page_count = doc->GetNumPages();
+  if (page_to == -2)
+    page_to = page_count - 1;
   if (page_from > page_count || page_to > page_count)
     throw std::runtime_error("Page number out of range");
 
