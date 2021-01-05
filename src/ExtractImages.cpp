@@ -34,7 +34,7 @@ void SaveImage(PdeElement* element,
     if (elem_height == 0 || elem_width == 0)
       return;
       
-    image->SetRender(true);
+    image->SetVisible(true);
 
     PsImage* ps_image = pdfix->CreateImage(page_view->GetDeviceWidth(),
       page_view->GetDeviceHeight(), kImageDIBFormatArgb);
@@ -50,7 +50,7 @@ void SaveImage(PdeElement* element,
     ps_image->SaveRect(path.c_str(), &img_params, &elem_dev_rect);
     ps_image->Destroy();
 
-    image->SetRender(false);
+    image->SetVisible(false);
   }
 
   int count = element->GetNumChildren();

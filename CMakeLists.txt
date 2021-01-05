@@ -204,6 +204,7 @@ target_compile_definitions(pdfixsdksample
   UNICODE
   _UNICODE
   "$<$<CONFIG:DEBUG>:_DEBUG>"
+  BOOST_BIND_GLOBAL_PLACEHOLDERS
   )  
 
 target_include_directories(pdfixsdksample
