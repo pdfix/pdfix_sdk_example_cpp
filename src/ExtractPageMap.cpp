@@ -43,12 +43,8 @@ namespace ExtractData {
   // extract image element
   void ExtractImageElement(PdeImage* image, ptree& node, const DataType& data_types) {
     auto page = image->GetPageMap()->GetPage();
-    // render this element only
-    image->SetVisible(true);
     auto bbox = image->GetBBox();
     RenderPageArea(page, bbox, node, data_types);
-    // render cleanup
-    image->SetVisible(false);
   }
 
   // write page element

@@ -34,8 +34,6 @@ void SaveImage(PdeElement* element,
     if (elem_height == 0 || elem_width == 0)
       return;
       
-    image->SetVisible(true);
-
     PsImage* ps_image = pdfix->CreateImage(page_view->GetDeviceWidth(),
       page_view->GetDeviceHeight(), kImageDIBFormatArgb);
     if (!ps_image)
@@ -49,8 +47,6 @@ void SaveImage(PdeElement* element,
     std::wstring path = save_path + L"/ExtractImages_" + std::to_wstring(image_index++) + L".png";
     ps_image->SaveRect(path.c_str(), &img_params, &elem_dev_rect);
     ps_image->Destroy();
-
-    image->SetVisible(false);
   }
 
   int count = element->GetNumChildren();

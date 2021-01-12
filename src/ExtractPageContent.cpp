@@ -22,12 +22,8 @@ namespace ExtractData {
   // extract image page object data
   void ExtractImageObject(PdsImage *image, ptree &node, const DataType &data_types) {
     auto page = image->GetPage();
-    // render this element only
-    image->SetVisible(true);
     auto bbox = image->GetBBox();
     RenderPageArea(page, bbox, node, data_types);
-    // render cleanup
-    image->SetVisible(false);
   }
 
   // extract form page object data
