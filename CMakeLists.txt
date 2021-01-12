@@ -168,7 +168,7 @@ if(MSVC)
   set(DOWNLOAD_PLATFORM windows.zip)
 elseif(APPLE)
   set(OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin/darwin")
-  set(DOWNLOAD_PLATFORM macos.zip)
+  set(DOWNLOAD_PLATFORM darwin.zip)
 elseif(UNIX)
   set(OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin/linux")
   set(DOWNLOAD_PLATFORM linux.tar.gz)
@@ -179,7 +179,7 @@ include(FetchContent)
 
 FetchContent_Declare(
   pdfixdist
-  URL "https://github.com/pdfix/pdfix_sdk_builds/releases/download/6.5.0/pdfix_sdk_6.5.0_${DOWNLOAD_PLATFORM}"
+  URL "https://github.com/pdfix/pdfix_sdk_builds/releases/download/6.6.0/pdfix_sdk_6.6.0_a8441a44d_${DOWNLOAD_PLATFORM}"
   SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/pdfix_sdk
   )
 
