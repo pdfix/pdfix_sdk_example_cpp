@@ -179,7 +179,7 @@ include(FetchContent)
 
 FetchContent_Declare(
   pdfixdist
-  URL "https://github.com/pdfix/pdfix_sdk_builds/releases/download/6.6.0/pdfix_sdk_6.6.0_a8441a44d_${DOWNLOAD_PLATFORM}"
+  URL "https://github.com/pdfix/pdfix_sdk_builds/releases/download/6.7.0/pdfix_sdk_6.7.0_e5132d42_${DOWNLOAD_PLATFORM}"
   SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/pdfix_sdk
   )
 
