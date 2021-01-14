@@ -5,8 +5,6 @@
 
 #include "pdfixsdksamples/samples.h"
  
-#include "pdfixsdksamples/ConvertRGBToCMYK.h"
-
 extern std::wstring GetAbsolutePath(const std::wstring& path);
 
 int main()

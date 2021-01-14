@@ -20,15 +20,16 @@ set(HEADERS
   include/pdfixsdksamples/ConvertRGBToCMYK.h
   include/pdfixsdksamples/ConvertToHtml.h
   include/pdfixsdksamples/ConvertToHtmlEx.h
-  include/pdfixsdksamples/ExtractData.h
   include/pdfixsdksamples/CreateNewDocument.h
   include/pdfixsdksamples/CreateNewDocuments.h
   include/pdfixsdksamples/CreatePage.h
   include/pdfixsdksamples/DeletePages.h
   include/pdfixsdksamples/DigitalSignature.h
   include/pdfixsdksamples/DocumentMetadata.h
+  include/pdfixsdksamples/EditContent.h
   include/pdfixsdksamples/EmbedFonts.h
   include/pdfixsdksamples/ExportFormFieldValues.h
+  include/pdfixsdksamples/ExtractData.h
   include/pdfixsdksamples/ExtractHighlightedText.h
   include/pdfixsdksamples/ExtractImages.h
   include/pdfixsdksamples/ExtractTables.h
@@ -85,6 +86,7 @@ set(SOURCES
   src/ConvertRGBToCMYK.cpp
   src/ConvertToHtml.cpp
   src/ConvertToHtmlEx.cpp
+  src/EditContent.cpp
   src/ExtractPdfData.cpp
   src/ExtractPdfUtils.cpp
   src/ExtractPageData.cpp
