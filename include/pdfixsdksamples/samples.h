@@ -28,6 +28,7 @@
 #include "ParsePageContent.h"
 #include "ParsePdsObjects.h"
 #include "PrintPage.h"
+#include "ProcessControl.h"
 #include "RegexSearch.h"
 #include "RegexSetPattern.h"
 #include "RegisterEvent.h"
