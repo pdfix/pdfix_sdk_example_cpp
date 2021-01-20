@@ -93,6 +93,7 @@ int main()
     OcrPageImagesWithTesseract(open_path, output_dir + L"/OcrPageImagesWithTesseract.pdf", resources_dir + L"/tessdata", L"eng", 2., kRotate0);
 
     // Miscelaneous
+    ProcessControl::Run(open_path);
     BookmarksToJson::Run(open_path, L"", std::cout);
     GetWhitespace::Run(open_path);
     OpedDocumentFromStream::Run(open_path);
