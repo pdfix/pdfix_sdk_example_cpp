@@ -26,10 +26,17 @@ namespace OpedDocumentFromStream {
     if (!pdfix)
       throw std::runtime_error("GetPdfix fail");
     
+    // open document from file stream
     PsStream* file_stm = pdfix->CreateFileStream(open_path.c_str(), kPsReadOnly);
     if (!file_stm)
       throw PdfixException();
-    
+    PdfDoc* doc0 = pdfix->OpenDocFromStream(file_stm, L"");
+    if (!doc0)
+      throw PdfixException();
+    std::cout << "Document from file stream: " << doc0->GetNumPages() << " pages" << std::endl;
+    doc0->Close();    
+  
+    // open PDF from memory stream
     PsStream* mem_stm = pdfix->CreateMemStream();
     if (!mem_stm)
       throw PdfixException();
@@ -45,14 +52,34 @@ namespace OpedDocumentFromStream {
       pos += read;
       sz -= read;
     }
-    file_stm->Destroy();
     
-    PdfDoc* doc = pdfix->OpenDocFromStream(mem_stm, L"");
-    if (!doc)
+    PdfDoc* doc1 = pdfix->OpenDocFromStream(mem_stm, L"");
+    if (!doc1)
+      throw PdfixException();
+    std::cout << "Document from memory stream: " << doc1->GetNumPages() << " pages" << std::endl;
+    doc1->Close();    
+    mem_stm->Destroy();
+
+    // open from custom stream - define Read and GetSize procedure
+    auto custom_stm = pdfix->CreateCustomStream(
+      [](int offset, uint8_t* buffer, int size, void* data) -> int {
+        return ((PsStream*)data)->Read(offset, buffer, size) ? size : 0;
+      }, file_stm);
+    if (!custom_stm)
       throw PdfixException();
 
-    doc->Close();    
-    mem_stm->Destroy();
+    custom_stm->SetGetSizeProc(
+      [](void* data) -> int { return ((PsStream*)data)->GetSize(); });
+
+    PdfDoc* doc2 = pdfix->OpenDocFromStream(custom_stm, L"");
+    if (!doc2)
+      throw PdfixException();
+    std::cout << "Document from custom stream: " << doc2->GetNumPages() << " pages" << std::endl;
+    doc2->Close();    
+
+    custom_stm->Destroy();
+
+    file_stm->Destroy();
     pdfix->Destroy();
   }
 }
