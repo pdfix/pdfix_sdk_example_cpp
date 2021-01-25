@@ -36,35 +36,41 @@ namespace PreflightDocTemplate {
     if (!doc_template)
       throw PdfixException();
 
+    auto save_config = [&](auto flags) {
+      // save JSON to stream
+      auto stm = pdfix->CreateMemStream();
+      if (!stm)
+        throw PdfixException();
+      if (!doc_template->SaveToStream(stm, format, flags))
+        throw PdfixException();
+
+      auto sz = stm->GetSize();
+
+      struct free_delete { void operator()(void* x) { free(x); } };
+      std::shared_ptr<uint8_t> buffer((uint8_t *)malloc(sizeof(uint8_t) * (sz + 1)), free_delete());
+      memset(buffer.get(), 0, sz + 1);
+
+      if (!stm->Read(0, buffer.get(), sz))
+        throw PdfixException();
+      output << buffer.get();
+      stm->Destroy();
+    };
+
+    // save default config
+    output << "Default config: " << std::endl;
+    save_config(kSaveUncompressed | kSaveIncludeComments);
+
     // add reference pages for preflight
     for (auto i = 0; i < doc->GetNumPages(); i++) {
       if (!doc_template->AddPage(i, nullptr, nullptr))
         throw PdfixException();
     }
-        
-    // run document preflight
+    // update document preflight
     if (!doc_template->Update(nullptr, nullptr))
       throw PdfixException();
 
-    // save JSON to stream
-    auto stm = pdfix->CreateMemStream();
-    if (!stm)
-      throw PdfixException();
-
-    if (!doc_template->SaveToStream(stm, format))
-      throw PdfixException();
-
-    auto sz = stm->GetSize();
-
-    struct free_delete { void operator()(void* x) { free(x); } };
-    std::shared_ptr<uint8_t> buffer((uint8_t *)malloc(sizeof(uint8_t) * (sz + 1)), free_delete());
-    memset(buffer.get(), 0, sz + 1);
-
-    if (!stm->Read(0, buffer.get(), sz))
-      throw PdfixException();
-    output << buffer.get();
-
-    stm->Destroy();
+    output << "Preflight config: " << std::endl;
+    save_config(kSaveUncompressed);
 
     doc->Close();
     pdfix->Destroy();
