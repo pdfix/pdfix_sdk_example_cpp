@@ -264,8 +264,18 @@ namespace EditContent {
     matrix.e = object_prop.pos_x;
     matrix.f = object_prop.pos_y;
 
-    auto sys_font = pdfix->FindSysFont(L"Arial", kFontItalic, PdfFontCodepage::kFontDefANSICodepage);
+    auto sys_font = pdfix->FindSysFont(L"Arial", kFontForceBold, PdfFontCodepage::kFontDefANSICodepage);
+
+    if (!sys_font) {
+      throw PdfixException();
+    }
+
     auto font = doc->CreateFont(sys_font, PdfFontCharset::kFontAnsiCharset, 0);
+    sys_font->Destroy();
+
+    // std::wcout << font->GetFaceName() << std::endl;
+    // std::wcout << font->GetFontName() << std::endl;
+    // std::wcout << font->GetSystemFontName() << std::endl;
 
     auto text_obj = content->AddNewText(-1, font, &matrix);
     if (!text_obj)
