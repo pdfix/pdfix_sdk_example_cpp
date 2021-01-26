@@ -62,8 +62,8 @@ namespace OpedDocumentFromStream {
 
     // open from custom stream - define Read and GetSize procedure
     auto custom_stm = pdfix->CreateCustomStream(
-      [](int offset, uint8_t* buffer, int size, void* data) -> int {
-        return ((PsStream*)data)->Read(offset, buffer, size) ? size : 0;
+      [](int offset, void* buffer, int size, void* data) -> int {
+        return ((PsStream*)data)->Read(offset, (uint8_t*)buffer, size) ? size : 0;
       }, file_stm);
     if (!custom_stm)
       throw PdfixException();
