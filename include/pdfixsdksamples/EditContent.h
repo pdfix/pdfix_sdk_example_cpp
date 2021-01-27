@@ -32,7 +32,7 @@ namespace EditContent {
     const ObjectProps& object_prop);
   void AddStampAnnot(Pdfix* pdfix, PdfDoc* doc, PdfPage* page, const std::wstring& img_path,
     const ObjectProps& object_prop);
-  //void AddText(PdsContent* content, const ObjectProps& object_prop);
+  void AddText(Pdfix* pdfix, PdfDoc* doc, PdsContent* content, const ObjectProps& object_prop);
 
   void Run(
     const std::wstring& open_path,    // source PDF document

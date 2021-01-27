@@ -18,8 +18,8 @@ namespace EditContent {
       AddPath(doc, content, object_prop);
     if (object_prop.image) 
       AddImage(pdfix, doc, content, img_path, object_prop);
-    //if (object_prop.text)
-      //AddText(content, object_prop);
+    if (object_prop.text)
+      AddText(pdfix, doc, content, object_prop);
   }
 
   //path
@@ -251,6 +251,60 @@ namespace EditContent {
     auto added = page->AddAnnot(page->GetNumAnnots(), annot);
 
   }
+
+  void AddText(Pdfix* pdfix, PdfDoc* doc, PdsContent* content, const ObjectProps& object_prop) {
+
+    auto rgb_colorspace = doc->CreateColorSpace(PdfColorSpaceFamily::kColorSpaceDeviceRGB);
+
+    auto matrix = PdfMatrix();
+    matrix.a = 1;
+    matrix.b = 0;
+    matrix.c = 0;
+    matrix.d = 1;
+    matrix.e = object_prop.pos_x;
+    matrix.f = object_prop.pos_y;
+
+    auto sys_font = pdfix->FindSysFont(L"Arial", kFontForceBold, PdfFontCodepage::kFontDefANSICodepage);
+
+    if (!sys_font) {
+      throw PdfixException();
+    }
+
+    auto font = doc->CreateFont(sys_font, PdfFontCharset::kFontAnsiCharset, 0);
+    sys_font->Destroy();
+
+    // std::wcout << font->GetFaceName() << std::endl;
+    // std::wcout << font->GetFontName() << std::endl;
+    // std::wcout << font->GetSystemFontName() << std::endl;
+
+    auto text_obj = content->AddNewText(-1, font, &matrix);
+    if (!text_obj)
+      throw PdfixException();
+
+    text_obj->SetText(L"Hello world!");
+
+    PdfTextState ts;
+    auto stroke_color = rgb_colorspace->CreateColor();
+    stroke_color->SetValue(0, 1.0f);
+    ts.color_state.stroke_color = stroke_color;
+    ts.color_state.stroke_opacity = 255;
+    ts.color_state.stroke_type = kFillTypeSolid;
+
+    auto fill_color = rgb_colorspace->CreateColor();
+    fill_color->SetValue(1, 1.0f);
+    ts.color_state.fill_color = fill_color;
+    ts.color_state.fill_opacity = 255;
+    ts.color_state.fill_type = kFillTypeSolid;
+
+    ts.font = font;
+    ts.font_size = 20;
+
+    ts.char_spacing = 7;
+    ts.word_spacing = 10;
+
+    text_obj->SetTextState(&ts);
+  }
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////
   void Run(
     const std::wstring &open_path,
@@ -283,9 +337,9 @@ namespace EditContent {
     
     EditPageContent(pdfix, doc, content, img_path, object_prop);
 
-    AddStampAnnot(pdfix, doc, page, img_path, object_prop);
+    //AddStampAnnot(pdfix, doc, page, img_path, object_prop);
         
-    //page->SetContent();
+    page->SetContent();
 
     if (!doc->Save(save_path.c_str(), kSaveFull))
       throw PdfixException();
