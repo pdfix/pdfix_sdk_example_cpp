@@ -48,7 +48,7 @@ int main()
     PdfImageParams image_params;
     ExtractImages(open_path, output_dir + L"/", 800, image_params);
     ExtractTables(open_path, output_dir + L"/");
-    ExtractHighlightedText(open_path, output_dir + L"/ExtractHighlightedText.txt", config_path);
+    ExtractHighlightedText::Run(open_path, std::cout, config_path);
 
     // PDF to HTML samples
     PdfHtmlParams html_params;
