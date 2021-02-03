@@ -7,6 +7,8 @@
 
 #include "Pdfix.h"
 
+#include <sstream>
+
 using namespace PDFixSDK;
 
 namespace EditContent {
@@ -63,6 +65,7 @@ namespace EditContent {
       throw PdfixException();
    
     CreateCircle(&rect, path_obj3);
+
     path_obj3->SetStroke(true);
     path_obj3->SetFillType(kFillRuleNone);
 
@@ -93,6 +96,56 @@ namespace EditContent {
     path_obj->SetGState(&gs);
     path_obj2->SetGState(&gs);
     path_obj3->SetGState(&gs);
+  }
+
+  void CreatePathFromSvg(std::string svg_path, PdsPath* path_obj) {
+    std::istringstream iss(svg_path);
+    std::istream_iterator<std::string> it(iss);
+    auto end = std::istream_iterator<std::string>();
+    for (;it != end; ++it) {
+      auto token = *it;
+      if (token == "M") {
+        PdfPoint pt;
+        pt.x = std::stod(*(++it));
+        pt.y = std::stod(*(++it));
+        path_obj->MoveTo(&pt);
+      }else if (token == "L") {
+        PdfPoint pt;
+        pt.x = std::stod(*(++it));
+        pt.y = std::stod(*(++it));
+        path_obj->LineTo(&pt);
+      } else if (token == "C") {
+        PdfPoint cp1;
+        cp1.x = std::stod(*(++it));
+        cp1.y = std::stod(*(++it));
+
+        PdfPoint cp2;
+        cp2.x = std::stod(*(++it));
+        cp2.y = std::stod(*(++it));
+
+        PdfPoint pt;
+        pt.x = std::stod(*(++it));
+        pt.y = std::stod(*(++it));
+        path_obj->CurveTo(&cp1, &cp2, &pt);
+      } else if (token == "A") {
+        PdfPoint r;
+        r.x = std::stod(*(++it));
+        r.y = std::stod(*(++it));
+
+        double x_angle = std::stod(*(++it));
+
+        bool large = std::stoi(*(++it)) != 0;
+        bool sweep = std::stoi(*(++it)) != 0;
+
+        PdfPoint to;
+        to.x = std::stod(*(++it));
+        to.y = std::stod(*(++it));
+
+        path_obj->ArcTo(&to, &r, x_angle, large, sweep);
+      } else if (token == "Z") {
+        path_obj->ClosePath();
+      }
+    }
   }
 
   //rect
@@ -175,6 +228,15 @@ namespace EditContent {
     path_obj->ClosePath();
   }
   
+  void CreateArc(PdsPath* path_obj) {
+    std::string svg = "M 110 215 A 36 60 0 0 0 150.71 170.29 "
+                      "M 110 215 A 36 60 0 0 1 150.71 170.29 "
+                      "M 110 215 A 36 60 0 1 0 150.71 170.29 "
+                      "M 110 215 A 36 60 0 1 1 150.71 170.29";
+
+    CreatePathFromSvg(svg, path_obj);
+  }
+
   //image
   void AddImage(Pdfix* pdfix, PdfDoc* doc, PdsContent* content, const std::wstring& img_path, 
     const ObjectProps& object_prop) {

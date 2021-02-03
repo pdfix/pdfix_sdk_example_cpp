@@ -25,9 +25,11 @@ namespace EditContent {
   void EditPageContent(Pdfix* pdfix, PdfDoc* doc, PdsContent* content, const std::wstring& img_path,
     const ObjectProps& object_prop);
   void AddPath(PdfDoc* doc, PdsContent* content, const ObjectProps& object_prop);
+  void CreatePathFromSvg(std::string svg_path, PdsPath* path);
   void CreateRect(PdfRect* rect, PdsPath* path);
   void CreateTriangle(PdfRect* rect, PdsPath* path_obj);
   void CreateCircle(PdfRect* rect, PdsPath* path_obj);
+  void CreateArc(PdsPath* path_obj);
   void AddImage(Pdfix* pdfix, PdfDoc* doc, PdsContent* content, const std::wstring& img_path, 
     const ObjectProps& object_prop);
   void AddStampAnnot(Pdfix* pdfix, PdfDoc* doc, PdfPage* page, const std::wstring& img_path,
