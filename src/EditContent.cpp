@@ -8,6 +8,7 @@
 #include "Pdfix.h"
 
 #include <sstream>
+#include <iterator>
 
 using namespace PDFixSDK;
 
