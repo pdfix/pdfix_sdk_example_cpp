@@ -13,33 +13,31 @@ using namespace PDFixSDK;
 namespace EditContent {
 
   struct ObjectProps {
-    int pos_x = 0;            // position x for object
-    int pos_y = 0;            // position y for object
-    int width = 0;            // position x for object
-    int height = 0;           // position y for object
-    bool path = false;           // add path
-    bool image = false;          // add image
-    bool text = false;           // add text
+    PdfPoint pos;               // position of the object
+    PdfPageObjectType obj_type; // type of the object
+    std::wstring data;          // data associated with the object
   };
 
-  void EditPageContent(Pdfix* pdfix, PdfDoc* doc, PdsContent* content, const std::wstring& img_path,
-    const ObjectProps& object_prop);
-  void AddPath(PdfDoc* doc, PdsContent* content, const ObjectProps& object_prop);
-  void CreatePathFromSvg(std::string svg_path, PdsPath* path);
-  void CreateRect(PdfRect* rect, PdsPath* path);
-  void CreateTriangle(PdfRect* rect, PdsPath* path_obj);
-  void CreateCircle(PdfRect* rect, PdsPath* path_obj);
-  void CreateArc(PdsPath* path_obj);
-  void AddImage(Pdfix* pdfix, PdfDoc* doc, PdsContent* content, const std::wstring& img_path, 
-    const ObjectProps& object_prop);
-  void AddStampAnnot(Pdfix* pdfix, PdfDoc* doc, PdfPage* page, const std::wstring& img_path,
-    const ObjectProps& object_prop);
+  class PropsBuilder {
+    std::vector<ObjectProps> m_properties;
+
+  public:
+    PropsBuilder& AddText(double x, double y, const std::wstring& text);
+    PropsBuilder& AddPath(double x, double y, const std::wstring& svg);
+    PropsBuilder& AddImage(double x, double y, const std::wstring& path);
+    std::vector<ObjectProps>& Get();
+  };
+
+  void EditPageContent(Pdfix* pdfix, PdfDoc* doc, PdsContent* content, const std::vector<ObjectProps>& object_props);
+  
   void AddText(Pdfix* pdfix, PdfDoc* doc, PdsContent* content, const ObjectProps& object_prop);
+  
+  void AddPath(PdfDoc* doc, PdsContent* content, const ObjectProps& object_prop);
+  
+  void AddImage(Pdfix* pdfix, PdfDoc* doc, PdsContent* content, const ObjectProps& object_prop);
 
   void Run(
-    const std::wstring& open_path,    // source PDF document
-    const std::wstring& save_path,    // output PDF document
-    const std::wstring& img_path,    // output PDF document
-    const ObjectProps& object_prop    // structure containing object properties
+    const std::wstring& output_path,               // output PDF document
+    const std::vector<ObjectProps>& object_props   // structure containing object properties
   );
 }

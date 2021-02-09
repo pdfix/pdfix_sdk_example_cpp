@@ -18,7 +18,14 @@ int main()
   std::wstring config_path = resources_dir + L"/config.json";   // configuration file
 
   try {
+    
     Initialization();
+
+    EditContent::PropsBuilder builder;
+    builder.AddImage(0, 0, resources_dir + L"watermark.png");
+    builder.AddText(100, 100, L"Hello!");
+    builder.AddPath(200, 200, L"M 0 0 A 50 50 90 0 1 100 0 C 100 50 10 80 0 140 C -10 80 -100 50 -100 0 A 50 50 90 0 1 0 0 Z");
+    EditContent::Run(output_dir + L"/EditContent.pdf", builder.Get());
 
     ConvertRGBToCMYK(open_path, output_dir + L"/Rgb2Cmyk.pdf");
     
