@@ -32,7 +32,8 @@ namespace ExtractData {
 
     // page map and page content extraction
     bool extract_text = false;           // extract text when extracting page map or page content
-    bool extract_text_state = false;     // extract text state information for each text object or element
+    bool extract_text_style = false;     // extract text style of the text element
+    bool extract_text_state = false;     // extract text state if the text object or element
     bool extract_tables = false;         // extract table strecture extracting page map
     bool extract_images = false;         // extract images when extracting page map or page content
     bool extract_paths = false;          // extract images when extracting page content

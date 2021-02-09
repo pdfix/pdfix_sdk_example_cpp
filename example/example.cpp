@@ -43,6 +43,8 @@ int main()
     extract_data.doc_info = true;       // extract document info
     extract_data.page_map = true;       // extract page map data for data scraping
     extract_data.extract_text = true;   // extract text
+    extract_data.extract_text_style = true;   // extract text style
+    extract_data.extract_text_state = true;   // extract text state
     ExtractData::Run(open_path, password, config_path, std::cout, extract_data, true, kDataFormatJson);
 
     PdfImageParams image_params;

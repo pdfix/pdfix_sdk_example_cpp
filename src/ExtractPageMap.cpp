@@ -10,6 +10,22 @@ namespace ExtractData {
   void ExtractTextElement(PdeText* text, ptree& node, const DataType& data_types) {
     node.put("text", EncodeText(text->GetText()));
 
+    if (data_types.extract_text_style) {
+      switch (text->GetTextStyle()) {
+        case kTextH1: node.put("text_style", "h1"); break;
+        case kTextH2: node.put("text_style", "h2"); break;
+        case kTextH3: node.put("text_style", "h3"); break;
+        case kTextH4: node.put("text_style", "h4"); break;
+        case kTextH5: node.put("text_style", "h5"); break;
+        case kTextH6: node.put("text_style", "h6"); break;
+        case kTextH7: node.put("text_style", "h7"); break;
+        case kTextH8: node.put("text_style", "h8"); break;
+        case kTextNote: node.put("text_style", "note"); break;
+        case kTextTitle: node.put("text_style", "title"); break;
+        case kTextNormal: node.put("text_style", "normal"); break;
+      }
+    }
+
     if (data_types.extract_text_state) {
       ptree text_state_node;
       PdfTextState ts;
