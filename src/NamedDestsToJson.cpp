@@ -34,10 +34,13 @@ namespace NamedDestsToJson {
   void ProcessNamedDest(PdsObject* name, PdsObject* value, PdfDoc* doc, ptree& json) {
     ptree dest_json;
     auto text = static_cast<PdsString*>(name)->GetText();
-    auto view_dest = doc->GetViewDestinationFromObject(value);
-    if (view_dest && ProcessViewDestination(view_dest, doc, dest_json)) {
-      // named dest may contain dots so define space as a delimiter
-      json.add_child(ptree::path_type(ToUtf8(text), ' '), dest_json);
+    auto view_dest = doc->AcquireViewDestinationFromObject(value);
+    if (view_dest) {
+      if (ProcessViewDestination(view_dest, doc, dest_json)) {
+        // named dest may contain dots so define space as a delimiter
+        json.add_child(ptree::path_type(ToUtf8(text), ' '), dest_json);
+      }
+      view_dest->Release();
     }
   }
 
