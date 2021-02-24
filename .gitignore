@@ -1,5 +1,6 @@
 bin/
 build/
+output/
 external/pdfix_sdk
 
 .vs/

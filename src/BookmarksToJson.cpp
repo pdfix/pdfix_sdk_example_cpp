@@ -49,9 +49,7 @@ namespace BookmarksToJson {
     if (processed_bookmarks[bmk] != 0)
       return;
     processed_bookmarks[bmk] = 1;
-#ifdef _DEBUG
-    json.put("object_id", bmk->GetObject()->GetId());
-#endif
+
     if (bmk->GetParent()) {
       // bookmark title
       json.put("title", ToUtf8(bmk->GetTitle()));

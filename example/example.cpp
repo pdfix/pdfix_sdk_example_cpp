@@ -7,8 +7,17 @@
  
 extern std::wstring GetAbsolutePath(const std::wstring& path);
 
-int main()
-{
+int main(int argc, char* argv[]) {
+  // update current working directory
+  std::string path = argv[0];
+  auto pos = path.find_last_of("/\\");
+  if (pos != std::string::npos) {
+    path.erase(path.begin() + pos, path.end());
+    auto ok = chdir(path.c_str());
+    if (ok != 0)
+      throw std::system_error(errno, std::generic_category(), "Failed to set working directory");
+  }
+
   std::wstring resources_dir = GetAbsolutePath(L"../../resources");
   std::wstring output_dir = GetAbsolutePath(L"../../output");
 
@@ -22,7 +31,7 @@ int main()
     Initialization();
 
     EditContent::PropsBuilder builder;
-    builder.AddImage(0, 0, resources_dir + L"watermark.png");
+    builder.AddImage(0, 0, resources_dir + L"/watermark.png");
     builder.AddText(100, 100, L"Hello!");
     builder.AddPath(200, 200, L"M 0 0 A 50 50 90 0 1 100 0 C 100 50 10 80 0 140 C -10 80 -100 50 -100 0 A 50 50 90 0 1 0 0 Z");
     EditContent::Run(output_dir + L"/EditContent.pdf", builder.Get());
@@ -87,7 +96,7 @@ int main()
 
     // Render & Print
     PdfDevRect clip_area;
-    RenderPage::Run(open_path, password, output_dir + L"/RenderPage.jpg", image_params, 1, 1.0, kRotate0, clip_area);
+    RenderPage::Run(open_path, password, output_dir + L"/RenderPage.jpg", image_params, 0, 1.0, kRotate0, clip_area);
 
     // Signing and form-filling
     DigitalSignature(open_path, output_dir + L"/DigitalSignature.pdf", resources_dir + L"/test.pfx", L"TEST_PASSWORD");

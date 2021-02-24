@@ -121,7 +121,7 @@ namespace ParsePageContent {
     if (!doc)
       throw PdfixException();
     
-    PdfPage* page = doc->AcquirePage(page_num - 1);
+    PdfPage* page = doc->AcquirePage(page_num);
     if (!page)
       throw PdfixException();
       
