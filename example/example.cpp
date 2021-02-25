@@ -3,6 +3,11 @@
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ///////////////////////////////////////////////////////////////////////////////
 
+#ifdef WIN32
+#include <direct.h>
+#endif
+#include <string>
+
 #include "pdfixsdksamples/samples.h"
  
 extern std::wstring GetAbsolutePath(const std::wstring& path);
