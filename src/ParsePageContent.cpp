@@ -102,7 +102,7 @@ namespace ParsePageContent {
     }
   }
 
-  // Iterates all documents bookmars.
+  // Iterates the content on a page
   void Run(
     const std::wstring& open_path,              // source PDF document
     std::ostream& output,                       // output document
