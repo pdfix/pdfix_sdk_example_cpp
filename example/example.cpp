@@ -32,7 +32,9 @@ int main(int argc, char* argv[]) {
   std::wstring config_path = resources_dir + L"/config.json";   // configuration file
 
   try {
-    
+    if (!DirectoryExists(output_dir, true))
+      throw std::runtime_error("Output directory does not exist");
+
     Initialization();
 
     EditContent::PropsBuilder builder;

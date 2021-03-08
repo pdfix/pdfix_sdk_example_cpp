@@ -11,11 +11,13 @@
 #include <math.h>
 #ifdef _WIN32
 #include <Windows.h>
+#include <Shlobj.h>
 extern HINSTANCE ghInstance;
-#elif defined __linux__
+#elif defined __GNUC__
 #include <cstring>
 #include <limits.h>
 #include <locale>
+#include <sys/stat.h>
 #endif
 #include "Pdfix.h"
 #include "PdfToHtml.h"
@@ -26,6 +28,37 @@ using namespace PDFixSDK;
 Pdfix_statics;
 PdfToHtml_statics;
 OcrTesseract_statics;
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// CreateDirectory
+////////////////////////////////////////////////////////////////////////////////////////////////////
+int CreateDirectory(const std::string& dir) {
+#if defined _MSC_VER 
+  return SHCreateDirectoryExA(NULL, dir.c_str(), NULL);
+//  return _mkdir(dir.data());
+#elif defined __GNUC__
+  return mkdir(dir.data(), 0777);
+#endif
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// DirectoryExists
+////////////////////////////////////////////////////////////////////////////////////////////////////
+bool DirectoryExists(const std::string& path, bool create) {
+  struct stat s;
+  if (stat(path.c_str(), &s) == 0 && (s.st_mode & S_IFDIR))
+    return true;
+  if (create && !CreateDirectory(path.c_str())) return true;
+
+  return false;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// DirectoryExists
+////////////////////////////////////////////////////////////////////////////////////////////////////
+bool DirectoryExists(const std::wstring& path, bool create) {
+  return DirectoryExists(ToUtf8(path), create);
+}
 
 // convert UTF-8 string to wstring
 std::wstring FromUtf8(const std::string& str) {
