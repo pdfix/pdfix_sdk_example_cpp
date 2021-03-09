@@ -96,11 +96,11 @@ static void SearchText(
     auto word = word_list->GetWord(i);
     auto text = word->GetText();
     auto it = std::search(text.begin(), text.end(), query.begin(), query.end(), lower_test);
-//#ifdef DEBUG && 1
+#if defined(_DEBUG) && 0
     std::wstring_convert<std::codecvt_utf8<wchar_t>> conv;
     std::string u8str = conv.to_bytes(text);
     std::cout << u8str << std::endl;
-//#endif
+#endif
     // found
     if (it != text.end()) {
       process_word(word);
@@ -131,10 +131,6 @@ void SearchText(
   PdfPage* page = nullptr;
 
   auto process_word = [&](PdsWord* word) {
-    //std::wstring_convert<std::codecvt_utf8<wchar_t>> conv;
-    //std::string u8str = conv.to_bytes(word->GetText());
-    //std::cout << u8str << std::endl;
-
     auto content = page->GetContent();
     auto bbox = word->GetBBox();
     
@@ -144,6 +140,9 @@ void SearchText(
   };
 
   auto finder = doc->CreateWordFinder(0);
+  if (!finder)
+    throw PdfixException();
+
   if (page_num < 0) {
     auto page_count = doc->GetNumPages();
     for (int i = 0; i < page_count; i++) {
