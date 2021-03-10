@@ -91,7 +91,7 @@ static void SearchText(
   std::wstring_convert<std::codecvt_utf8<wchar_t>> conv;
 
   auto word_list = finder->AcquireWordList(page_num);
-  int word_count = word_list->GetWordCount();
+  int word_count = word_list->GetNumWords();
   for (int i = 0; i < word_count; i++) {
     auto word = word_list->GetWord(i);
     auto text = word->GetText();
