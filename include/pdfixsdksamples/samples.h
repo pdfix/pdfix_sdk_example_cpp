@@ -34,5 +34,6 @@
 #include "RegisterEvent.h"
 #include "RemoveComments.h"
 #include "RenderPage.h"
+#include "SearchText.h"
 #include "SetFieldFlags.h"
 #include "SetFormFieldValue.h"

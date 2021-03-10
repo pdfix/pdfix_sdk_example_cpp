@@ -60,6 +60,7 @@ set(HEADERS
   include/pdfixsdksamples/RemoveTags.h
   include/pdfixsdksamples/RenderPage.h
   include/pdfixsdksamples/RenderPages.h
+  include/pdfixsdksamples/SearchText.h
   include/pdfixsdksamples/SetAnnotationAppearance.h
   include/pdfixsdksamples/SetFieldFlags.h
   include/pdfixsdksamples/SetFormFieldValue.h
@@ -133,6 +134,7 @@ set(SOURCES
   src/RemoveTags.cpp
   src/RenderPage.cpp
   src/RenderPages.cpp
+  src/SearchText.cpp
   src/SetAnnotationAppearance.cpp
   src/SetFieldFlags.cpp
   src/SetFormFieldValue.cpp
