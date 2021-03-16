@@ -101,6 +101,7 @@ namespace ParsePdsObjects {
   // Iterates all documents bookmars.
   void Run(
     const std::wstring& open_path,           // source PDF document
+    const std::wstring& password,            // source PDF document
     std::ostream& output                     // output document
     ) {
     // initialize Pdfix
@@ -112,10 +113,9 @@ namespace ParsePdsObjects {
       throw std::runtime_error("GetPdfix fail");
 
     PdfDoc* doc = nullptr;
-    doc = pdfix->OpenDoc(open_path.c_str(), L"");
+    doc = pdfix->OpenDoc(open_path.c_str(), password.c_str());
     if (!doc)
       throw PdfixException();
-    auto obj = doc->GetObjectById(2120);
       
     PdsObject* root = doc->GetRootObject();
     if (!root)
@@ -125,6 +125,16 @@ namespace ParsePdsObjects {
     output << "/root ";
     ProcessObject(root, output, "", mapped);
 
+    PdsObject* info = doc->GetInfoObject();
+    output << "/info ";
+    if (info)
+      ProcessObject(info, output, "", mapped);
+
+    PdsDictionary* trailer = doc->GetTrailerObject();
+    output << "/trailer ";
+    if (trailer)
+      ProcessObject(trailer, output, "", mapped);
+  
     doc->Close();
     pdfix->Destroy();
   }
