@@ -124,16 +124,19 @@ namespace ParsePdsObjects {
     std::map<PdsObject*, int> mapped;
     output << "/root ";
     ProcessObject(root, output, "", mapped);
+    output << std::endl; 
 
     PdsObject* info = doc->GetInfoObject();
     output << "/info ";
     if (info)
       ProcessObject(info, output, "", mapped);
+    output << std::endl; 
 
     PdsDictionary* trailer = doc->GetTrailerObject();
     output << "/trailer ";
     if (trailer)
       ProcessObject(trailer, output, "", mapped);
+    output << std::endl; 
   
     doc->Close();
     pdfix->Destroy();

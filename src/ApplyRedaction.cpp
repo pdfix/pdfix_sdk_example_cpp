@@ -41,7 +41,7 @@ void ApplyRedaction(
   }
 #endif
 
-  if (!doc->ApplyRedaction())
+  if (!doc->ApplyRedaction(nullptr, nullptr))
     throw PdfixException();
 
   if (!doc->Save(save_path.c_str(), kSaveFull))
