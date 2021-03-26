@@ -83,19 +83,43 @@ bool lower_test(wchar_t l, wchar_t r) {
 }
 
 static void SearchText(
-  PdsWordFinder* finder,
+  PdfPage* page,
   const std::wstring& query,
-  int page_num,
   std::function<void(PdsWord*)> process_word
 ) {
-  std::wstring_convert<std::codecvt_utf8<wchar_t>> conv;
 
-  auto word_list = finder->AcquireWordList(page_num);
+  auto finder = page->CreateWordFinder(kWordFinderAlgLatest);
+  if (!finder)
+    throw PdfixException();
+  
+  auto word_list = finder->AcquireWordList();
   int word_count = word_list->GetNumWords();
   for (int i = 0; i < word_count; i++) {
     auto word = word_list->GetWord(i);
+
+#if defined(_DEBUG) && 0
+    std::wstring_convert<std::codecvt_utf8<wchar_t>> conv;
+    std::string u8word = conv.to_bytes(word->GetText());
+    std::cout << u8word << " = ";
+    auto num_textrun = word->GetNumTextRuns();
+    for (int j = 0; j < num_textrun; j++) {
+      auto textrun = word->GetTextRunAt(j);
+      auto text_obj = textrun->GetTextObject();
+      
+      std::string u8str = conv.to_bytes(text_obj->GetText());
+      auto from =  textrun->GetFirstCharIndex();
+      auto to = textrun->GetLastCharIndex();
+      if (j > 0) {
+       std::cout << " + ";
+      }
+      std::cout << u8str.substr(from, to-from);
+    }
+    std::cout << std::endl;
+#endif
+
     auto text = word->GetText();
     auto it = std::search(text.begin(), text.end(), query.begin(), query.end(), lower_test);
+
 #if defined(_DEBUG) && 0
     std::wstring_convert<std::codecvt_utf8<wchar_t>> conv;
     std::string u8str = conv.to_bytes(text);
@@ -106,7 +130,7 @@ static void SearchText(
       process_word(word);
     }
   }
-  finder->ReleaseWordList(page_num);
+  finder->Destroy();
 }
 
 void SearchText(
@@ -135,28 +159,27 @@ void SearchText(
     auto bbox = word->GetBBox();
     
     DrawRecangle(doc, content, bbox);
-
-    page->SetContent();
   };
-
-  auto finder = doc->CreateWordFinder(0);
-  if (!finder)
-    throw PdfixException();
 
   if (page_num < 0) {
     auto page_count = doc->GetNumPages();
     for (int i = 0; i < page_count; i++) {
       page = doc->AcquirePage(i);
-      SearchText(finder, query, i, process_word);
+      SearchText(page, query, process_word);
+
+      page->SetContent();
+      page->Release();
     }
   } else {
     page = doc->AcquirePage(page_num);
-    SearchText(finder, query, page_num, process_word);
+    SearchText(page, query, process_word);
+
+    page->SetContent();
+    page->Release();
   }
 
   doc->Save(save_path.c_str(), kSaveFull);
 
-  finder->Destroy();
   doc->Close();
   pdfix->Destroy();
 }
