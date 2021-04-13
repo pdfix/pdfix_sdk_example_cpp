@@ -52,12 +52,24 @@ namespace ImportFormData {
     }
     
     if (flatten) {
-      PdfFlattenAnnotsParams params;
-      if (!doc->FlattenAnnots(&params))
-        throw PdfixException();
+      for (auto i = 0; i < doc->GetNumPages(); i++) {
+        auto page = doc->AcquirePage(i);
+        if (!page)
+          throw PdfixException();
+        for (auto j = page->GetNumAnnots() - 1; j >= 0; j--) {
+          auto annot = page->GetAnnot(i);
+          // flatten all but link annotations which to not have appearance
+          if (annot && annot->GetSubtype() == kAnnotWidget)
+            if (!page->FlattenAnnot(annot))
+              throw PdfixException();
+        }
+        page->Release();
+      }
     }
 
-    doc->Save(save_path.c_str(), kSaveFull);
+    if (!doc->Save(save_path.c_str(), kSaveFull))
+      throw PdfixException();
+      
     doc->Close();
     pdfix->Destroy();
   }
