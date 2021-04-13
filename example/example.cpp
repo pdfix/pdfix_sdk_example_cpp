@@ -98,8 +98,7 @@ int main(int argc, char* argv[]) {
     
     RemoveComments(open_path, output_dir + L"/RemoveComments.pdf");
 
-    PdfFlattenAnnotsParams flatten_annots_params;
-    FlattenAnnots(open_path, output_dir + L"/FlattenAnnots.pdf", flatten_annots_params);
+    FlattenAnnots(open_path, output_dir + L"/FlattenAnnots.pdf");
 
     // Render & Print
     PdfDevRect clip_area;
