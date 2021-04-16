@@ -26,6 +26,7 @@ set(HEADERS
   include/pdfixsdksamples/DeletePages.h
   include/pdfixsdksamples/DigitalSignature.h
   include/pdfixsdksamples/DocumentMetadata.h
+  include/pdfixsdksamples/DocumentSecurity.h
   include/pdfixsdksamples/EditContent.h
   include/pdfixsdksamples/EmbedFonts.h
   include/pdfixsdksamples/ExportFormFieldValues.h
@@ -101,6 +102,7 @@ set(SOURCES
   src/DeletePages.cpp
   src/DigitalSignature.cpp
   src/DocumentMetadata.cpp
+  src/DocumentSecurity.cpp
   src/EmbedFonts.cpp
   src/ExportFormFieldValues.cpp
   src/ExtractHighlightedText.cpp
