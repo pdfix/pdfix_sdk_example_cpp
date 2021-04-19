@@ -62,7 +62,7 @@ namespace DocumentSecurity {
     PdfStandardSecurityParams encryption_params;
     auto security_handler = pdfix->CreateStandardSecurityHandler(password.c_str(), &encryption_params);
 
-    // remove document security by setting security handler to null
+    // new security handler will be used when saving the document
     doc->SetSecurityHandler(security_handler);
 
     if (!doc->Save(save_path.c_str(), kSaveFull) )
@@ -76,12 +76,18 @@ namespace DocumentSecurity {
       const std::wstring& open_path,  // source PDF document
       const std::wstring& save_path  // output PDF doucment
   ) {
-// TODO:
+    // TODO: Xor cipher
   }
 
   void RemoveCustomSecurity(
       const std::wstring& open_path,  // source PDF document
       const std::wstring& save_path  // output PDF doucment
+  ) {
+    // TODO: Xor cipher
+  }
+
+  void PostponedDocumentAuthorization(
+    const std::wstring& open_path  // source PDF document
   ) {
     // TODO:
   }
