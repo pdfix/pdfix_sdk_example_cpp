@@ -8,6 +8,8 @@
 // project
 #include "Pdfix.h"
 
+#include <iostream>
+
 using namespace PDFixSDK;
 
 namespace DocumentSecurity {
@@ -32,7 +34,7 @@ namespace DocumentSecurity {
   void RemoveSecurity(
       const std::wstring& open_path,  // source PDF document
       const std::wstring& save_path,  // output PDF doucment
-      const std::wstring& password    // source PDF document passowrd
+      const std::wstring& password    // source PDF document password
   ) {
     auto pdfix = InitPdfix();
     auto doc = pdfix->OpenDoc(open_path.c_str(), password.c_str());
@@ -52,7 +54,7 @@ namespace DocumentSecurity {
   void AddSecurity(
       const std::wstring& open_path,  // source PDF document
       const std::wstring& save_path,  // output PDF doucment
-      const std::wstring& password    // output PDF document passowrd
+      const std::wstring& password    // output PDF document password
   ) {
     auto pdfix = InitPdfix();
     auto doc = pdfix->OpenDoc(open_path.c_str(), L"");
@@ -86,10 +88,47 @@ namespace DocumentSecurity {
     // TODO: Xor cipher
   }
 
+
+  static const wchar_t* g_password = nullptr;
+
   void PostponedDocumentAuthorization(
-    const std::wstring& open_path  // source PDF document
+    const std::wstring& open_path,  // source PDF document
+    const std::wstring& password    // source PDF document password
   ) {
-    // TODO:
+    auto pdfix = InitPdfix();
+    auto doc = pdfix->OpenDoc(open_path.c_str(), nullptr);
+    if (!doc)
+      throw std::runtime_error(pdfix->GetError());
+
+    g_password = password.c_str();
+    auto get_auth_data = [](PdfDoc* doc, PdfSecurityHandler* handler) -> bool {
+      auto filter = handler->GetFilter();
+      if (filter == L"Standard") {
+        auto std_handler = static_cast<PdfStandardSecurityHandler*>(handler);
+        std_handler->SetPassword(g_password);
+        return true;
+      }
+
+      return false;
+    };
+
+    if (doc->IsSecured() && !doc->Authorize(get_auth_data)) {
+      throw std::runtime_error(pdfix->GetError());
+    }
+
+    // do something with the document
+    auto num_objects = 0;
+    auto num_pages = doc->GetNumPages();
+    for (int i = 0; i < num_pages; i++) {
+      auto page = doc->AcquirePage(i);
+      num_objects += page->GetContent()->GetNumObjects();
+      page->Release();
+    }
+
+    std::cout << "Total object count: " << num_objects << std::endl;
+
+    doc->Close();
+    pdfix->Destroy();
   }
 };
 

@@ -27,6 +27,7 @@ namespace DocumentSecurity {
   );
 
   void PostponedDocumentAuthorization(
-    const std::wstring& open_path  // source PDF document
+    const std::wstring& open_path,  // source PDF document
+    const std::wstring& password    // source PDF document password
   );
 }
