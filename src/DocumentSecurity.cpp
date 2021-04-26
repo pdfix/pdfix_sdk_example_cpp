@@ -17,12 +17,12 @@ using namespace PDFixSDK;
 
 namespace DocumentSecurity {
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// helper structures
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
   class XorSecurityHandler {
    public:
-    struct ContextData {
-      Pdfix* pdfix;
-    };
-
     static const wchar_t* kFilterName;
    private:
     uint8_t m_cipher_key;
@@ -113,27 +113,11 @@ namespace DocumentSecurity {
       encrypt_dict->PutString(L"Secret", secret.c_str());
     }
 
-    int GetDecryptSize(const uint8_t* data, int size) {
+    int GetCryptSize(const uint8_t* data, int size) {
       return size;
     }
 
-    int DecryptContent(
-      int objnum, int gennum,
-      const uint8_t* data, int data_size,
-      uint8_t* dest, int dest_size) {
-
-      assert(dest_size >= data_size);
-      crypt_data(data, data_size, dest);
-
-      return data_size;
-    }
-
-    int GetEncryptSize(const uint8_t* data, int size) {
-      return size;
-    }
-
-    int EncryptContent(
-      int objnum, int gennum,
+    int CryptData(
       const uint8_t* data, int data_size,
       uint8_t* dest, int dest_size) {
 
@@ -149,6 +133,11 @@ namespace DocumentSecurity {
 
   PdfCustomSecurityHandler* CreateXorSecurityHandler(Pdfix* pdfix, XorSecurityHandler* xor_handler) {
     auto security_handler = pdfix->CreateCustomSecurityHandler(XorSecurityHandler::kFilterName, xor_handler);
+    security_handler->SetFreeClientDataProc([](void* client_data) {
+      auto handler = static_cast<XorSecurityHandler*>(client_data);
+      if (handler)
+        delete handler;
+    });
     security_handler->SetSetAuthoziationDataProc([](void* data, void* client_data) -> bool {
       auto key = *static_cast<uint8_t*>(data);
       static_cast<XorSecurityHandler*>(client_data)->SetKey(key);
@@ -167,29 +156,27 @@ namespace DocumentSecurity {
       static_cast<XorSecurityHandler*>(client_data)->UpdateEncryptDict(encrypt_dict, id_array);
     });
     security_handler->SetGetDecryptSizeProc([](const void* data, int size, void* client_data) {
-      return static_cast<XorSecurityHandler*>(client_data)->GetDecryptSize(static_cast<const uint8_t*>(data), size);
+      return static_cast<XorSecurityHandler*>(client_data)->GetCryptSize(static_cast<const uint8_t*>(data), size);
     });
     security_handler->SetDecryptContentProc(
       [](int objnum, int gennum,
          const void* data, int data_size,
          void* dest, int dest_size,
          void* client_data) {
-      return static_cast<XorSecurityHandler*>(client_data)->DecryptContent(
-        objnum, gennum,
+      return static_cast<XorSecurityHandler*>(client_data)->CryptData(
         static_cast<const uint8_t*>(data), data_size,
         static_cast<uint8_t*>(dest), dest_size
       );
     });
     security_handler->SetGetEncryptSizeProc([](const void* data, int size, void* client_data) -> int {
-      return static_cast<XorSecurityHandler*>(client_data)->GetEncryptSize(static_cast<const uint8_t*>(data), size);
+      return static_cast<XorSecurityHandler*>(client_data)->GetCryptSize(static_cast<const uint8_t*>(data), size);
     });
     security_handler->SetEncryptContentProc(
       [](int objnum, int gennum,
          const void* data, int data_size,
          void* dest, int dest_size,
          void* client_data) {
-      return static_cast<XorSecurityHandler*>(client_data)->EncryptContent(
-        objnum, gennum,
+      return static_cast<XorSecurityHandler*>(client_data)->CryptData(
         static_cast<const uint8_t*>(data), data_size,
         static_cast<uint8_t*>(dest), dest_size
       );
@@ -198,13 +185,8 @@ namespace DocumentSecurity {
   }
 
   PdfSecurityHandler* CreateXorSecurityHandler(void* client_data) {
-    auto data = static_cast<XorSecurityHandler::ContextData*>(client_data);
-
-    auto pdfix = data->pdfix;
-    // TODO: we have to release this somehow!!!
-    // e.g. OnDestory procedure
+    auto pdfix = static_cast<Pdfix*>(client_data);
     auto xor_handler = new XorSecurityHandler();
-
     return CreateXorSecurityHandler(pdfix, xor_handler);
   }
 
@@ -224,6 +206,10 @@ namespace DocumentSecurity {
     
     return pdfix;
   }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// actual examples
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
   void RemoveSecurity(
       const std::wstring& open_path,  // source PDF document
@@ -270,7 +256,8 @@ namespace DocumentSecurity {
 
   void AddCustomSecurity(
       const std::wstring& open_path,  // source PDF document
-      const std::wstring& save_path  // output PDF doucment
+      const std::wstring& save_path,  // output PDF doucment
+      uint8_t key                     // key to lock PDF document
   ) {
     auto pdfix = InitPdfix();
     auto doc = pdfix->OpenDoc(open_path.c_str(), L"");
@@ -278,8 +265,8 @@ namespace DocumentSecurity {
       throw std::runtime_error(pdfix->GetError());
 
     const auto cipher_key = 0x8b; // random prime number
-    XorSecurityHandler xor_handler(cipher_key);
-    auto security_handler = CreateXorSecurityHandler(pdfix, &xor_handler);
+    auto xor_handler = new XorSecurityHandler(cipher_key);
+    auto security_handler = CreateXorSecurityHandler(pdfix, xor_handler);
 
     // new security handler will be used when saving the document
     doc->SetSecurityHandler(security_handler);
@@ -291,45 +278,36 @@ namespace DocumentSecurity {
     pdfix->Destroy();
   }
 
-  // TODO: Authorize Custom security
   void RemoveCustomSecurity(
       const std::wstring& open_path,  // source PDF document
-      const std::wstring& save_path  // output PDF doucment
+      const std::wstring& save_path,  // output PDF doucment
+      uint8_t key                     // key to unlock PDF document
   ) {
     auto pdfix = InitPdfix();
     auto doc = pdfix->OpenDoc(open_path.c_str(), nullptr);
     if (!doc)
       throw std::runtime_error(pdfix->GetError());
 
-    // TODO: set cipher key in the authorizaton procedure!
-    XorSecurityHandler::ContextData data;
-    data.pdfix = pdfix;
-
     // new security handler will be used when saving the document
-    pdfix->RegisterSecurityHandler(
-      XorSecurityHandler::kFilterName,
-      [](void* data) { return CreateXorSecurityHandler(data); }, 
-      &data
-    );
+    pdfix->RegisterSecurityHandler(XorSecurityHandler::kFilterName, CreateXorSecurityHandler, pdfix);
 
-    auto get_auth_data = [](PdfDoc* doc, PdfSecurityHandler* handler) -> bool {
+    auto get_auth_data = [](PdfDoc* doc, PdfSecurityHandler* handler, void* data) -> bool {
       auto filter = handler->GetFilter();
       if (filter == XorSecurityHandler::kFilterName) {
         auto custom_handler = static_cast<PdfCustomSecurityHandler*>(handler);
-        // TODO: get key from somwhere else!
-        uint8_t cipher_key = 0x8b;
-        custom_handler->SetAuthorizationData(&cipher_key);
+        custom_handler->SetAuthorizationData(data);
         return true;
       }
 
       return false;
     };
 
-    if (!doc->Authorize(get_auth_data)) {
+    uint8_t cipher_key = 0x8b;
+    if (!doc->Authorize(get_auth_data, &cipher_key)) {
       throw std::runtime_error(pdfix->GetError());
     }
 
-        // do something with the document
+    // do something with the document
     auto num_objects = 0;
     auto num_pages = doc->GetNumPages();
     for (int i = 0; i < num_pages; i++) {
@@ -349,8 +327,6 @@ namespace DocumentSecurity {
     pdfix->Destroy();
   }
 
-  static const wchar_t* g_password = nullptr;
-
   void PostponedDocumentAuthorization(
     const std::wstring& open_path,  // source PDF document
     const std::wstring& password    // source PDF document password
@@ -360,19 +336,20 @@ namespace DocumentSecurity {
     if (!doc)
       throw std::runtime_error(pdfix->GetError());
 
-    g_password = password.c_str();
-    auto get_auth_data = [](PdfDoc* doc, PdfSecurityHandler* handler) -> bool {
+    auto get_auth_data = [](PdfDoc* doc, PdfSecurityHandler* handler, void* data) -> bool {
       auto filter = handler->GetFilter();
       if (filter == L"Standard") {
         auto std_handler = static_cast<PdfStandardSecurityHandler*>(handler);
-        std_handler->SetPassword(g_password);
+        const wchar_t* password = static_cast<const wchar_t*>(data);
+        std_handler->SetPassword(password);
         return true;
       }
 
       return false;
     };
 
-    if (doc->IsSecured() && !doc->Authorize(get_auth_data)) {
+    std::wstring pass = password;
+    if (doc->IsSecured() && !doc->Authorize(get_auth_data, pass.data())) {
       throw std::runtime_error(pdfix->GetError());
     }
 
