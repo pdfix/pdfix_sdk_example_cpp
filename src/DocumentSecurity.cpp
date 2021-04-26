@@ -133,7 +133,7 @@ namespace DocumentSecurity {
 
   PdfCustomSecurityHandler* CreateXorSecurityHandler(Pdfix* pdfix, XorSecurityHandler* xor_handler) {
     auto security_handler = pdfix->CreateCustomSecurityHandler(XorSecurityHandler::kFilterName, xor_handler);
-    security_handler->SetFreeClientDataProc([](void* client_data) {
+    security_handler->SetDestroyProc([](void* client_data) {
       auto handler = static_cast<XorSecurityHandler*>(client_data);
       if (handler)
         delete handler;
@@ -264,8 +264,7 @@ namespace DocumentSecurity {
     if (!doc)
       throw std::runtime_error(pdfix->GetError());
 
-    const auto cipher_key = 0x8b; // random prime number
-    auto xor_handler = new XorSecurityHandler(cipher_key);
+    auto xor_handler = new XorSecurityHandler(key);
     auto security_handler = CreateXorSecurityHandler(pdfix, xor_handler);
 
     // new security handler will be used when saving the document
@@ -289,7 +288,7 @@ namespace DocumentSecurity {
       throw std::runtime_error(pdfix->GetError());
 
     // new security handler will be used when saving the document
-    pdfix->RegisterSecurityHandler(XorSecurityHandler::kFilterName, CreateXorSecurityHandler, pdfix);
+    pdfix->RegisterSecurityHandler(CreateXorSecurityHandler, XorSecurityHandler::kFilterName, pdfix);
 
     auto get_auth_data = [](PdfDoc* doc, PdfSecurityHandler* handler, void* data) -> bool {
       auto filter = handler->GetFilter();
@@ -302,7 +301,7 @@ namespace DocumentSecurity {
       return false;
     };
 
-    uint8_t cipher_key = 0x8b;
+    auto cipher_key = key;
     if (!doc->Authorize(get_auth_data, &cipher_key)) {
       throw std::runtime_error(pdfix->GetError());
     }
