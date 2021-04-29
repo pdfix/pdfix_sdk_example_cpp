@@ -9,6 +9,7 @@
 #include "ConvertToHtmlEx.h"
 #include "DigitalSignature.h"
 #include "DocumentMetadata.h"
+#include "DocumentSecurity.h"
 #include "EditContent.h"
 #include "EmbedFonts.h"
 #include "ExportFormFieldValues.h"
