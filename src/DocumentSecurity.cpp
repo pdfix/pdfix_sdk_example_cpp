@@ -100,7 +100,7 @@ namespace DocumentSecurity {
     }
 
     bool IsMetadataEncrypted() {
-      return true;
+      return false;
     }
 
     void UpdateEncryptDict(PdsDictionary* encrypt_dict, const PdsArray* id_array) {
