@@ -125,6 +125,7 @@ int main(int argc, char* argv[]) {
     ParsePageContent::Run(open_path, std::cout, 0);
     DocumentMetadata::Run(open_path, output_dir + L"/DocumentMetadata.pdf", output_dir + L"/metadata.xml");
     EmbedFonts::Run(open_path, output_dir + L"/EmbedFonts.pdf");
+    SearchText::Run(open_path, output_dir + L"/SearchText.pdf", L"PDF", 0);
     RegisterEvent(open_path);
 
     // Regex
