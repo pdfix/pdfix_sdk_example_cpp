@@ -15,16 +15,16 @@
 
 using namespace PDFixSDK;
 
-inline  std::array<PdfPoint, 4> GetRectPoints(const PdfRect& rect) {
-  return {
-    PdfPoint{rect.left, rect.top},
-    PdfPoint{rect.right, rect.top},
-    PdfPoint{rect.right, rect.bottom},
-    PdfPoint{rect.left, rect.bottom}
-  };
-}
+// inline  std::array<PdfPoint, 4> GetRectPoints(const PdfRect& rect) {
+//   return {
+//     PdfPoint{rect.left, rect.top},
+//     PdfPoint{rect.right, rect.top},
+//     PdfPoint{rect.right, rect.bottom},
+//     PdfPoint{rect.left, rect.bottom}
+//   };
+// }
 
-void DrawRecangle(PdfDoc* doc, PdsContent* content, const PdfRect& rect) {
+void DrawQuad(PdfDoc* doc, PdsContent* content, const PdfQuad& quad) {
   auto rgb_colorspace = doc->CreateColorSpace(PdfColorSpaceFamily::kColorSpaceDeviceRGB);
 
   PdfMatrix matrix;
@@ -39,11 +39,16 @@ void DrawRecangle(PdfDoc* doc, PdsContent* content, const PdfRect& rect) {
   if (!path_obj)
     throw PdfixException();
 
-  auto pts = GetRectPoints(rect);
-  path_obj->MoveTo(&pts[0]);
-  path_obj->LineTo(&pts[1]);
-  path_obj->LineTo(&pts[2]);
-  path_obj->LineTo(&pts[3]);
+  // auto pts = GetRectPoints(rect);
+  // path_obj->MoveTo(&pts[0]);
+  // path_obj->LineTo(&pts[1]);
+  // path_obj->LineTo(&pts[2]);
+  // path_obj->LineTo(&pts[3]);
+
+  path_obj->MoveTo(&quad.tl);
+  path_obj->LineTo(&quad.tr);
+  path_obj->LineTo(&quad.br);
+  path_obj->LineTo(&quad.bl);
   path_obj->ClosePath();
 
   path_obj->SetStroke(true);
@@ -157,8 +162,9 @@ void SearchText(
   auto process_word = [&](PdsWord* word) {
     auto content = page->GetContent();
     auto bbox = word->GetBBox();
+    auto quad = word->GetQuad();
     
-    DrawRecangle(doc, content, bbox);
+    DrawQuad(doc, content, quad);
   };
 
   if (page_num < 0) {

@@ -170,9 +170,9 @@ std::string PsStreamEncodeBase64(PsStream* stream) {
 // PdfMatrix utils
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void PdfMatrixTransform(PdfMatrix& m, PdfPoint& p) {
-  PdfPoint ret = {
-    m.a * p.x + m.c * p.y + m.e, m.b * p.x + m.d * p.y + m.f
-  };
+  PdfPoint ret;
+  ret.x = m.a * p.x + m.c * p.y + m.e;
+  ret.y = m.b * p.x + m.d * p.y + m.f;
   p.x = ret.x;
   p.y = ret.y;
 }
