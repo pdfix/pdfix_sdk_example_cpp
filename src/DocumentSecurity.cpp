@@ -147,7 +147,8 @@ namespace DocumentSecurity {
       static_cast<XorSecurityHandler*>(client_data)->SetKey(key);
       return true;
     });
-    security_handler->SetOnInitProc([](const PdsDictionary* trailer, void* client_data) {
+    security_handler->SetOnInitProc([](const void* _trailer, void* client_data) {
+      auto trailer = static_cast<const PdsDictionary*>(_trailer);
       return static_cast<XorSecurityHandler*>(client_data)->OnInit(trailer);
     });
     security_handler->SetGetPermissionsProc([](void* client_data) {
@@ -156,7 +157,9 @@ namespace DocumentSecurity {
     security_handler->SetIsMetadataEncryptedProc([](void* client_data) {
       return static_cast<XorSecurityHandler*>(client_data)->IsMetadataEncrypted();
     });
-    security_handler->SetUpdateEncryptDictProc([](PdsDictionary* encrypt_dict, const PdsArray* id_array, void* client_data) {
+    security_handler->SetUpdateEncryptDictProc([](void* _encrypt_dict, const void* _id_array, void* client_data) {
+      auto encrypt_dict = static_cast<PdsDictionary*>(_encrypt_dict);
+      auto id_array = static_cast<const PdsArray*>(_id_array);
       static_cast<XorSecurityHandler*>(client_data)->UpdateEncryptDict(encrypt_dict, id_array);
     });
     security_handler->SetGetDecryptSizeProc([](const void* data, int size, void* client_data) {
@@ -298,8 +301,9 @@ namespace DocumentSecurity {
     // new security handler will be used when saving the document
     pdfix->RegisterSecurityHandler(CreateXorSecurityHandler, XorSecurityHandler::kFilterName, pdfix);
 
-    auto get_auth_data = [](PdfDoc* doc, PdfSecurityHandler* handler, void* data) -> bool {
+    auto get_auth_data = [](void* doc, void* _handler, void* data) -> bool {
       UNUSED(doc);
+      auto handler = static_cast<PdfSecurityHandler*>(_handler);
       auto filter = handler->GetFilter();
       if (filter == XorSecurityHandler::kFilterName) {
         auto custom_handler = static_cast<PdfCustomSecurityHandler*>(handler);
@@ -344,8 +348,9 @@ namespace DocumentSecurity {
     if (!doc)
       throw std::runtime_error(pdfix->GetError());
 
-    auto get_auth_data = [](PdfDoc* doc, PdfSecurityHandler* handler, void* data) -> bool {
+    auto get_auth_data = [](void* doc, void* _handler, void* data) -> bool {
       UNUSED(doc);
+      auto handler = static_cast<PdfSecurityHandler*>(_handler);
       auto filter = handler->GetFilter();
       if (filter == L"Standard") {
         auto std_handler = static_cast<PdfStandardSecurityHandler*>(handler);
