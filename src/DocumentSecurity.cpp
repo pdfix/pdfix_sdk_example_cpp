@@ -13,6 +13,8 @@
 #include <sstream>
 #include <cassert>
 
+#define UNUSED(x) (void)(x)
+
 using namespace PDFixSDK;
 
 namespace DocumentSecurity {
@@ -104,6 +106,7 @@ namespace DocumentSecurity {
     }
 
     void UpdateEncryptDict(PdsDictionary* encrypt_dict, const PdsArray* id_array) {
+      UNUSED(id_array);
       encrypt_dict->PutName(L"Filter", kFilterName);
 
       std::wstring secret = kSecret;
@@ -114,6 +117,7 @@ namespace DocumentSecurity {
     }
 
     int GetCryptSize(const uint8_t* data, int size) {
+      UNUSED(data);
       return size;
     }
 
@@ -147,7 +151,7 @@ namespace DocumentSecurity {
       return static_cast<XorSecurityHandler*>(client_data)->OnInit(trailer);
     });
     security_handler->SetGetPermissionsProc([](void* client_data) {
-      return static_cast<XorSecurityHandler*>(client_data)->GetPermissions();
+      return (int)static_cast<XorSecurityHandler*>(client_data)->GetPermissions();
     });
     security_handler->SetIsMetadataEncryptedProc([](void* client_data) {
       return static_cast<XorSecurityHandler*>(client_data)->IsMetadataEncrypted();
@@ -163,6 +167,8 @@ namespace DocumentSecurity {
          const void* data, int data_size,
          void* dest, int dest_size,
          void* client_data) {
+      UNUSED(objnum);
+      UNUSED(gennum);
       return static_cast<XorSecurityHandler*>(client_data)->CryptData(
         static_cast<const uint8_t*>(data), data_size,
         static_cast<uint8_t*>(dest), dest_size
@@ -176,6 +182,8 @@ namespace DocumentSecurity {
          const void* data, int data_size,
          void* dest, int dest_size,
          void* client_data) {
+      UNUSED(objnum);
+      UNUSED(gennum);
       return static_cast<XorSecurityHandler*>(client_data)->CryptData(
         static_cast<const uint8_t*>(data), data_size,
         static_cast<uint8_t*>(dest), dest_size
@@ -291,6 +299,7 @@ namespace DocumentSecurity {
     pdfix->RegisterSecurityHandler(CreateXorSecurityHandler, XorSecurityHandler::kFilterName, pdfix);
 
     auto get_auth_data = [](PdfDoc* doc, PdfSecurityHandler* handler, void* data) -> bool {
+      UNUSED(doc);
       auto filter = handler->GetFilter();
       if (filter == XorSecurityHandler::kFilterName) {
         auto custom_handler = static_cast<PdfCustomSecurityHandler*>(handler);
@@ -336,6 +345,7 @@ namespace DocumentSecurity {
       throw std::runtime_error(pdfix->GetError());
 
     auto get_auth_data = [](PdfDoc* doc, PdfSecurityHandler* handler, void* data) -> bool {
+      UNUSED(doc);
       auto filter = handler->GetFilter();
       if (filter == L"Standard") {
         auto std_handler = static_cast<PdfStandardSecurityHandler*>(handler);
