@@ -73,11 +73,7 @@ namespace SearchText {
     std::function<void(PdsWord*)> process_word
   ) {
 
-    auto finder = page->CreateWordFinder(kWordFinderAlgLatest);
-    if (!finder)
-      throw PdfixException();
-    
-    auto word_list = finder->AcquireWordList();
+    auto word_list = page->AcquireWordList(kWordFinderAlgLatest);
     int word_count = word_list->GetNumWords();
     for (int i = 0; i < word_count; i++) {
       auto word = word_list->GetWord(i);
@@ -115,7 +111,7 @@ namespace SearchText {
         process_word(word);
       }
     }
-    finder->Destroy();
+    word_list->Release();
   }
 
   void Run(
