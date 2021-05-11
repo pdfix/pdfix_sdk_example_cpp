@@ -9,6 +9,5 @@ using namespace PDFixSDK;
 void AddWatermark(
     const std::wstring& open_path,                    // source PDF document
     const std::wstring& save_path,                    // path to save PDF docuemnt
-    const std::wstring& img_path,                     // watermark to apply
-    PdfWatermarkParams& watermark_params              // watermark parameters
+    const std::wstring& img_path                      // watermark to apply
     );
