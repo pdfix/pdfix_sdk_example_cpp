@@ -106,7 +106,7 @@ int main(int argc, char* argv[]) {
 
     // Signing and form-filling
     DigitalSignature(open_path, output_dir + L"/DigitalSignature.pdf", resources_dir + L"/test.pfx", L"TEST_PASSWORD");
-    AddWatermark(open_path, output_dir + L"/AddWatermark.pdf", resources_dir + L"/watermark.png");
+    AddWatermark(open_path, output_dir + L"/AddWatermark.pdf", resources_dir + L"/watermark.png", 0, -1, 1, false, kAlignmentLeft, kAlignmentTop, 0.0f, 0.0f, 2.0f, 0.0f, 0.5f);
     ExportFormFieldValues(open_path, output_dir + L"/ExportFormFieldValues.txt");
     SetFormFieldValue(open_path, output_dir + L"/SetFormFieldValue.pdf");
     SetFieldFlags(open_path, output_dir + L"/SetFieldFlags.pdf");
