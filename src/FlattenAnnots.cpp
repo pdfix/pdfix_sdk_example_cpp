@@ -34,9 +34,11 @@ void FlattenAnnots(
     for (auto j = page->GetNumAnnots() - 1; j >= 0; j--) {
       auto annot = page->GetAnnot(i);
       // flatten all but link annotations which to not have appearance
-      if (annot && annot->GetSubtype() != kAnnotLink)
+      if (annot && annot->GetSubtype() != kAnnotLink) {
         page->FlattenAnnot(annot);
+      }
     }
+    page->SetContent();
     page->Release();
   }
 
