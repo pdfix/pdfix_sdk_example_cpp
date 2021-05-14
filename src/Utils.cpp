@@ -221,3 +221,18 @@ void PdfMatrixTranslate(PdfMatrix& m, double x, double y, bool prepend) {
   m.e += x;
   m.f += y; 
 }
+
+void PdfMatrixInverse(PdfMatrix& m, PdfMatrix& m1) {
+  PdfMatrix inverse(m), orig(m1);
+  float i = orig.a * orig.d - orig.b * orig.c;
+  if (fabs(i) == 0)
+    return;
+
+  float j = -i;
+  inverse.a = orig.d / i;
+  inverse.b = orig.b / j;
+  inverse.c = orig.c / j;
+  inverse.d = orig.a / i;
+  inverse.e = (orig.c * orig.f - orig.d * orig.e) / i;
+  inverse.f = (orig.a * orig.f - orig.b * orig.e) / j;
+}
