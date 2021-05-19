@@ -157,7 +157,7 @@ namespace TagTableAsFigure {
     
     doc_tmpl->SetProperty(L"ignore_tags", 1);
 
-    if (!page_map->AcquireElements(nullptr, nullptr))
+    if (!page_map->CreateElements(nullptr, nullptr))
       throw PdfixException();
 
     if (!page_map->AddTags(table.get(), nullptr, nullptr))
