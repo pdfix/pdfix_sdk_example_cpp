@@ -32,9 +32,11 @@ void RegexSearch(
   if (!page)
     throw PdfixException();
 
-  PdePageMap* page_map = page->AcquirePageMap(nullptr, nullptr);
-  if (!page_map)
-    throw PdfixException();
+    PdePageMap* page_map = page->AcquirePageMap();
+    if (!page_map)
+      throw PdfixException();
+    if (!page_map->CreateElements(nullptr, nullptr))
+      throw PdfixException();
 
   PsRegex* regex = pdfix->CreateRegex();
   regex->SetPattern(regex_pattern.c_str());

@@ -122,13 +122,15 @@ namespace ExtractHighlightedText {
       PdfPage* page = doc->AcquirePage(i);
       if (!page)
         throw std::runtime_error(pdfix->GetError());
-      PdePageMap* page_map = page->AcquirePageMap(nullptr, nullptr);
+      PdePageMap* page_map = page->AcquirePageMap();
       if (!page_map)
-        throw std::runtime_error(pdfix->GetError());
+        throw PdfixException();
+      if (!page_map->CreateElements(nullptr, nullptr))
+        throw PdfixException();
 
       PdeElement* container = page_map->GetElement();
       if (!container)
-        throw std::runtime_error(pdfix->GetError());
+        throw PdfixException();
 
       GetHighlightedText(page, container, output);
 

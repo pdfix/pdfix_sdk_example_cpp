@@ -102,8 +102,10 @@ void ExtractImages(
     if (!page_view)
       throw PdfixException();
 
-    PdePageMap* page_map = page->AcquirePageMap(nullptr, nullptr);
+    PdePageMap* page_map = page->AcquirePageMap();
     if (!page_map)
+      throw PdfixException();
+    if (!page_map->CreateElements(nullptr, nullptr))
       throw PdfixException();
 
     auto element = page_map->GetElement();

@@ -30,10 +30,12 @@ namespace GetWhitespace {
     PdfPage* page = doc->AcquirePage(0);
     if (!page)
       throw PdfixException();
-    PdePageMap* page_map = page->AcquirePageMap(nullptr, nullptr);
+    PdePageMap* page_map = page->AcquirePageMap();
     if (!page_map)
       throw PdfixException();
-
+    if (!page_map->CreateElements(nullptr, nullptr))
+      throw PdfixException();
+    
     PdfRect bbox;
     PdfWhitespaceParams whitespace_params;
     // set watermark width in user space coordinates

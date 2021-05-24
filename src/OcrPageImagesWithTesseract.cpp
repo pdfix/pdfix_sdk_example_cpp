@@ -73,8 +73,10 @@ void OcrPageImagesWithTesseract(
     throw PdfixException();
 
   // find images on the page and collect bounding boxes to ocr
-  PdePageMap* page_map = page->AcquirePageMap(nullptr, nullptr);
+  PdePageMap* page_map = page->AcquirePageMap();
   if (!page_map)
+    throw PdfixException();
+  if (!page_map->CreateElements(nullptr, nullptr))
     throw PdfixException();
     
   PdeElement* elem = page_map->GetElement();

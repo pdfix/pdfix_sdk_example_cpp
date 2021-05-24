@@ -136,8 +136,10 @@ namespace ExtractData {
   void ExtractPageMap(PdfPage *page, ptree &node, const DataType &data_types) {
     auto page_map_deleter = [&](PdePageMap* page_map) { page_map->Release(); };
     std::unique_ptr<PdePageMap, decltype(page_map_deleter)> 
-      page_map(page->AcquirePageMap(nullptr, nullptr), page_map_deleter);  
+      page_map(page->AcquirePageMap(), page_map_deleter);  
     if (!page_map)
+      throw PdfixException();
+    if (!page_map->CreateElements(nullptr, nullptr))
       throw PdfixException();
 
     ptree page_map_node;

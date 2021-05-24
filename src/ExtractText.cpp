@@ -46,9 +46,11 @@ namespace ExtractText {
   }
 
   void GetPageText(PdfPage* page, std::stringstream &ss){
-    std::unique_ptr<PdePageMap, decltype(page_map_deleter)> page_map(page->AcquirePageMap(nullptr, nullptr),
+    std::unique_ptr<PdePageMap, decltype(page_map_deleter)> page_map(page->AcquirePageMap(),
       page_map_deleter);
     if (!page_map)
+      throw PdfixException();
+    if (!page_map->CreateElements(nullptr, nullptr))
       throw PdfixException();
     
     PdeElement* container = page_map->GetElement();
