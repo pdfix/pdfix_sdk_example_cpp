@@ -30,24 +30,21 @@ namespace DocumentMetadata {
     if (!doc)
       throw PdfixException();
 
-    std::wstring title = doc->GetInfo(L"Title");
-    doc->SetInfo(L"Title", L"My next presentation");
-
+    // save document metadata into a file
     PsMetadata* metadata = doc->GetMetadata();
     if (!metadata)
       throw PdfixException();
 
+    // save metadata to file
     PsFileStream* stream = pdfix->CreateFileStream(xml_path.c_str(), kPsTruncate);
     if (!metadata->SaveToStream(stream))
       throw PdfixException();
     stream->Destroy();
 
-    // do something with XML metadata ...
-
-    stream = pdfix->CreateFileStream(xml_path.c_str(), kPsReadOnly);
-    if (!metadata->LoadFromStream(stream))
+    // modify document title
+    std::wstring title = doc->GetInfo(L"Title");
+    if (!doc->SetInfo(L"Title", L"My next presentation"))
       throw PdfixException();
-    stream->Destroy();
 
     if (!doc->Save(save_path.c_str(), kSaveFull))
       throw PdfixException();
