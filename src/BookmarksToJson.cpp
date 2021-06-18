@@ -69,7 +69,8 @@ namespace BookmarksToJson {
       ptree kids;
       for (int i = 0; i < num; i++) {
         ptree bmk_json;
-        PdfBookmark* child = bmk->GetChild(i);
+        auto child_obj = bmk->GetChildObject(i);
+        auto child = bmk->AcquireBookmark(child_obj);
         ProcessBookmark(child, doc, bmk_json);
 
         kids.push_back(std::make_pair("", bmk_json));
