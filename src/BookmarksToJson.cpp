@@ -44,11 +44,12 @@ namespace BookmarksToJson {
     // clear processed bookmarks
     if (bmk->GetParent() == nullptr)
       processed_bookmarks.clear();
-    
+   
+    auto bmk_obj = bmk->GetObject();
     // skip processed bookmark
-    if (processed_bookmarks[bmk] != 0)
+    if (processed_bookmarks.count(bmk_obj) > 0)
       return;
-    processed_bookmarks[bmk] = 1;
+    processed_bookmarks.insert(bmk_obj);
 
     if (bmk->GetParent()) {
       // bookmark title
@@ -69,10 +70,16 @@ namespace BookmarksToJson {
       ptree kids;
       for (int i = 0; i < num; i++) {
         ptree bmk_json;
-        PdfBookmark* child = bmk->GetChild(i);
+        auto child_obj = bmk->GetChildObject(i);
+        if (!child_obj)
+          throw PdfixException();
+        auto child = bmk->AcquireBookmark(child_obj);
+        if (!child)
+          throw PdfixException();
         ProcessBookmark(child, doc, bmk_json);
-
         kids.push_back(std::make_pair("", bmk_json));
+
+        child->Release();
       }
       json.add_child("kids", kids);
     }
@@ -102,6 +109,7 @@ namespace BookmarksToJson {
     PdfBookmark* parent = doc->GetBookmarkRoot();
     if (parent) {
       ProcessBookmark(parent, doc, bookmark_root);
+      parent->Release();
     }
 
     ptree output_json;
