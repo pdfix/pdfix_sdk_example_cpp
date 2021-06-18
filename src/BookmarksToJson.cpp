@@ -106,7 +106,7 @@ namespace BookmarksToJson {
 
     ptree bookmark_root;
 
-    PdfBookmark* parent = doc->GetBookmarkRoot();
+    PdfBookmark* parent = doc->AcquireBookmarkRoot();
     if (parent) {
       ProcessBookmark(parent, doc, bookmark_root);
       parent->Release();
