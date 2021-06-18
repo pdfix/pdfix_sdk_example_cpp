@@ -12,8 +12,7 @@ namespace ExtractData {
 
     if (data_types.extract_text_state) {
       ptree text_state_node;
-      PdfTextState ts;
-      text->GetTextState(text->GetPage()->GetDoc(), &ts);
+      PdfTextState ts = text->GetTextState();
       ExtractTextState(&ts, text_state_node, data_types);
       node.put_child("text_state", text_state_node);
     }
