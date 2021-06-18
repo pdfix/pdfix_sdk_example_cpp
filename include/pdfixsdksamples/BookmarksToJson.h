@@ -3,7 +3,7 @@
 // system
 #include <string>
 #include <iostream>
-#include <map>
+#include <set>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 // project
@@ -14,7 +14,7 @@ using namespace PDFixSDK;
 using namespace boost::property_tree;
 
 namespace BookmarksToJson {
-static std::map<PdfBookmark*, int> processed_bookmarks;
+static std::set<PdsObject*> processed_bookmarks;
 
 void ProcessAction(PdfAction* action, PdfDoc* doc, ptree& json);
 
