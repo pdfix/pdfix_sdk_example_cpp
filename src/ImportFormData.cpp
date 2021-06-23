@@ -57,11 +57,12 @@ namespace ImportFormData {
         if (!page)
           throw PdfixException();
         for (auto j = page->GetNumAnnots() - 1; j >= 0; j--) {
-          auto annot = page->GetAnnot(i);
+          auto annot = page->AcquireAnnot(i);
           // flatten all but link annotations which to not have appearance
           if (annot && annot->GetSubtype() == kAnnotWidget)
             if (!page->FlattenAnnot(annot))
               throw PdfixException();
+          annot->Release();
         }
         page->Release();
       }

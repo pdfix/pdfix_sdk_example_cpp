@@ -51,13 +51,14 @@ void ProcessStructElement(PdsStructTree* struct_tree, PdsStructElement* struct_e
     // based on structure element you can obtain different data
     switch (struct_elem->GetKidType(i)) {
     case kPdsStructKidElement: {
-      auto kid_struct_elem = struct_tree->AcquireStructElement(kid_obj);
+      auto kid_struct_elem = struct_tree->GetStructElement(kid_obj);
+      //auto kid_struct_elem = struct_tree->AcquireStructElement(kid_obj);
       if (kid_struct_elem == nullptr)
         throw PdfixException();
       ptree kid_json;
       ProcessStructElement(struct_tree, kid_struct_elem, kid_json);
       kids.push_back(std::make_pair("", kid_json));
-      kid_struct_elem->Release();
+      //kid_struct_elem->Release();
     } break;
     case kPdsStructKidObject: 
       break;
@@ -108,10 +109,11 @@ void TagsReadStructTree(
     for (auto i = 0; i < num_kids; i++) {
       PdsObject* kid_object = struct_tree->GetKidObject(i);
       ptree kid_json;
-      PdsStructElement* struct_elem = struct_tree->AcquireStructElement(kid_object);
+      //PdsStructElement* struct_elem = struct_tree->AcquireStructElement(kid_object);
+      auto struct_elem = struct_tree->GetStructElement(kid_object);
       ProcessStructElement(struct_tree, struct_elem, kid_json);
       kids.push_back(std::make_pair("", kid_json));
-      struct_elem->Release();
+      //struct_elem->Release();
     }
   }
   struct_tree_root_json.add_child("kids", kids);
