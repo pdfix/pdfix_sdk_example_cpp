@@ -25,12 +25,15 @@ using namespace PDFixSDK;
 using namespace boost::property_tree;
 
 extern std::string ToUtf8(const std::wstring& wstr);
+static int it = 0;
 
 void ProcessStructElement(PdsStructTree* struct_tree, PdsStructElement* struct_elem,
   ptree& json) {
 
   if (!struct_elem)
     throw PdfixException();
+
+  it++;
 
   auto type_str = struct_elem->GetType(true);
   json.put("type", ToUtf8(type_str));
@@ -130,6 +133,8 @@ void TagsReadStructTree(
   ptree json;
   json.add_child("struct-tree", struct_tree_root_json);
   write_json(output, json, false);
+
+  output << it;
 
   doc->Close();
   pdfix->Destroy();

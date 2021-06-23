@@ -70,10 +70,7 @@ namespace BookmarksToJson {
       ptree kids;
       for (int i = 0; i < num; i++) {
         ptree bmk_json;
-        auto child_obj = bmk->GetChildObject(i);
-        if (!child_obj)
-          throw PdfixException();
-        auto child = bmk->AcquireBookmark(child_obj);
+        auto child = bmk->AcquireChild(i);
         if (!child)
           throw PdfixException();
         ProcessBookmark(child, doc, bmk_json);

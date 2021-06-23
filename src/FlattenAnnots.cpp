@@ -32,7 +32,7 @@ void FlattenAnnots(
     if (!page)
       throw PdfixException();
     for (auto j = page->GetNumAnnots() - 1; j >= 0; j--) {
-      auto annot = page->GetAnnot(j);
+      auto annot = page->AcquireAnnot(j);
       
       // skip and remove hidden annotations
       auto flags = annot->GetFlags();
@@ -45,6 +45,8 @@ void FlattenAnnots(
       if (annot && annot->GetSubtype() != kAnnotLink) {
         page->FlattenAnnot(annot);
       }
+
+      annot->Release();
     }
     page->SetContent();
     page->Release();

@@ -27,11 +27,12 @@ namespace ExtractHighlightedText {
     // get annotations over the bbox
     int num_annots = page->GetNumAnnotsAtRect(&char_rect);
     for (int i = 0; i < num_annots; i++) {
-      PdfAnnot* annot = page->GetAnnotAtRect(&char_rect, i);
+      PdfAnnot* annot = page->AcquireAnnotAtRect(&char_rect, i);
       if (annot) {
         PdfAnnotSubtype subtype = annot->GetSubtype();
         if (subtype == kAnnotHighlight)
           return true;
+        annot->Release();
       }
     }
     return false;
