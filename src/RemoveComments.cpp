@@ -30,12 +30,11 @@ void RemoveComments(
   PdfPage* page = doc->AcquirePage(0);
 
   for (auto i = 0; i < page->GetNumAnnots(); i++) {
-    PdfAnnot* annot = page->AcquireAnnot(i);
+    PdfAnnot* annot = page->GetAnnot(i);
     if (annot->GetSubtype() == kAnnotText) {
       page->RemoveAnnot(i, kRemoveAnnotPopup | kRemoveAnnotReply);
       break;
     }
-    annot->Release();
   }
   page->Release();
   doc->Save(save_path.c_str(), kSaveFull);

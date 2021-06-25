@@ -55,14 +55,11 @@ void FillForm(
       if (!page)
         throw PdfixException();
       for (auto j = page->GetNumAnnots() - 1; j >= 0; j--) {
-        auto annot = page->AcquireAnnot(i);
+        auto annot = page->GetAnnot(i);
         // flatten all but link annotations which to not have appearance
         if (annot && annot->GetSubtype() == kAnnotWidget)
           if (!page->FlattenAnnot(annot))
             throw PdfixException();
-        
-        if (annot)
-          annot->Release();
       }
       page->Release();
     }

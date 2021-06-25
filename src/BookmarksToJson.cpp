@@ -70,13 +70,11 @@ namespace BookmarksToJson {
       ptree kids;
       for (int i = 0; i < num; i++) {
         ptree bmk_json;
-        auto child = bmk->AcquireChild(i);
+        auto child = bmk->GetChild(i);
         if (!child)
           throw PdfixException();
         ProcessBookmark(child, doc, bmk_json);
         kids.push_back(std::make_pair("", bmk_json));
-
-        child->Release();
       }
       json.add_child("kids", kids);
     }
@@ -103,10 +101,9 @@ namespace BookmarksToJson {
 
     ptree bookmark_root;
 
-    PdfBookmark* parent = doc->AcquireBookmarkRoot();
+    PdfBookmark* parent = doc->GetBookmarkRoot();
     if (parent) {
       ProcessBookmark(parent, doc, bookmark_root);
-      parent->Release();
     }
 
     ptree output_json;
