@@ -22,6 +22,7 @@
 #include "FlattenAnnots.h"
 #include "GetWhitespace.h"
 #include "Initialization.h"
+#include "InsertPages.h"
 #include "MakeAccessible.h"
 #include "OcrPageImagesWithTesseract.h"
 #include "OcrWithTesseract.h"
