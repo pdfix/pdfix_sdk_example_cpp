@@ -25,7 +25,7 @@ PdsStructElementPtr FindStructElement(PdsStructElement* struct_elem, const std::
       continue;
     PdsObject* kid_obj = struct_elem->GetKidObject(i);
     if (!kid_obj)
-      throw PdfixException(GetPdfix());
+      throw PdfixException();
     
     PdsStructElementPtr kid_elem(struct_tree->AcquireStructElement(kid_obj), struct_elem_deleter);
 
@@ -52,11 +52,11 @@ PdsStructElementPtr FindStructElement(PdsStructTree* struct_tree, const std::wst
   for (int i = 0; i < struct_tree->GetNumKids(); i++) {
     auto kid_obj = struct_tree->GetKidObject(i);
     if (!kid_obj)
-      throw PdfixException(GetPdfix());
+      throw PdfixException();
 
     PdsStructElementPtr kid_elem(struct_tree->AcquireStructElement(kid_obj), struct_elem_deleter);
     if (!kid_elem)
-      throw PdfixException(GetPdfix());
+      throw PdfixException();
     if (auto found = FindStructElement(kid_elem.get(), name, title))
       return found;
   }
@@ -72,7 +72,7 @@ void TableTagRowHeader(PdsStructElement* table) {
     if (tr->GetKidType(i) == kPdsStructKidElement) {
       PdsObject* td_obj = tr->GetKidObject(i);
       if (!td_obj)
-        throw PdfixException(GetPdfix());
+        throw PdfixException();
       
       PdsStructElementPtr td(struct_tree->AcquireStructElement(td_obj), struct_elem_deleter);
       

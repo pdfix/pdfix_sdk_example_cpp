@@ -143,12 +143,12 @@ set(SOURCES
   src/StandardLicenseActivate.cpp
   src/StandardLicenseDeactivate.cpp
   src/StandardLicenseUpdate.cpp
-  #src/TagAnnotation.cpp
-  #src/TagHeadings.cpp
-  #src/TagTableAsFigure.cpp
-  #src/TagsEditStructTree.cpp
-  #src/TagsReadStructTree.cpp
-  #src/TagsReadingOrder.cpp
+  src/TagAnnotation.cpp
+  src/TagHeadings.cpp
+  src/TagTableAsFigure.cpp
+  src/TagsEditStructTree.cpp
+  src/TagsReadStructTree.cpp
+  # src/TagsReadingOrder.cpp
   src/Utils.cpp
   src/CreateRedactionMark.cpp
   src/ProcessControl.cpp

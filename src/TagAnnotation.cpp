@@ -28,8 +28,9 @@ namespace TagAnnotation {
         
         // find text object with mcid on the page to get the text state
         int mcid = struct_elem->GetKidMcid(i);
-        for (int j = 0; j < page->GetNumPageObjects(); j++) {
-          PdsPageObject* page_object = page->GetPageObject(j);
+        auto content = page->GetContent();
+        for (int j = 0; j < content->GetNumObjects(); j++) {
+          PdsPageObject* page_object = content->GetObject(j);
           
           // check if this text page object has the same mcid
           PdsContentMark* content_mark = page_object->GetContentMark();

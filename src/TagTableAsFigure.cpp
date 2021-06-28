@@ -27,8 +27,9 @@ namespace TagTableAsFigure {
         
         // find text object with mcid on the page to get the text state
         int mcid = struct_elem->GetKidMcid(i);
-        for (int j = 0; j < page->GetNumPageObjects(); j++) {
-          PdsPageObject* page_object = page->GetPageObject(j);
+        auto content = page->GetContent();
+        for (int j = 0; j < content->GetNumObjects(); j++) {
+          PdsPageObject* page_object = content->GetObject(j);
           
           // check if this text page object has the same mcid
           PdsContentMark* content_mark = page_object->GetContentMark();
@@ -139,7 +140,10 @@ namespace TagTableAsFigure {
     auto page_deleter = [](PdfPage* page) {page->Release();};
     std::unique_ptr<PdfPage, decltype(page_deleter)> page(doc->AcquirePage(0), page_deleter);
 
-    PdePageMap* page_map = page->CreatePageMap();
+    PdePageMap* page_map = page->AcquirePageMap();
+    if (page_map->CreateElements(nullptr, nullptr))
+      throw PdfixException();
+
     PdeElement* elem = page_map->CreateElement(kPdeImage, nullptr);
     elem->SetBBox(&bbox);
     elem->SetAlt(L"This is image caption");
@@ -154,6 +158,8 @@ namespace TagTableAsFigure {
 
     if (!table->SetType(L"Sect"))
         throw PdfixException();
+
+    page_map->Release();
 
     // save document
     if (!doc->Save(save_path.c_str(), kSaveFull))

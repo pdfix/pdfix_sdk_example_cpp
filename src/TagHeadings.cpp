@@ -20,15 +20,16 @@ bool GetPageObjectTextState(PdsPageObject* page_object, int mcid, PdfTextState* 
     // check if this text page object has the same mcid
     PdsContentMark* content_mark = page_object->GetContentMark();
     if (content_mark && content_mark->GetTagMcid() == mcid) {
-      text->GetTextState(page_object->GetPage()->GetDoc(), ts);
+      text->GetTextState(ts);
       return true;
     }
   }
   else if (page_object->GetObjectType() == kPdsPageForm) {
     // search for the text object inside of the form XObject
     PdsForm* form = (PdsForm*)page_object;
-    for (int i = 0; i < form->GetNumPageObjects(); i++) {
-      if (GetPageObjectTextState(form->GetPageObject(i), mcid, ts))
+    auto content = form->GetContent();
+    for (int i = 0; i < content->GetNumObjects(); i++) {
+      if (GetPageObjectTextState(content->GetObject(i), mcid, ts))
         return true;
     }
   }
@@ -47,8 +48,9 @@ bool GetParagraphTextState(PdsStructElement* struct_elem, PdfTextState* ts) {
       
       // find text object with mcid on the page to get the text state
       int mcid = struct_elem->GetKidMcid(i);
-      for (int j = 0; j < page->GetNumPageObjects(); j++) {
-        if (GetPageObjectTextState(page->GetPageObject(j), mcid, ts))
+      auto content = page->GetContent();
+      for (int j = 0; j < content->GetNumObjects(); j++) {
+        if (GetPageObjectTextState(content->GetObject(j), mcid, ts))
           return true;
       }
     }
