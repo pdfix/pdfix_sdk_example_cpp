@@ -6,6 +6,7 @@
 #pragma once
 #include <string>
 #include <iostream>
+#include <memory>
 #include "Pdfix.h"
 
 using namespace PDFixSDK;
