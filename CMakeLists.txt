@@ -40,6 +40,7 @@ set(HEADERS
   include/pdfixsdksamples/GetWhitespace.h
   include/pdfixsdksamples/ImportFormData.h
   include/pdfixsdksamples/Initialization.h
+  include/pdfixsdksamples/InsertPages.h
   include/pdfixsdksamples/LicenseReset.h
   include/pdfixsdksamples/LicenseStatus.h
   include/pdfixsdksamples/MakeAccessible.h
@@ -115,6 +116,7 @@ set(SOURCES
   src/GetWhitespace.cpp
   src/ImportFormData.cpp
   src/Initialization.cpp
+  src/InsertPages.cpp
   src/LicenseReset.cpp
   src/LicenseStatus.cpp
   src/MakeAccessible.cpp
