@@ -20,6 +20,7 @@ set(HEADERS
   include/pdfixsdksamples/ConvertRGBToCMYK.h
   include/pdfixsdksamples/ConvertToHtml.h
   include/pdfixsdksamples/ConvertToHtmlEx.h
+  include/pdfixsdksamples/CopyAnnots.h
   include/pdfixsdksamples/CreateNewDocument.h
   include/pdfixsdksamples/CreateNewDocuments.h
   include/pdfixsdksamples/CreatePage.h
@@ -90,13 +91,7 @@ set(SOURCES
   src/ConvertRGBToCMYK.cpp
   src/ConvertToHtml.cpp
   src/ConvertToHtmlEx.cpp
-  src/EditContent.cpp
-  src/ExtractPdfData.cpp
-  src/ExtractPdfUtils.cpp
-  src/ExtractPageData.cpp
-  src/ExtractPageContent.cpp
-  src/ExtractPageMap.cpp
-  src/ExtractAnnot.cpp
+  src/CopyAnnots.cpp
   src/CreateNewDocument.cpp
   src/CreateNewDocuments.cpp
   src/CreatePage.cpp
@@ -104,10 +99,17 @@ set(SOURCES
   src/DigitalSignature.cpp
   src/DocumentMetadata.cpp
   src/DocumentSecurity.cpp
+  src/EditContent.cpp
   src/EmbedFonts.cpp
+  src/ExtractAnnot.cpp
   src/ExportFormFieldValues.cpp
   src/ExtractHighlightedText.cpp
   src/ExtractImages.cpp
+  src/ExtractPageData.cpp
+  src/ExtractPageContent.cpp
+  src/ExtractPageMap.cpp
+  src/ExtractPdfData.cpp
+  src/ExtractPdfUtils.cpp
   src/ExtractStructTree.cpp
   src/ExtractTables.cpp
   src/ExtractText.cpp
