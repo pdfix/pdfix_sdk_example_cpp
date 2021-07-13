@@ -107,7 +107,10 @@ namespace CopyAnnots {
     annot_handler->SetCopyProc([](PdfAnnot* annot) -> void* {
       auto rect = annot->GetBBox();
       auto result = new PdfRect();
-      memcpy(result, &rect, sizeof(PdfRect));
+      result->bottom = rect.bottom;
+      result->left = rect.left;
+      result->right = rect.right;
+      result->top = rect.top;
       return result;
     });
 
