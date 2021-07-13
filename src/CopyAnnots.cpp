@@ -12,6 +12,8 @@
 
 using namespace PDFixSDK;
 
+#define UNUSED(x) (void)(x)
+
 namespace CopyAnnots {
 
     void CopyAnnots(
@@ -98,6 +100,7 @@ namespace CopyAnnots {
     auto annot_handler = pdfix->RegisterAnnotHandler(custom_annot_name.c_str());
 
     annot_handler->SetCanCopyProc([](PdfAnnot* annot) -> bool {
+      UNUSED(annot);
       return true;
     });
 
@@ -109,10 +112,14 @@ namespace CopyAnnots {
     });
 
     annot_handler->SetCanPasteProc([](PdfPage* dest_page, const PdfPoint* center, void* data) -> bool {
+      UNUSED(dest_page);
+      UNUSED(center);
+      UNUSED(data);
       return true;
     });
 
     annot_handler->SetPasteProc([](PdfPage* dest_page, const PdfPoint* center, void* data) -> PdfAnnot* {
+      UNUSED(center);
       PdfRect* rect = static_cast<PdfRect*>(data);
       return dest_page->AddNewAnnot(-1, rect, PdfAnnotSubtype::kAnnotSquare);
     });
