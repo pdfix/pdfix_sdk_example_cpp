@@ -189,9 +189,9 @@ void PdfMatrixConcat(PdfMatrix& m, PdfMatrix& m1, bool prepend) {
   m.f = left.e * right.b + left.f * right.d + right.f;
 }
 
-void PdfMatrixRotate(PdfMatrix& m, double radian, bool prepend) {
-  double cosValue = cos(radian);
-  double sinValue = sin(radian);
+void PdfMatrixRotate(PdfMatrix& m, float radian, bool prepend) {
+  float cosValue = cos(radian);
+  float sinValue = sin(radian);
   PdfMatrix m1;
   m1.a = cosValue;
   m1.b = sinValue;
@@ -200,7 +200,7 @@ void PdfMatrixRotate(PdfMatrix& m, double radian, bool prepend) {
   PdfMatrixConcat(m, m1, prepend);
 }
 
-void PdfMatrixScale(PdfMatrix& m, double sx, double sy, bool prepend) {
+void PdfMatrixScale(PdfMatrix& m, float sx, float sy, bool prepend) {
   m.a *= sx;
   m.d *= sy;
   if (prepend) {
@@ -213,7 +213,7 @@ void PdfMatrixScale(PdfMatrix& m, double sx, double sy, bool prepend) {
   m.f *= sy;
 }
 
-void PdfMatrixTranslate(PdfMatrix& m, double x, double y, bool prepend) {
+void PdfMatrixTranslate(PdfMatrix& m, float x, float y, bool prepend) {
   if (prepend) {
     m.e += x * m.a + y + m.c;
     m.f += y * m.d + x * m.b;

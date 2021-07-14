@@ -15,9 +15,9 @@ using namespace PDFixSDK;
 
 #define kPi 3.1415926535897932384626433832795f
 
-extern void PdfMatrixRotate(PdfMatrix& m, double radian, bool prepend);
-extern void PdfMatrixScale(PdfMatrix& m, double sx, double sy, bool prepend);
-extern void PdfMatrixTranslate(PdfMatrix& m, double x, double y, bool prepend);
+extern void PdfMatrixRotate(PdfMatrix& m, float radian, bool prepend);
+extern void PdfMatrixScale(PdfMatrix& m, float sx, float sy, bool prepend);
+extern void PdfMatrixTranslate(PdfMatrix& m, float x, float y, bool prepend);
 
 void parse_page_element(PdeElement* elem, std::vector<PdfRect>& image_bbox_arr) {
   if (!elem)

@@ -44,7 +44,7 @@ namespace ExtractData {
     bool struct_tree_content = false;     // extract content when listing structure tree using doc_struct_tree
 
     // rendering and images
-    double render_zoom = 1.;              // page rasterizing zoom of image extraction
+    float render_zoom = 1.;              // page rasterizing zoom of image extraction
     PdfRotate render_rotate = kRotate0;   // page rasterizing rotation of image extraction
     PdfImageFormat image_format = kImageFormatJpg;  // format of the image
   };

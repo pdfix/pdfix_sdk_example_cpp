@@ -13,7 +13,7 @@ namespace RenderPage {
         const std::wstring& img_path,               // output image
         PdfImageParams img_params,                  // output image params
         int page_num,                               // page number
-        double zoom,                                // page zoom
+        float zoom,                                 // page zoom
         PdfRotate rotate,                           // page rotation
         PdfDevRect clip_rect                        // clip region
         );

@@ -13,6 +13,6 @@ void OcrPageImagesWithTesseract(
     const std::wstring& save_path,                  // searchable PDF document
     const std::wstring& data_path,                  // path to OCR data
     const std::wstring& language,                   // default OCR language
-    const double zoom,                              // zoom to control page rendering quality
+    const float zoom,                               // zoom to control page rendering quality
     const PdfRotate rotate                          // page rotation to be applied
     );

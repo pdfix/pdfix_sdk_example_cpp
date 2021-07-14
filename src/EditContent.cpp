@@ -14,7 +14,7 @@ using namespace PDFixSDK;
 
 namespace EditContent {
 
-  PropsBuilder& PropsBuilder::AddText(double x, double y, const std::wstring& text) {
+  PropsBuilder& PropsBuilder::AddText(float x, float y, const std::wstring& text) {
     ObjectProps props;
     props.pos.x = x;
     props.pos.y = y;
@@ -23,7 +23,7 @@ namespace EditContent {
     m_properties.push_back(props);return *this;
   }
 
-  PropsBuilder& PropsBuilder::AddPath(double x, double y, const std::wstring& svg) {
+  PropsBuilder& PropsBuilder::AddPath(float x, float y, const std::wstring& svg) {
     ObjectProps props;
     props.pos.x = x;
     props.pos.y = y;
@@ -33,7 +33,7 @@ namespace EditContent {
     return *this;
   }
 
-  PropsBuilder& PropsBuilder::AddImage(double x, double y, const std::wstring& path) {
+  PropsBuilder& PropsBuilder::AddImage(float x, float y, const std::wstring& path) {
     ObjectProps props;
     props.pos.x = x;
     props.pos.y = y;
@@ -151,7 +151,7 @@ namespace EditContent {
         r.x = std::stod(*(++it));
         r.y = std::stod(*(++it));
 
-        double x_angle = std::stod(*(++it));
+        float x_angle = std::stod(*(++it));
 
         bool large = std::stoi(*(++it)) != 0;
         bool sweep = std::stoi(*(++it)) != 0;

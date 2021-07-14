@@ -22,9 +22,9 @@ namespace EditContent {
     std::vector<ObjectProps> m_properties;
 
   public:
-    PropsBuilder& AddText(double x, double y, const std::wstring& text);
-    PropsBuilder& AddPath(double x, double y, const std::wstring& svg);
-    PropsBuilder& AddImage(double x, double y, const std::wstring& path);
+    PropsBuilder& AddText(float x, float y, const std::wstring& text);
+    PropsBuilder& AddPath(float x, float y, const std::wstring& svg);
+    PropsBuilder& AddImage(float x, float y, const std::wstring& path);
     std::vector<ObjectProps>& Get();
   };
 
