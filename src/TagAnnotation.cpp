@@ -137,7 +137,8 @@ namespace TagAnnotation {
     // add new link annotation to the page
     auto page_deleter = [](PdfPage* page) { page->Release(); };
     std::unique_ptr<PdfPage, decltype(page_deleter)> page(doc->AcquirePage(0), page_deleter);
-    PdfLinkAnnot* annot = page->AddNewLinkAnnot(0, &annot_bbox);
+    PdfLinkAnnot* annot = (PdfLinkAnnot*)page->CreateAnnot(kAnnotLink, &annot_bbox);
+    page->AddAnnot(0, annot);
     if (!annot)
       throw PdfixException();
     

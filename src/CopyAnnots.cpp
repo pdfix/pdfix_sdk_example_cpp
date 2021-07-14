@@ -124,7 +124,9 @@ namespace CopyAnnots {
     annot_handler->SetPasteProc([](PdfPage* dest_page, const PdfPoint* center, void* data) -> PdfAnnot* {
       UNUSED(center);
       PdfRect* rect = static_cast<PdfRect*>(data);
-      return dest_page->AddNewAnnot(-1, rect, PdfAnnotSubtype::kAnnotSquare);
+      auto annot = dest_page->CreateAnnot(PdfAnnotSubtype::kAnnotSquare, rect);
+      dest_page->AddAnnot(-1, annot);
+      return annot;
     });
 
     annot_handler->SetDestroyDataProc([](void* data){

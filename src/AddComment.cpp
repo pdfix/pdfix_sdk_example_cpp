@@ -46,7 +46,8 @@ void AddComment(
   annot_rect.right = (crop_box.right + crop_box.left) / 2. + 10;
   annot_rect.top = (crop_box.top + crop_box.bottom) / 2. + 10;
 
-  PdfTextAnnot* annot = page->AddNewTextAnnot(-1, &annot_rect);
+  PdfTextAnnot* annot = (PdfTextAnnot*)page->CreateAnnot(kAnnotText, &annot_rect);
+  page->AddAnnot(-1, annot);
   if (!annot)
     throw PdfixException();
   annot->SetAuthor(L"Peter Brown");

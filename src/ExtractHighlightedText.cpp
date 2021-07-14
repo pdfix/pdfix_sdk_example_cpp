@@ -19,10 +19,10 @@ namespace ExtractHighlightedText {
   // HasHighlight rerturns true if there is an highlight annotation over the char_rect
   bool HasHighlight(PdfPage* page, PdfRect& char_rect) {
     // deflate char rect to minimal
-    char_rect.left += (char_rect.right - char_rect.left) / 2.;
-    char_rect.right = char_rect.left + 1;
-    char_rect.bottom += (char_rect.top - char_rect.bottom) / 2.;
-    char_rect.top = char_rect.bottom + 1;
+    char_rect.left += (char_rect.right - char_rect.left) / 2.f;
+    char_rect.right = char_rect.left + 1.f;
+    char_rect.bottom += (char_rect.top - char_rect.bottom) / 2.f;
+    char_rect.top = char_rect.bottom + 1.f;
 
     // get annotations over the bbox
     int num_annots = page->GetNumAnnotsAtRect(&char_rect);

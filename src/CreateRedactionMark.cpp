@@ -24,7 +24,8 @@ using namespace PDFixSDK;
 
 static void CreteRedactionMark(PdfPage* page, PdfRect& redaction_rect) {
   // Create empty redact annotation and add it to the page
-  auto redact_annot = page->AddNewAnnot(-1, &redaction_rect, PdfAnnotSubtype::kAnnotRedact);
+  auto redact_annot = page->CreateAnnot(PdfAnnotSubtype::kAnnotRedact, &redaction_rect);
+  page->AddAnnot(-1, redact_annot);
 
   // Notify before editing
   redact_annot->NotifyWillChange(L"IC");

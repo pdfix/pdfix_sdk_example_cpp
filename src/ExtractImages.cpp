@@ -96,8 +96,8 @@ void ExtractImages(
 
     PdfRect crop_box;
     page->GetCropBox(&crop_box);
-    double page_width = (crop_box.right - crop_box.left);
-    double zoom = render_width / page_width;
+    float page_width = (crop_box.right - crop_box.left);
+    float zoom = render_width / page_width;
     PdfPageView* page_view = page->AcquirePageView(zoom, kRotate0);
     if (!page_view)
       throw PdfixException();

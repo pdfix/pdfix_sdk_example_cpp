@@ -62,8 +62,11 @@ namespace SetAnnotationAppearance {
     page_view->RectToPage(&dev_rect, &annot_rect);
      
     auto annot = page->GetAnnot(0);
-    if (!annot)
-      annot = page->AddNewAnnot(0, &annot_rect, kAnnotStamp);
+    if (!annot) {
+      annot = page->CreateAnnot(kAnnotStamp, &annot_rect);
+      page->AddAnnot(0, annot);
+    }
+      
     
     if (!annot->SetAppearanceFromXObject(image_obj, kAppearanceNormal))
       throw PdfixException();
