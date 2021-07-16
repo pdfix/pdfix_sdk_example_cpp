@@ -87,10 +87,8 @@ void TagParagraphAsHeading(PdsStructElement* struct_elem) {
   for (int i = 0; i < struct_elem->GetNumKids(); i++) {
     if (struct_elem->GetKidType(i) == kPdsStructKidElement) {
       PdsObject* kid_obj = struct_elem->GetKidObject(i);
-      auto elem_deleter = [](PdsStructElement* elem) { elem->Release(); };
-      std::unique_ptr<PdsStructElement, decltype(elem_deleter)>
-      kid_elem(struct_elem->GetStructTree()->AcquireStructElement(kid_obj), elem_deleter);
-      TagParagraphAsHeading(kid_elem.get());
+      auto kid_elem = struct_elem->GetStructTree()->GetStructElement(kid_obj);
+      TagParagraphAsHeading(kid_elem);
     }
   }
 }
@@ -131,10 +129,8 @@ void Run(
   // tag headings
   for (int i = 0; i < struct_tree->GetNumKids(); i++) {
     PdsObject* kid_obj = struct_tree->GetKidObject(i);
-    auto elem_deleter = [](PdsStructElement* elem) { elem->Release(); };
-    std::unique_ptr<PdsStructElement, decltype(elem_deleter)>
-      kid_elem(struct_tree->AcquireStructElement(kid_obj), elem_deleter);
-    TagParagraphAsHeading(kid_elem.get());
+    auto kid_elem = struct_tree->GetStructElement(kid_obj);
+    TagParagraphAsHeading(kid_elem);
   }
   
   // save document

@@ -40,9 +40,7 @@ namespace TagAsArtifact {
     for (int i = struct_elem->GetNumKids() - 1; i >= 0 ; i--) {
       if (struct_elem->GetKidType(i) == kPdsStructKidElement) {
         PdsObject* kid_obj = struct_elem->GetKidObject(i);
-        auto elem_deleter = [](PdsStructElement* elem) { elem->Release(); };
-        std::unique_ptr<PdsStructElement, decltype(elem_deleter)>
-        kid_elem(struct_elem->GetStructTree()->AcquireStructElement(kid_obj), elem_deleter);
+        auto kid_elem = struct_elem->GetStructTree()->GetStructElement(kid_obj);
         
         auto type = kid_elem->GetType(true);
         kid_elem->GetType(true, (wchar_t*)type.c_str(), (int)type.size());
@@ -63,7 +61,7 @@ namespace TagAsArtifact {
           }
         }
         else {
-          RemoveParagraph(kid_elem.get());
+          RemoveParagraph(kid_elem);
         }
         // remove this element if it has no kids
         if (kid_elem->GetNumKids() == 0)
@@ -107,10 +105,8 @@ namespace TagAsArtifact {
     // tag text on the bottom of the page as artifact
     for (int i = 0; i < struct_tree->GetNumKids(); i++) {
       PdsObject* kid_obj = struct_tree->GetKidObject(i);
-      auto elem_deleter = [](PdsStructElement* elem) { elem->Release(); };
-      std::unique_ptr<PdsStructElement, decltype(elem_deleter)>
-        kid_elem(struct_tree->AcquireStructElement(kid_obj), elem_deleter);
-      RemoveParagraph(kid_elem.get());
+      auto kid_elem = struct_tree->GetStructElement(kid_obj);
+      RemoveParagraph(kid_elem);
     }
     
     // the struct tree was updates, save page content on each page to apply changes

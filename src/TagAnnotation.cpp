@@ -13,9 +13,6 @@ using namespace PDFixSDK;
 
 namespace TagAnnotation {
 
-  auto struct_elem_deleter = [](PdsStructElement* elem) { elem->Release(); };
-  typedef std::unique_ptr<PdsStructElement, decltype(struct_elem_deleter)> PdsStructElementP;
-
   // get the text state of the text objects inside paragraph by iterating content kid objects
   bool GetStructElementBBox(PdsStructElement* struct_elem, PdfRect& bbox) {
     bool result = false;
@@ -51,22 +48,20 @@ namespace TagAnnotation {
       }
       else if (struct_elem->GetKidType(i) == kPdsStructKidElement) {
         PdsObject* kid_obj = struct_elem->GetKidObject(i);
-        PdsStructElementP kid_elem(struct_elem->GetStructTree()->AcquireStructElement(kid_obj),
-          struct_elem_deleter);
-        GetStructElementBBox(kid_elem.get(), bbox);
+        PdsStructElement* kid_elem = struct_elem->GetStructTree()->GetStructElement(kid_obj);
+        GetStructElementBBox(kid_elem, bbox);
       }
     }
     return result;
   }
 
   // get reference to the first paragraph on the page
-  PdsStructElementP GetFirstParagraph(PdsStructElement* struct_elem) {
+  PdsStructElement* GetFirstParagraph(PdsStructElement* struct_elem) {
     // search kid struct elements
     for (int i = 0; i < struct_elem->GetNumKids(); i++) {
       if (struct_elem->GetKidType(i) == kPdsStructKidElement) {
         PdsObject* kid_obj = struct_elem->GetKidObject(i);
-        PdsStructElementP kid_elem(struct_elem->GetStructTree()->AcquireStructElement(kid_obj),
-                                   struct_elem_deleter);
+        PdsStructElement* kid_elem = struct_elem->GetStructTree()->GetStructElement(kid_obj);
         if (!kid_elem)
           throw PdfixException();
         
@@ -75,25 +70,23 @@ namespace TagAnnotation {
         if (type == L"P")
           return kid_elem;
 
-        auto paragraph = GetFirstParagraph(kid_elem.get());
+        auto paragraph = GetFirstParagraph(kid_elem);
         if (paragraph)
           return paragraph;
       }
     }
-    return PdsStructElementP(nullptr, struct_elem_deleter);
+    return nullptr;
   }
 
-  PdsStructElementP GetFirstParagraph(PdsStructTree* struct_tree) {
+  PdsStructElement* GetFirstParagraph(PdsStructTree* struct_tree) {
     for (int i = 0; i < struct_tree->GetNumKids(); i++) {
       PdsObject* kid_obj = struct_tree->GetKidObject(i);
-      auto elem_deleter = [](PdsStructElement* elem) { elem->Release(); };
-      std::unique_ptr<PdsStructElement, decltype(elem_deleter)>
-        kid_elem(struct_tree->AcquireStructElement(kid_obj), elem_deleter);
-      auto paragraph = GetFirstParagraph(kid_elem.get());
+      PdsStructElement* kid_elem = struct_tree->GetStructElement(kid_obj);
+      auto paragraph = GetFirstParagraph(kid_elem);
       if (paragraph)
         return paragraph;
     }
-    return PdsStructElementP(nullptr, struct_elem_deleter);
+    return nullptr;
   }
 
   // add annotation on the page and add it to the struct tree
@@ -127,12 +120,12 @@ namespace TagAnnotation {
       throw PdfixException();
 
     // get the first P struct element on the first page
-    PdsStructElementP paragraph = GetFirstParagraph(struct_tree);
+    PdsStructElement* paragraph = GetFirstParagraph(struct_tree);
     if (!paragraph)
       throw std::runtime_error("No paragraph found.");
 
     PdfRect annot_bbox;
-    GetStructElementBBox(paragraph.get(), annot_bbox);
+    GetStructElementBBox(paragraph, annot_bbox);
     
     // add new link annotation to the page
     auto page_deleter = [](PdfPage* page) { page->Release(); };

@@ -66,12 +66,10 @@ namespace ExtractData {
 
   void ExtractStructObject(PdsStructTree* struct_tree, PdsObject* object, ptree &node, 
     const DataType& data_types) {
-    auto struct_elem_deleter = [&](PdsStructElement *elem) { elem->Release(); };
-    auto elem = std::unique_ptr<PdsStructElement, 
-          decltype(struct_elem_deleter)>(struct_tree->AcquireStructElement(object), struct_elem_deleter);
+    auto elem = struct_tree->GetStructElement(object);
     if (!elem)
       throw PdfixException();
-    ExtractStructElement(elem.get(), node, data_types);
+    ExtractStructElement(elem, node, data_types);
   }
 
   void ExtractStructTree(PdsStructTree* struct_tree, ptree &node, const DataType& data_types) {
