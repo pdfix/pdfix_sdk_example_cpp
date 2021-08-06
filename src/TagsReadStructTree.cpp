@@ -45,32 +45,32 @@ void ProcessStructElement(PdsStructTree* struct_tree, PdsStructElement* struct_e
   
   ptree kids;
 
-  int num_kids = struct_elem->GetNumKids();
+  int num_kids = struct_elem->GetNumChildren();
   for (int i = 0; i < num_kids; i++) {
-    auto kid_obj = struct_elem->GetKidObject(i);
+    auto kid_obj = struct_elem->GetChildObject(i);
     // based on structure element you can obtain different data
-    switch (struct_elem->GetKidType(i)) {
-    case kPdsStructKidElement: {
-      auto kid_struct_elem = struct_tree->GetStructElement(kid_obj);
+    switch (struct_elem->GetChildType(i)) {
+    case kPdsStructChildElement: {
+      auto kid_struct_elem = struct_tree->GetStructElementFromObject(kid_obj);
       if (kid_struct_elem == nullptr)
         throw PdfixException();
       ptree kid_json;
       ProcessStructElement(struct_tree, kid_struct_elem, kid_json);
       kids.push_back(std::make_pair("", kid_json));
     } break;
-    case kPdsStructKidObject: 
+    case kPdsStructChildObject: 
       break;
-    case kPdsStructKidStreamContent: {
-      auto kid_page_num = struct_elem->GetKidPageNumber(i);
+    case kPdsStructChildStreamContent: {
+      auto kid_page_num = struct_elem->GetChildPageNumber(i);
       ptree kid_json;
       if ( kid_page_num != -1 )
         kid_json.put("page_num", kid_page_num + 1);
-      auto mcid = struct_elem->GetKidMcid(i);
+      auto mcid = struct_elem->GetChildMcid(i);
       kid_json.put("mcid", mcid);
       kids.push_back(std::make_pair("", kid_json));
       } break;
-    case kPdsStructKidPageContent: {
-      auto mcid = struct_elem->GetKidMcid(i);
+    case kPdsStructChildPageContent: {
+      auto mcid = struct_elem->GetChildMcid(i);
       ptree kid_json;
       kid_json.put("mcid", mcid);
       kids.push_back(std::make_pair("", kid_json));
@@ -103,11 +103,11 @@ void TagsReadStructTree(
   if (!struct_tree)
     std::cout << "No Tags available" << std::endl;
   else {
-    int num_kids = struct_tree->GetNumKids();
+    int num_kids = struct_tree->GetNumChildren();
     for (auto i = 0; i < num_kids; i++) {
-      PdsObject* kid_object = struct_tree->GetKidObject(i);
+      PdsObject* kid_object = struct_tree->GetChildObject(i);
       ptree kid_json;
-      PdsStructElement* struct_elem = struct_tree->GetStructElement(kid_object);
+      PdsStructElement* struct_elem = struct_tree->GetStructElementFromObject(kid_object);
       ProcessStructElement(struct_tree, struct_elem, kid_json);
       kids.push_back(std::make_pair("", kid_json));
     }

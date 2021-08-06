@@ -25,35 +25,35 @@ namespace ExtractData {
     put_non_empty("actual_text", elem->GetActualText());
 
     ptree kids_node;
-    for (int i = 0; i < elem->GetNumKids(); i++) {
+    for (int i = 0; i < elem->GetNumChildren(); i++) {
       ptree kid_node;
-      switch (elem->GetKidType(i)) {
-        case kPdsStructKidElement: {
+      switch (elem->GetChildType(i)) {
+        case kPdsStructChildElement: {
           // structure element reference
           kid_node.put("kid_type", "element");
-          auto kid_obj = elem->GetKidObject(i);
+          auto kid_obj = elem->GetChildObject(i);
           ExtractStructObject(elem->GetStructTree(), kid_obj, kid_node, data_types);
           break;
         }
-        case kPdsStructKidStreamContent: {
+        case kPdsStructChildStreamContent: {
           kid_node.put("kid_type", "stream_content");
           // object reference
-          auto kid_obj = elem->GetKidObject(i);
+          auto kid_obj = elem->GetChildObject(i);
           kid_node.put("obj", kid_obj->GetId());
           break;
         }
-        case kPdsStructKidObject: {
+        case kPdsStructChildObject: {
           kid_node.put("kid_type", "object");
           // object reference
-          auto kid_obj = elem->GetKidObject(i);
+          auto kid_obj = elem->GetChildObject(i);
           kid_node.put("obj", kid_obj->GetId());
           break;
         }
-        case kPdsStructKidPageContent: {
+        case kPdsStructChildPageContent: {
           kid_node.put("kid_type", "page_content");
           // content element reference
-          kid_node.put("mcid", elem->GetKidMcid(i));
-          kid_node.put("page_num", elem->GetKidPageNumber(i));
+          kid_node.put("mcid", elem->GetChildMcid(i));
+          kid_node.put("page_num", elem->GetChildPageNumber(i));
           break;
         }
         default:; // unknown/invalid reference
@@ -66,7 +66,7 @@ namespace ExtractData {
 
   void ExtractStructObject(PdsStructTree* struct_tree, PdsObject* object, ptree &node, 
     const DataType& data_types) {
-    auto elem = struct_tree->GetStructElement(object);
+    auto elem = struct_tree->GetStructElementFromObject(object);
     if (!elem)
       throw PdfixException();
     ExtractStructElement(elem, node, data_types);
@@ -74,8 +74,8 @@ namespace ExtractData {
 
   void ExtractStructTree(PdsStructTree* struct_tree, ptree &node, const DataType& data_types) {
     ptree kids_node;
-    for (int i = 0; i < struct_tree->GetNumKids(); i++) {
-      auto struct_elem_obj = struct_tree->GetKidObject(i);
+    for (int i = 0; i < struct_tree->GetNumChildren(); i++) {
+      auto struct_elem_obj = struct_tree->GetChildObject(i);
       ptree kid_node;
       ExtractStructObject(struct_tree, struct_elem_obj, kid_node, data_types);
       kids_node.push_back(std::make_pair("", kid_node));

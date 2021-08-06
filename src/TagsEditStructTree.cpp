@@ -16,16 +16,16 @@ PdsStructElement* FindStructElement(PdsStructElement* struct_elem, const std::ws
   const std::wstring& title = L"") {
   // find object inside of the struct element with specified name
   auto struct_tree = struct_elem->GetStructTree();
-  auto num_kids = struct_elem->GetNumKids();
+  auto num_kids = struct_elem->GetNumChildren();
   for (int i = 0; i < num_kids; i++) {
-    auto kid_type = struct_elem->GetKidType(i);
-    if (kid_type != kPdsStructKidElement)
+    auto kid_type = struct_elem->GetChildType(i);
+    if (kid_type != kPdsStructChildElement)
       continue;
-    PdsObject* kid_obj = struct_elem->GetKidObject(i);
+    PdsObject* kid_obj = struct_elem->GetChildObject(i);
     if (!kid_obj)
       throw PdfixException();
     
-    PdsStructElement* kid_elem = struct_tree->GetStructElement(kid_obj);
+    PdsStructElement* kid_elem = struct_tree->GetStructElementFromObject(kid_obj);
 
     // get struct element type and title
     std::wstring type_str(type), title_str(title);
@@ -47,12 +47,12 @@ PdsStructElement* FindStructElement(PdsStructElement* struct_elem, const std::ws
 PdsStructElement* FindStructElement(PdsStructTree* struct_tree, const std::wstring& name,
   const std::wstring& title = L"") {
   // find object inside of the struct tree
-  for (int i = 0; i < struct_tree->GetNumKids(); i++) {
-    auto kid_obj = struct_tree->GetKidObject(i);
+  for (int i = 0; i < struct_tree->GetNumChildren(); i++) {
+    auto kid_obj = struct_tree->GetChildObject(i);
     if (!kid_obj)
       throw PdfixException();
 
-    PdsStructElement* kid_elem = struct_tree->GetStructElement(kid_obj);
+    PdsStructElement* kid_elem = struct_tree->GetStructElementFromObject(kid_obj);
     if (!kid_elem)
       throw PdfixException();
     if (auto found = FindStructElement(kid_elem, name, title))
@@ -66,13 +66,13 @@ void TableTagRowHeader(PdsStructElement* table) {
   auto struct_tree = table->GetStructTree();
   // get the first row td elements
   auto tr = FindStructElement(table, L"TR");
-  for (int i = 0; i < tr->GetNumKids(); i++) {
-    if (tr->GetKidType(i) == kPdsStructKidElement) {
-      PdsObject* td_obj = tr->GetKidObject(i);
+  for (int i = 0; i < tr->GetNumChildren(); i++) {
+    if (tr->GetChildType(i) == kPdsStructChildElement) {
+      PdsObject* td_obj = tr->GetChildObject(i);
       if (!td_obj)
         throw PdfixException();
       
-      PdsStructElement* td = struct_tree->GetStructElement(td_obj);
+      PdsStructElement* td = struct_tree->GetStructElementFromObject(td_obj);
       
       std::wstring type(L"TD");
       td->GetType(true, (wchar_t*)type.c_str(), (int)type.length());

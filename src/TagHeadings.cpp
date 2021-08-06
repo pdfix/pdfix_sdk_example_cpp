@@ -39,16 +39,16 @@ bool GetPageObjectTextState(PdsPageObject* page_object, int mcid, PdfTextState* 
 
 // get the text state of the text objects inside paragraph by iterating content kid objects
 bool GetParagraphTextState(PdsStructElement* struct_elem, PdfTextState* ts) {
-  for (int i = 0; i < struct_elem->GetNumKids(); i++) {
-    if (struct_elem->GetKidType(i) == kPdsStructKidPageContent) {
+  for (int i = 0; i < struct_elem->GetNumChildren(); i++) {
+    if (struct_elem->GetChildType(i) == kPdsStructChildPageContent) {
       // acquire page on which the element is present
       PdfDoc* doc = struct_elem->GetStructTree()->GetDoc();
       auto page_deleter = [](PdfPage* page) { page->Release(); };
       std::unique_ptr<PdfPage, decltype(page_deleter)>
-        page(doc->AcquirePage(struct_elem->GetKidPageNumber(i)), page_deleter);
+        page(doc->AcquirePage(struct_elem->GetChildPageNumber(i)), page_deleter);
       
       // find text object with mcid on the page to get the text state
-      int mcid = struct_elem->GetKidMcid(i);
+      int mcid = struct_elem->GetChildMcid(i);
       auto content = page->GetContent();
       for (int j = 0; j < content->GetNumObjects(); j++) {
         if (GetPageObjectTextState(content->GetObject(j), mcid, ts))
@@ -84,10 +84,10 @@ void TagParagraphAsHeading(PdsStructElement* struct_elem) {
     return; // this was a P tag, no need to continue to kid struct elements
   }
   // search kid struct elements
-  for (int i = 0; i < struct_elem->GetNumKids(); i++) {
-    if (struct_elem->GetKidType(i) == kPdsStructKidElement) {
-      PdsObject* kid_obj = struct_elem->GetKidObject(i);
-      auto kid_elem = struct_elem->GetStructTree()->GetStructElement(kid_obj);
+  for (int i = 0; i < struct_elem->GetNumChildren(); i++) {
+    if (struct_elem->GetChildType(i) == kPdsStructChildElement) {
+      PdsObject* kid_obj = struct_elem->GetChildObject(i);
+      auto kid_elem = struct_elem->GetStructTree()->GetStructElementFromObject(kid_obj);
       TagParagraphAsHeading(kid_elem);
     }
   }
@@ -127,9 +127,9 @@ void Run(
     throw PdfixException();
   
   // tag headings
-  for (int i = 0; i < struct_tree->GetNumKids(); i++) {
-    PdsObject* kid_obj = struct_tree->GetKidObject(i);
-    auto kid_elem = struct_tree->GetStructElement(kid_obj);
+  for (int i = 0; i < struct_tree->GetNumChildren(); i++) {
+    PdsObject* kid_obj = struct_tree->GetChildObject(i);
+    auto kid_elem = struct_tree->GetStructElementFromObject(kid_obj);
     TagParagraphAsHeading(kid_elem);
   }
   
