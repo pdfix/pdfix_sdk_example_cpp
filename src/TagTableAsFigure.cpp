@@ -3,7 +3,6 @@
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
 #include <string>
 #include <iostream>
 #include <memory>
@@ -13,21 +12,18 @@ using namespace PDFixSDK;
 
 namespace TagTableAsFigure {
 
-  auto struct_elem_deleter = [](PdsStructElement* elem) { elem->Release(); };
-  typedef std::unique_ptr<PdsStructElement, decltype(struct_elem_deleter)> PdsStructElementP;
-  
   bool GetStructElementBBox(PdsStructElement* struct_elem, PdfRect& bbox) {
     bool result = false;
-    for (int i = 0; i < struct_elem->GetNumKids(); i++) {
-      if (struct_elem->GetKidType(i) == kPdsStructKidPageContent) {
+    for (int i = 0; i < struct_elem->GetNumChildren(); i++) {
+      if (struct_elem->GetChildType(i) == kPdsStructChildPageContent) {
         // acquire page on which the element is present
         PdfDoc* doc = struct_elem->GetStructTree()->GetDoc();
         auto page_deleter = [](PdfPage* page) { page->Release(); };
         std::unique_ptr<PdfPage, decltype(page_deleter)>
-        page(doc->AcquirePage(struct_elem->GetKidPageNumber(i)), page_deleter);
+        page(doc->AcquirePage(struct_elem->GetChildPageNumber(i)), page_deleter);
         
         // find text object with mcid on the page to get the text state
-        int mcid = struct_elem->GetKidMcid(i);
+        int mcid = struct_elem->GetChildMcid(i);
         auto content = page->GetContent();
         for (int j = 0; j < content->GetNumObjects(); j++) {
           PdsPageObject* page_object = content->GetObject(j);
@@ -48,23 +44,21 @@ namespace TagTableAsFigure {
           }
         }
       }
-      else if (struct_elem->GetKidType(i) == kPdsStructKidElement) {
-        PdsObject* kid_obj = struct_elem->GetKidObject(i);
-        PdsStructElementP kid_elem(struct_elem->GetStructTree()->AcquireStructElement(kid_obj),
-                                   struct_elem_deleter);
-        GetStructElementBBox(kid_elem.get(), bbox);
+      else if (struct_elem->GetChildType(i) == kPdsStructChildElement) {
+        PdsObject* kid_obj = struct_elem->GetChildObject(i);
+        PdsStructElement* kid_elem = struct_elem->GetStructTree()->GetStructElementFromObject(kid_obj);
+        GetStructElementBBox(kid_elem, bbox);
       }
     }
     return result;
   }
 
-  PdsStructElementP GetFirstTable(PdsStructElement* struct_elem) {
+  PdsStructElement* GetFirstTable(PdsStructElement* struct_elem) {
     // search kid struct elements
-    for (int i = 0; i < struct_elem->GetNumKids(); i++) {
-      if (struct_elem->GetKidType(i) == kPdsStructKidElement) {
-        PdsObject* kid_obj = struct_elem->GetKidObject(i);
-        PdsStructElementP kid_elem(struct_elem->GetStructTree()->AcquireStructElement(kid_obj),
-                                   struct_elem_deleter);
+    for (int i = 0; i < struct_elem->GetNumChildren(); i++) {
+      if (struct_elem->GetChildType(i) == kPdsStructChildElement) {
+        PdsObject* kid_obj = struct_elem->GetChildObject(i);
+        PdsStructElement* kid_elem = struct_elem->GetStructTree()->GetStructElementFromObject(kid_obj);
         if (!kid_elem)
           throw PdfixException();
         
@@ -72,25 +66,23 @@ namespace TagTableAsFigure {
         if (type == L"Table")
           return kid_elem;
 
-        auto paragraph = GetFirstTable(kid_elem.get());
+        auto paragraph = GetFirstTable(kid_elem);
         if (paragraph)
           return paragraph;
       }
     }
-    return PdsStructElementP(nullptr, struct_elem_deleter);
+    return nullptr;
   }
 
-  PdsStructElementP GetFirstTable(PdsStructTree* struct_tree) {
-    for (int i = 0; i < struct_tree->GetNumKids(); i++) {
-      PdsObject* kid_obj = struct_tree->GetKidObject(i);
-      auto elem_deleter = [](PdsStructElement* elem) { elem->Release(); };
-      std::unique_ptr<PdsStructElement, decltype(elem_deleter)>
-        kid_elem(struct_tree->AcquireStructElement(kid_obj), elem_deleter);
-      auto paragraph = GetFirstTable(kid_elem.get());
+  PdsStructElement* GetFirstTable(PdsStructTree* struct_tree) {
+    for (int i = 0; i < struct_tree->GetNumChildren(); i++) {
+      PdsObject* kid_obj = struct_tree->GetChildObject(i);
+      auto kid_elem = struct_tree->GetStructElementFromObject(kid_obj);
+      auto paragraph = GetFirstTable(kid_elem);
       if (paragraph)
         return paragraph;
     }
-    return PdsStructElementP(nullptr, struct_elem_deleter);
+    return nullptr;
   }
 
   void Run(
@@ -123,17 +115,17 @@ namespace TagTableAsFigure {
       throw PdfixException();
 
     // get the first P struct element on the first page
-    PdsStructElementP table = GetFirstTable(struct_tree);
+    PdsStructElement* table = GetFirstTable(struct_tree);
     if (!table)
       throw std::runtime_error("No table found.");
 
     // get table bounding box
     PdfRect bbox;
-    GetStructElementBBox(table.get(), bbox);
+    GetStructElementBBox(table, bbox);
     
     // remove all items from the table to make it untagged cotnent
-    for (int i = table->GetNumKids() - 1; i >=0; i--)
-      table->RemoveKid(i);
+    for (int i = table->GetNumChildren() - 1; i >=0; i--)
+      table->RemoveChild(i);
     
     PdfDocTemplate* doc_tmpl = doc->GetTemplate();
     
@@ -154,7 +146,7 @@ namespace TagTableAsFigure {
     if (!page_map->CreateElements(nullptr, nullptr))
       throw PdfixException();
 
-    if (!page_map->AddTags(table.get(), nullptr, nullptr))
+    if (!page_map->AddTags(table, nullptr, nullptr))
       throw PdfixException();
 
     if (!table->SetType(L"Sect"))

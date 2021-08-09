@@ -37,18 +37,16 @@ namespace TagAsArtifact {
     
     // remove last 2 P struct elements from struct tree
     static int count = 0;
-    for (int i = struct_elem->GetNumKids() - 1; i >= 0 ; i--) {
-      if (struct_elem->GetKidType(i) == kPdsStructKidElement) {
-        PdsObject* kid_obj = struct_elem->GetKidObject(i);
-        auto elem_deleter = [](PdsStructElement* elem) { elem->Release(); };
-        std::unique_ptr<PdsStructElement, decltype(elem_deleter)>
-        kid_elem(struct_elem->GetStructTree()->AcquireStructElement(kid_obj), elem_deleter);
+    for (int i = struct_elem->GetNumChildren() - 1; i >= 0 ; i--) {
+      if (struct_elem->GetChildType(i) == kPdsStructChildElement) {
+        PdsObject* kid_obj = struct_elem->GetChildObject(i);
+        auto kid_elem = struct_elem->GetStructTree()->GetStructElementFromObject(kid_obj);
         
         auto type = kid_elem->GetType(true);
         kid_elem->GetType(true, (wchar_t*)type.c_str(), (int)type.size());
         if (type == L"P") {
-          for (int j = kid_elem->GetNumKids() - 1; j >= 0; j--) {
-            if (!kid_elem->RemoveKid(j))
+          for (int j = kid_elem->GetNumChildren() - 1; j >= 0; j--) {
+            if (!kid_elem->RemoveChild(j))
               throw PdfixException();
           }
         }
@@ -56,18 +54,18 @@ namespace TagAsArtifact {
           // remove figure if does not contain an alt text
           int alt_len = kid_elem->GetAlt(nullptr, 0);
           if (alt_len == 0) {
-            for (int j = kid_elem->GetNumKids() - 1; j >= 0; j--) {
-              if (!kid_elem->RemoveKid(j))
+            for (int j = kid_elem->GetNumChildren() - 1; j >= 0; j--) {
+              if (!kid_elem->RemoveChild(j))
                 throw PdfixException();
             }
           }
         }
         else {
-          RemoveParagraph(kid_elem.get());
+          RemoveParagraph(kid_elem);
         }
         // remove this element if it has no kids
-        if (kid_elem->GetNumKids() == 0)
-          struct_elem->RemoveKid(i);
+        if (kid_elem->GetNumChildren() == 0)
+          struct_elem->RemoveChild(i);
       }
       // remove only 2 paragraphs in this sample
       if (++count >= 2) break;
@@ -105,12 +103,10 @@ namespace TagAsArtifact {
       throw PdfixException();
     
     // tag text on the bottom of the page as artifact
-    for (int i = 0; i < struct_tree->GetNumKids(); i++) {
-      PdsObject* kid_obj = struct_tree->GetKidObject(i);
-      auto elem_deleter = [](PdsStructElement* elem) { elem->Release(); };
-      std::unique_ptr<PdsStructElement, decltype(elem_deleter)>
-        kid_elem(struct_tree->AcquireStructElement(kid_obj), elem_deleter);
-      RemoveParagraph(kid_elem.get());
+    for (int i = 0; i < struct_tree->GetNumChildren(); i++) {
+      PdsObject* kid_obj = struct_tree->GetChildObject(i);
+      auto kid_elem = struct_tree->GetStructElementFromObject(kid_obj);
+      RemoveParagraph(kid_elem);
     }
     
     // the struct tree was updates, save page content on each page to apply changes
