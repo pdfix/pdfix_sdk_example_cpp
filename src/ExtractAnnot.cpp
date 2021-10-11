@@ -38,6 +38,7 @@ namespace ExtractData {
   // Extract annotation data
   void ExtractAnnot(PdfAnnot* annot, ptree& node, const DataType& data_types) {
     auto annot_dict = annot->GetObject();
+    node.put("object_id", annot_dict->GetId());    
     auto subtype = annot_dict->GetText(L"Subtype");
     node.put("subtype", EncodeText(subtype));
     if (data_types.extract_bbox) {
