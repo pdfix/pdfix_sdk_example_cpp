@@ -109,7 +109,7 @@ void PrintPage(
       page_view->RectToDevice(&crop_box, &clip_rect);
 
       PdfPageRenderParams params;
-      params.device = hdc;
+      params.device = pdfix->CreateRenderDeviceContext(hdc, kRenderDeviceTypeGDI);
       params.matrix = matrix;
       params.clip_box = crop_box;
       params.render_flags = kRenderAnnot;// | kRenderGrayscale;
