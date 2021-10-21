@@ -94,11 +94,19 @@ namespace ParsePageContent {
     
     auto content_mark = obj->GetContentMark();
     if (content_mark) {
-      auto mcid = content_mark->GetTagMcid();
-      if (mcid != -1)
-        ss << indent << "mcid: " << mcid << std::endl;
-      if (content_mark->GetTagArtifact())
-        ss << indent << "artifact: " << true << std::endl;
+      for (int i = 0; i < content_mark->GetNumTags(); i++) {
+        ss << indent << "/" << ToUtf8(content_mark->GetTagName(i)) << " ";
+        auto dict = content_mark->GetTagObject(i);
+        if (dict) {
+          ss << "<<";
+          for (int j = 0; j < dict->GetNumKeys(); j++) {
+            auto key = dict->GetKey(j);
+            ss << "/" << ToUtf8(key) << "(" << ToUtf8(dict->GetText(key.c_str())) << ") ";
+          }
+          ss << ">>";
+        }
+        ss << std::endl;
+      }
     }
   }
 

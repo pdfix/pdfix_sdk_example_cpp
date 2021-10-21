@@ -90,11 +90,6 @@ void FigureTagSetAttributes(PdsStructElement* figure) {
   figure->SetAlt(L"This is new image alternate text");
 }
 
-void PageContentsDidChange(void* data) {
-  PsEvent* event = GetPdfix()->GetEvent();  
-  std::cout << "PageContentsDidChange " << event->GetPage()->GetNumber() << std::endl;
-}
-
 void TagsEditStructTree(
   const std::wstring& open_path,        // source PDF document
   const std::wstring& save_path         // output PDF document
@@ -110,8 +105,6 @@ void TagsEditStructTree(
   PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), L"");
   if (!doc)
     throw PdfixException();
-  
-  pdfix->RegisterEvent(kEventPageContentsDidChange, PageContentsDidChange, nullptr);
   
   // cleanup any previous structure tree
   if (!doc->RemoveTags(nullptr, nullptr))
@@ -154,8 +147,6 @@ void TagsEditStructTree(
   // save document
   if (!doc->Save(save_path.c_str(), kSaveFull))
     throw PdfixException();
-  
-  pdfix->UnregisterEvent(kEventPageContentsDidChange, PageContentsDidChange, nullptr);
   
   doc->Close();
   pdfix->Destroy();
