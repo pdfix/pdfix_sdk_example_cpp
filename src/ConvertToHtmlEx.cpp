@@ -10,6 +10,7 @@
 #include <iostream>
 #include "Pdfix.h"
 #include "PdfToHtml.h"
+#include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
 
@@ -25,13 +26,7 @@ namespace ConvertToHtmlEx {
     const std::wstring& param1,         // param 1
     const std::wstring& param2          // param 2
   ) {
-    // initialize Pdfix
-    if (!Pdfix_init(Pdfix_MODULE_NAME))
-      throw std::runtime_error("Pdfix initialization fail");
-
-    Pdfix* pdfix = GetPdfix();
-    if (!pdfix)
-      throw std::runtime_error("GetPdfix fail");
+    auto pdfix = PdfixEngine::Get();
 
     // initialize PdfToHtml
     if (!PdfToHtml_init(PdfToHtml_MODULE_NAME))
@@ -85,6 +80,5 @@ namespace ConvertToHtmlEx {
     
     stm->Destroy();
     pdf_to_html->Destroy();
-    pdfix->Destroy();
   }
 }

@@ -8,6 +8,7 @@
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
+#include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
 
@@ -49,13 +50,7 @@ void DocWillCallback(void* data) {
 void RegisterEvent(
   const std::wstring& open_path                  // source PDF document
 ) {
-  // initialize Pdfix
-  if (!Pdfix_init(Pdfix_MODULE_NAME))
-    throw std::runtime_error("Pdfix initialization fail");
-
-  Pdfix* pdfix = GetPdfix();
-  if (!pdfix)
-    throw std::runtime_error("GetPdfix fail");
+  auto pdfix = PdfixEngine::Get();
 
   // add events
   pdfix->RegisterEvent(kEventDocDidOpen, &DocDidOpenCallback, nullptr);
@@ -66,5 +61,4 @@ void RegisterEvent(
   if (!doc)
     throw PdfixException();
   doc->Close();
-  pdfix->Destroy();
 }

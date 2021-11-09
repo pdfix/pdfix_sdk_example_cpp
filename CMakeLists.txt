@@ -130,6 +130,7 @@ set(SOURCES
   src/PagesToJson.cpp
   src/ParsePageContent.cpp
   src/ParsePdsObjects.cpp
+  src/PdfixEngine.cpp
   src/PreflightDocTemplate.cpp
   src/PrintPage.cpp
   src/ReadOCGLayers.cpp

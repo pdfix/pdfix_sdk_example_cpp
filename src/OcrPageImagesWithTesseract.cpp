@@ -10,6 +10,7 @@
 #include <vector>
 #include "Pdfix.h"
 #include "OcrTesseract.h"
+#include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
 
@@ -42,13 +43,7 @@ void OcrPageImagesWithTesseract(
   const float zoom,                              // zoom to control page rendering quality
   const PdfRotate rotate                          // page rotation to be applied
 ) {
-  // initialize Pdfix
-  if (!Pdfix_init(Pdfix_MODULE_NAME))
-    throw std::runtime_error("Pdfix initialization fail");
-
-  Pdfix* pdfix = GetPdfix();
-  if (!pdfix)
-    throw std::runtime_error("GetPdfix fail");
+  auto pdfix = PdfixEngine::Get();
 
   // initialize OcrTesseract
   if (!OcrTesseract_init(OcrTesseract_MODULE_NAME))
@@ -140,5 +135,4 @@ void OcrPageImagesWithTesseract(
   ocr->Destroy();
 
   doc->Close();
-  pdfix->Destroy();
 }

@@ -8,6 +8,7 @@
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
+#include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
 
@@ -19,7 +20,7 @@ void SaveImage(PdeElement* element,
   PdfPageView* page_view, 
   int& image_index) {
 
-  Pdfix* pdfix = GetPdfix();
+  auto pdfix = PdfixEngine::Get();
     
   PdfElementType elem_type = element->GetType();
     
@@ -66,16 +67,7 @@ void ExtractImages(
   int render_width,                             // with of the rendered page in pixels (image )
   PdfImageParams& img_params                    // image parameters
 ) {
-  // initialize Pdfix
-  if (!Pdfix_init(Pdfix_MODULE_NAME))
-    throw std::runtime_error("Pdfix initialization fail");
-
-  Pdfix* pdfix = GetPdfix();
-  if (!pdfix)
-    throw std::runtime_error("GetPdfix fail");
-  std::cout << "PDFix " << pdfix->GetVersionMajor() << "." <<
-    pdfix->GetVersionMinor() << "." <<
-    pdfix->GetVersionPatch() << std::endl;
+  auto pdfix = PdfixEngine::Get();
 
   PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), L"");
   if (!doc)
@@ -118,5 +110,4 @@ void ExtractImages(
   std::cout << std::endl << image_index - 1 << " images found" << std::endl;
 
   doc->Close();
-  pdfix->Destroy();
 }

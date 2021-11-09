@@ -9,6 +9,7 @@
 #include <iostream>
 #include "Pdfix.h"
 #include "PdfToHtml.h"
+#include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
 
@@ -22,13 +23,7 @@ namespace ConvertToHtml {
     PdfHtmlParams& html_params,         // conversion parameters
     const bool preflight                // preflight document template before processing
   ) {
-    // initialize Pdfix
-    if (!Pdfix_init(Pdfix_MODULE_NAME))
-      throw std::runtime_error("Pdfix initialization fail");
-
-    Pdfix* pdfix = GetPdfix();
-    if (!pdfix)
-      throw std::runtime_error("GetPdfix fail");
+    auto pdfix = PdfixEngine::Get();
 
     // initialize PdfToHtml
     if (!PdfToHtml_init(PdfToHtml_MODULE_NAME))
@@ -91,6 +86,5 @@ namespace ConvertToHtml {
     doc->Close();
 
     pdf_to_html->Destroy();
-    pdfix->Destroy();
   }
 }

@@ -7,6 +7,7 @@
 
 // project
 #include "Pdfix.h"
+#include "pdfixsdksamples/PdfixEngine.h"
 
 #include <iostream>
 #include <iomanip>
@@ -198,23 +199,6 @@ namespace DocumentSecurity {
     return CreateXorSecurityHandler(pdfix, xor_handler);
   }
 
-  Pdfix* InitPdfix() {
-        // initialize Pdfix
-    if (!Pdfix_init(Pdfix_MODULE_NAME))
-      throw std::runtime_error("Pdfix initialization fail");
-
-    Pdfix* pdfix = GetPdfix();
-    if (!pdfix)
-      throw std::runtime_error("GetPdfix fail");
-
-    if (pdfix->GetVersionMajor() != PDFIX_VERSION_MAJOR || 
-      pdfix->GetVersionMinor() != PDFIX_VERSION_MINOR ||
-      pdfix->GetVersionPatch() != PDFIX_VERSION_PATCH)
-      throw std::runtime_error("Incompatible version");
-    
-    return pdfix;
-  }
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // actual examples
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -224,7 +208,7 @@ namespace DocumentSecurity {
       const std::wstring& save_path,  // output PDF doucment
       const std::wstring& password    // source PDF document password
   ) {
-    auto pdfix = InitPdfix();
+    auto pdfix = PdfixEngine::Get();
     auto doc = pdfix->OpenDoc(open_path.c_str(), password.c_str());
     if (!doc)
       throw std::runtime_error(pdfix->GetError());
@@ -236,7 +220,6 @@ namespace DocumentSecurity {
       throw std::runtime_error(pdfix->GetError());
 
     doc->Close();
-    pdfix->Destroy();
   }
 
   void AddSecurity(
@@ -244,7 +227,7 @@ namespace DocumentSecurity {
       const std::wstring& save_path,  // output PDF doucment
       const std::wstring& password    // output PDF document password
   ) {
-    auto pdfix = InitPdfix();
+    auto pdfix = PdfixEngine::Get();
     auto doc = pdfix->OpenDoc(open_path.c_str(), L"");
     if (!doc)
       throw std::runtime_error(pdfix->GetError());
@@ -259,7 +242,6 @@ namespace DocumentSecurity {
       throw std::runtime_error(pdfix->GetError());
 
     doc->Close();
-    pdfix->Destroy();
   }
 
   void AddCustomSecurity(
@@ -267,7 +249,7 @@ namespace DocumentSecurity {
       const std::wstring& save_path,  // output PDF doucment
       uint8_t key                     // key to lock PDF document
   ) {
-    auto pdfix = InitPdfix();
+    auto pdfix = PdfixEngine::Get();
     auto doc = pdfix->OpenDoc(open_path.c_str(), L"");
     if (!doc)
       throw std::runtime_error(pdfix->GetError());
@@ -282,7 +264,6 @@ namespace DocumentSecurity {
       throw std::runtime_error(pdfix->GetError());
 
     doc->Close();
-    pdfix->Destroy();
   }
 
   void RemoveCustomSecurity(
@@ -290,7 +271,7 @@ namespace DocumentSecurity {
       const std::wstring& save_path,  // output PDF doucment
       uint8_t key                     // key to unlock PDF document
   ) {
-    auto pdfix = InitPdfix();
+    auto pdfix = PdfixEngine::Get();
     auto doc = pdfix->OpenDoc(open_path.c_str(), nullptr);
     if (!doc)
       throw std::runtime_error(pdfix->GetError());
@@ -332,14 +313,13 @@ namespace DocumentSecurity {
       throw std::runtime_error(pdfix->GetError());
 
     doc->Close();
-    pdfix->Destroy();
   }
 
   void PostponedDocumentAuthorization(
     const std::wstring& open_path,  // source PDF document
     const std::wstring& password    // source PDF document password
   ) {
-    auto pdfix = InitPdfix();
+    auto pdfix = PdfixEngine::Get();
     auto doc = pdfix->OpenDoc(open_path.c_str(), nullptr);
     if (!doc)
       throw std::runtime_error(pdfix->GetError());
@@ -374,7 +354,6 @@ namespace DocumentSecurity {
     std::cout << "Total object count: " << num_objects << std::endl;
 
     doc->Close();
-    pdfix->Destroy();
   }
 };
 

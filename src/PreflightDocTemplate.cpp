@@ -10,6 +10,7 @@
 #include <iostream>
 #include <memory>
 #include "Pdfix.h"
+#include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
 
@@ -20,13 +21,7 @@ namespace PreflightDocTemplate {
     std::ostream &output,                 // output stream for generated config
     PsDataFormat format                   // output format
   ) {
-    // initialize Pdfix
-    if (!Pdfix_init(Pdfix_MODULE_NAME))
-      throw std::runtime_error("Pdfix initialization fail");
-
-    Pdfix* pdfix = GetPdfix();
-    if (!pdfix)
-      throw std::runtime_error("GetPdfix fail");
+  auto pdfix = PdfixEngine::Get();
 
     PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), L"");
     if (!doc)
@@ -73,6 +68,5 @@ namespace PreflightDocTemplate {
     save_config(kSaveUncompressed);
 
     doc->Close();
-    pdfix->Destroy();
   }
 }
