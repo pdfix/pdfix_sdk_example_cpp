@@ -72,7 +72,5 @@ namespace ConvertToHtml {
 
     html_doc->Close();
     doc->Close();
-
-    pdf_to_html->Destroy();
   }
 }
