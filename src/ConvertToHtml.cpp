@@ -24,17 +24,6 @@ namespace ConvertToHtml {
   ) {
     auto pdfix = PdfixEngine::Get();
 
-    // initialize PdfToHtml
-    if (!PdfToHtml_init(PdfToHtml_MODULE_NAME))
-      throw std::runtime_error("PdfToHtml_init fail");
-      
-    auto pdf_to_html = GetPdfToHtml();
-    if (!pdf_to_html)
-      throw std::runtime_error("GetPdfToHtml fail");
-
-    if (!pdf_to_html->Initialize(pdfix))
-      throw PdfixException();
-
     PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), password.c_str());
     if (!doc)
       throw PdfixException();
