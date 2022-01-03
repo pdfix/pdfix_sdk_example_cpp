@@ -8,7 +8,6 @@
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
-#include "PdfToHtml.h"
 #include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
@@ -40,7 +39,7 @@ namespace ConvertToHtml {
     if (!doc)
       throw PdfixException();
 
-    PdfHtmlDoc* html_doc = pdf_to_html->OpenHtmlDoc(doc);
+    PdfHtmlDoc* html_doc = doc->CreateHtmlDoc();
     if (!html_doc)
       throw PdfixException();
 
