@@ -63,7 +63,7 @@ namespace ConvertToHtmlEx {
         if (!html_doc->SavePageHtml(stm, &html_params, page_num - 1, nullptr, nullptr))
           throw PdfixException();
       }
-      html_doc->Close();
+      html_doc->Destroy();
       doc->Close();
     }
     

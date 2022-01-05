@@ -70,7 +70,7 @@ namespace ConvertToHtml {
     if (!html_doc->Save(save_path.c_str(), &html_params, nullptr, nullptr))
       throw PdfixException();
 
-    html_doc->Close();
+    html_doc->Destroy();
     doc->Close();
   }
 }
