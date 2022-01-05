@@ -8,7 +8,6 @@
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
-#include "PdfToHtml.h"
 #include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
@@ -25,22 +24,11 @@ namespace ConvertToHtml {
   ) {
     auto pdfix = PdfixEngine::Get();
 
-    // initialize PdfToHtml
-    if (!PdfToHtml_init(PdfToHtml_MODULE_NAME))
-      throw std::runtime_error("PdfToHtml_init fail");
-      
-    auto pdf_to_html = GetPdfToHtml();
-    if (!pdf_to_html)
-      throw std::runtime_error("GetPdfToHtml fail");
-
-    if (!pdf_to_html->Initialize(pdfix))
-      throw PdfixException();
-
     PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), password.c_str());
     if (!doc)
       throw PdfixException();
 
-    PdfHtmlDoc* html_doc = pdf_to_html->OpenHtmlDoc(doc);
+    PdfHtmlDoc* html_doc = doc->CreateHtmlDoc();
     if (!html_doc)
       throw PdfixException();
 
@@ -82,9 +70,7 @@ namespace ConvertToHtml {
     if (!html_doc->Save(save_path.c_str(), &html_params, nullptr, nullptr))
       throw PdfixException();
 
-    html_doc->Close();
+    html_doc->Destroy();
     doc->Close();
-
-    pdf_to_html->Destroy();
   }
 }
