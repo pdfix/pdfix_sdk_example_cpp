@@ -36,36 +36,33 @@ namespace ConvertToHtmlEx {
     if (!doc)
       throw PdfixException();
 
-    PdfHtmlDoc* html_doc = doc->CreateHtmlDoc();
+    auto* html_doc = doc->CreateHtmlDocConversion();
     if (!html_doc)
       throw PdfixException();
-    
-    if (param1 == L"js") {
-      html_doc->SaveJavaScript(stm);
-    }
-    else if (param1 == L"css") {
-      html_doc->SaveCSS(stm);
-    }
-    else {
 
-      html_params.flags |= kHtmlNoExternalCSS | kHtmlNoExternalJS | kHtmlNoExternalIMG |
-        kHtmlNoExternalFONT;
+    html_params.flags |= kHtmlNoExternalCSS | kHtmlNoExternalJS | kHtmlNoExternalIMG |
+      kHtmlNoExternalFONT;
 
-      if (param1 == L"document") {
-        if (!html_doc->SaveDocHtml(stm, &html_params, nullptr, nullptr))
-          throw PdfixException();
-      }
-      else if (param1 == L"page") {
-        auto page_num = atoi(ToUtf8(param2).c_str());
-        if (page_num == 0)
-          throw std::runtime_error("Invalid page num");
+    if (!html_doc->SetParams(&html_params))
+      throw PdfixException();
 
-        if (!html_doc->SavePageHtml(stm, &html_params, page_num - 1, nullptr, nullptr))
-          throw PdfixException();
-      }
-      html_doc->Destroy();
-      doc->Close();
+    if (param1 == L"document") {
+      if (!html_doc->SaveToStream(stm, nullptr, nullptr))
+        throw PdfixException();
     }
+    else if (param1 == L"page") {
+      auto page_num = atoi(ToUtf8(param2).c_str());
+      if (page_num == 0)
+        throw std::runtime_error("Invalid page num");
+
+      if (!html_doc->SelectPage(page_num))
+        throw PdfixException();
+
+      if (!html_doc->SaveToStream(stm, nullptr, nullptr))
+        throw PdfixException();
+    }
+    html_doc->Destroy();
+    doc->Close();
     
     stm->Destroy();
   }

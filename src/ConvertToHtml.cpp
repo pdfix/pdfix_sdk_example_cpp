@@ -28,7 +28,7 @@ namespace ConvertToHtml {
     if (!doc)
       throw PdfixException();
 
-    PdfHtmlDoc* html_doc = doc->CreateHtmlDoc();
+    auto* html_doc = doc->CreateHtmlDocConversion();
     if (!html_doc)
       throw PdfixException();
 
@@ -67,7 +67,10 @@ namespace ConvertToHtml {
     html_params.flags |= kHtmlNoExternalCSS | kHtmlNoExternalJS | kHtmlNoExternalIMG | kHtmlNoExternalFONT;
     */
 
-    if (!html_doc->Save(save_path.c_str(), &html_params, nullptr, nullptr))
+    if (!html_doc->SetParams(&html_params))
+      throw PdfixException();
+
+    if (!html_doc->SaveToPath(save_path.c_str(), nullptr, nullptr))
       throw PdfixException();
 
     html_doc->Destroy();
