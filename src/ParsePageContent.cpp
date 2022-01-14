@@ -13,6 +13,7 @@
 // project
 #include "pdfixsdksamples/Utils.h"
 #include "Pdfix.h"
+#include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
 using namespace boost::property_tree;
@@ -116,13 +117,7 @@ namespace ParsePageContent {
     std::ostream& output,                       // output document
     int page_num
     ) {
-    // initialize Pdfix
-    if (!Pdfix_init(Pdfix_MODULE_NAME))
-      throw std::runtime_error("Pdfix initialization fail");
-
-    Pdfix* pdfix = GetPdfix();
-    if (!pdfix)
-      throw std::runtime_error("GetPdfix fail");
+    auto pdfix = PdfixEngine::Get();
 
     PdfDoc* doc = nullptr;
     doc = pdfix->OpenDoc(open_path.c_str(), L"");
@@ -160,6 +155,5 @@ namespace ParsePageContent {
     page->Release();
 
     doc->Close();
-    pdfix->Destroy();
   }
 }

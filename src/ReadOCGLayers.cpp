@@ -10,6 +10,7 @@
 #include <iostream>
 #include "pdfixsdksamples/Utils.h"
 #include "Pdfix.h"
+#include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
 
@@ -37,13 +38,7 @@ namespace ReadOCGLayers {
   void Run(
     const std::wstring& open_file                 // source PDF document
   ) {
-    // initialize Pdfix
-    if (!Pdfix_init(Pdfix_MODULE_NAME))
-      throw std::runtime_error("Pdfix initialization fail");
-
-    Pdfix* pdfix = GetPdfix();
-    if (!pdfix)
-      throw std::runtime_error("GetPdfix fail");
+    auto pdfix = PdfixEngine::Get();
 
     PdfDoc* doc = pdfix->OpenDoc(open_file.c_str(), L"");
     if (!doc)
@@ -55,6 +50,5 @@ namespace ReadOCGLayers {
     }
 
     doc->Close();
-    pdfix->Destroy();
   }
 }

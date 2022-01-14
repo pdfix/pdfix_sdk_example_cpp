@@ -9,6 +9,7 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include "Pdfix.h"
+#include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
 using namespace boost::property_tree;
@@ -24,7 +25,7 @@ void ProcessStructElement(PdsStructTree* struct_tree, PdsStructElement* struct_e
   auto type_str = struct_elem->GetType(true);
   json.put("type", ToUtf8(type_str));
 
-  auto obj_id = struct_elem->GetElementObject()->GetId();
+  auto obj_id = struct_elem->GetObject()->GetId();
   json.put("object-id", obj_id);
  
   auto title_str = struct_elem->GetTitle();
@@ -84,13 +85,7 @@ void TagsReadStructTree(
   const std::wstring& open_path,        // source PDF document
   std::ostream& output                  // output stream
 ) {
-  // initialize Pdfix
-  if (!Pdfix_init(Pdfix_MODULE_NAME))
-    throw std::runtime_error("Pdfix initialization fail");
-
-  Pdfix* pdfix = GetPdfix();
-  if (!pdfix)
-    throw std::runtime_error("GetPdfix fail");
+  auto pdfix = PdfixEngine::Get();
 
   PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), L"");
   if (!doc)
@@ -119,5 +114,4 @@ void TagsReadStructTree(
   write_json(output, json, false);
 
   doc->Close();
-  pdfix->Destroy();
 }

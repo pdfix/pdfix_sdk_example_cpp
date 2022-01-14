@@ -3,6 +3,7 @@
 #include  <cassert>
 #include <algorithm>
 #include "Pdfix.h"
+#include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
 
@@ -89,13 +90,7 @@ void ConvertRGBToCMYK(
   const std::wstring& open_path,      // source PDF document
   const std::wstring& save_path       // output PDF document
 ) {
-  // initialize Pdfix
-  if (!Pdfix_init(Pdfix_MODULE_NAME))
-    throw std::runtime_error("Pdfix initialization fail");
-
-  Pdfix* pdfix = GetPdfix();
-  if (!pdfix)
-    throw std::runtime_error("GetPdfix fail");
+  auto pdfix = PdfixEngine::Get();
 
   PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), L"");
   if (!doc)
@@ -109,6 +104,5 @@ void ConvertRGBToCMYK(
     throw PdfixException();
 
   doc->Close();
-  pdfix->Destroy();
 }
 

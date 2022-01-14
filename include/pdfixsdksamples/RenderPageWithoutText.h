@@ -18,6 +18,7 @@ Example how to render a PDF document page without text into an image.
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
+#include "PdfixEngine.h"
 
 using namespace PDFixSDK;
 
@@ -46,17 +47,7 @@ void RenderPageWithoutText(
   double zoom,                                // page zoom
   PdfRotate rotate                            // page rotation
 ) {
-  // initialize Pdfix
-  if (!Pdfix_init(Pdfix_MODULE_NAME))
-    throw std::runtime_error("Pdfix initialization fail");
-
-  Pdfix* pdfix = GetPdfix();
-  if (!pdfix)
-    throw std::runtime_error("GetPdfix fail");
-
-  PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), L"");
-  if (!doc)
-    throw PdfixException();
+  auto pdfix = PdfixEngine::Get();
 
   // render first page to jpg image
   PdfPage* page = doc->AcquirePage(0);
@@ -96,7 +87,5 @@ void RenderPageWithoutText(
 
   page->Release();
   doc->Close();
-
-  pdfix->Destroy();
 }
 //! [RenderPageWithoutText_cpp]

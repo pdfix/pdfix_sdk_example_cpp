@@ -8,7 +8,7 @@
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
-#include "PdfToHtml.h"
+#include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
 
@@ -22,30 +22,13 @@ namespace ConvertToHtml {
     PdfHtmlParams& html_params,         // conversion parameters
     const bool preflight                // preflight document template before processing
   ) {
-    // initialize Pdfix
-    if (!Pdfix_init(Pdfix_MODULE_NAME))
-      throw std::runtime_error("Pdfix initialization fail");
-
-    Pdfix* pdfix = GetPdfix();
-    if (!pdfix)
-      throw std::runtime_error("GetPdfix fail");
-
-    // initialize PdfToHtml
-    if (!PdfToHtml_init(PdfToHtml_MODULE_NAME))
-      throw std::runtime_error("PdfToHtml_init fail");
-      
-    auto pdf_to_html = GetPdfToHtml();
-    if (!pdf_to_html)
-      throw std::runtime_error("GetPdfToHtml fail");
-
-    if (!pdf_to_html->Initialize(pdfix))
-      throw PdfixException();
+    auto pdfix = PdfixEngine::Get();
 
     PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), password.c_str());
     if (!doc)
       throw PdfixException();
 
-    PdfHtmlDoc* html_doc = pdf_to_html->OpenHtmlDoc(doc);
+    auto* html_doc = doc->CreateHtmlDocConversion();
     if (!html_doc)
       throw PdfixException();
 
@@ -84,13 +67,13 @@ namespace ConvertToHtml {
     html_params.flags |= kHtmlNoExternalCSS | kHtmlNoExternalJS | kHtmlNoExternalIMG | kHtmlNoExternalFONT;
     */
 
-    if (!html_doc->Save(save_path.c_str(), &html_params, nullptr, nullptr))
+    if (!html_doc->SetParams(&html_params))
       throw PdfixException();
 
-    html_doc->Close();
-    doc->Close();
+    if (!html_doc->SaveToPath(save_path.c_str(), nullptr, nullptr))
+      throw PdfixException();
 
-    pdf_to_html->Destroy();
-    pdfix->Destroy();
+    html_doc->Destroy();
+    doc->Close();
   }
 }

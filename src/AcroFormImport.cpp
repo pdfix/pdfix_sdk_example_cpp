@@ -13,6 +13,7 @@
 #include <boost/property_tree/json_parser.hpp>
 //project
 #include "Pdfix.h"
+#include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
 using namespace boost::property_tree;
@@ -27,13 +28,7 @@ namespace AcroFormImport {
     const std::wstring& save_path,         // destination PDF document
     const std::wstring& json_path          // path to JSON to import
   ) {
-    // initialize Pdfix
-    if (!Pdfix_init(Pdfix_MODULE_NAME))
-      throw std::runtime_error("Pdfix initialization fail");
-
-    Pdfix* pdfix = GetPdfix();
-    if (!pdfix)
-      throw std::runtime_error("GetPdfix fail");
+    Pdfix* pdfix = PdfixEngine::Get();
 
     PdfDoc* doc = nullptr;
     doc = pdfix->OpenDoc(open_path.c_str(), L"");
@@ -87,6 +82,5 @@ namespace AcroFormImport {
       throw PdfixException();
     
     doc->Close();
-    pdfix->Destroy();
   }
 }

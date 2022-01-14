@@ -8,6 +8,7 @@
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
+#include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
 
@@ -18,18 +19,7 @@ void MovePage(
   int to,
   int from
 ) {
-  // initialize Pdfix
-  if (!Pdfix_init(Pdfix_MODULE_NAME))
-    throw std::runtime_error("Pdfix initialization fail");
-
-  Pdfix* pdfix = GetPdfix();
-  if (!pdfix)
-    throw std::runtime_error("GetPdfix fail");
-
-  if (pdfix->GetVersionMajor() != PDFIX_VERSION_MAJOR || 
-    pdfix->GetVersionMinor() != PDFIX_VERSION_MINOR ||
-    pdfix->GetVersionPatch() != PDFIX_VERSION_PATCH)
-    throw std::runtime_error("Incompatible version");
+  auto pdfix = PdfixEngine::Get();
 
   PdfDoc* doc = pdfix->OpenDoc(open_file.c_str(), L"");
   if (!doc)
@@ -40,5 +30,4 @@ void MovePage(
   if(!doc->Save(save_file.c_str(), kSaveFull))
     throw PdfixException();
   doc->Close();
-  pdfix->Destroy();
 }

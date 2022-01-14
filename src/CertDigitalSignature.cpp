@@ -13,6 +13,7 @@
 #include <Cryptdlg.h>
 #endif
 #include "Pdfix.h"
+#include "pdfixsdksamples/PdfixEngine.h"
 
 #ifdef WIN32
 static UINT_PTR CALLBACK CertHookCallback(HWND hDlg, UINT uiMsg, WPARAM wParam, LPARAM lParam) {
@@ -61,13 +62,7 @@ void CertDigitalSignature(
     throw std::runtime_error("Select cetificate store failed!");
   }
 
-  // initialize Pdfix
-  if (!Pdfix_init(Pdfix_MODULE_NAME))
-    throw std::runtime_error("Pdfix initialization fail");
-
-  Pdfix* pdfix = GetPdfix();
-  if (!pdfix)
-    throw std::runtime_error("GetPdfix fail");
+  auto pdfix = PdfixEngine::Get();
   if (!pdfix->Authorize(email.c_str(), license_key.c_str()))
     throw std::runtime_error(pdfix->GetError());
     
@@ -97,7 +92,5 @@ void CertDigitalSignature(
     CertFreeCertificateContext(cert_context);
   if (cert_store)
     CertCloseStore(cert_store, 0);
-
-  DestroyPdfix();
 #endif
 }

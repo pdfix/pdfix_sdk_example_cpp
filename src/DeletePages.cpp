@@ -8,6 +8,7 @@
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
+#include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
 
@@ -18,13 +19,7 @@ void DeletePages(
   int from,
   int to
 ) {
-  // initialize Pdfix
-  if (!Pdfix_init(Pdfix_MODULE_NAME))
-    throw std::runtime_error("Pdfix initialization fail");
-
-  Pdfix* pdfix = GetPdfix();
-  if (!pdfix)
-    throw std::runtime_error("GetPdfix fail");
+  auto pdfix = PdfixEngine::Get();
 
   PdfDoc* doc = pdfix->OpenDoc(open_file.c_str(), L"");
   if (!doc)
@@ -33,6 +28,4 @@ void DeletePages(
   doc->DeletePages(from,to,nullptr,nullptr);
   doc->Save(save_file.c_str(), kSaveFull);
   doc->Close();
-
-  pdfix->Destroy();
 }

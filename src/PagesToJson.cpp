@@ -13,6 +13,7 @@
 // project
 #include "Pdfix.h"
 #include "pdfixsdksamples/ExtractText.h"
+#include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
 using namespace boost::property_tree;
@@ -43,13 +44,7 @@ namespace PagesToJson {
     int export_flags,                                   // export flags
     int page_num                                        // page number to process
   ) {
-    // initialize Pdfix
-    if (!Pdfix_init(Pdfix_MODULE_NAME))
-      throw std::runtime_error("Pdfix initialization fail");
-
-    Pdfix* pdfix = GetPdfix();
-    if (!pdfix)
-      throw std::runtime_error("GetPdfix fail");
+    auto pdfix = PdfixEngine::Get();
 
     PdfDoc* doc = nullptr;
     doc = pdfix->OpenDoc(open_path.c_str(), password.c_str());
@@ -77,6 +72,5 @@ namespace PagesToJson {
     write_json(output, output_json, false);
 
     doc->Close();
-    pdfix->Destroy();
   }
 }

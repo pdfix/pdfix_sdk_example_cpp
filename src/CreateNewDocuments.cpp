@@ -11,6 +11,7 @@
 #include <thread>
 #include <sstream>
 #include "Pdfix.h"
+#include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
 
@@ -20,13 +21,7 @@ void CreateNewDocuments(
   size_t document_count,                         // count of documents to be created in the directory
   size_t thread_count                            // maximal number of threads to be used
 ) {
-  // initialize Pdfix
-  if (!Pdfix_init(Pdfix_MODULE_NAME))
-    throw std::runtime_error("Pdfix initialization fail");
-
-  Pdfix* pdfix = GetPdfix();
-  if (!pdfix)
-    throw std::runtime_error("GetPdfix fail");
+  auto pdfix = PdfixEngine::Get();
 
   if (pdfix->GetVersionMajor() != PDFIX_VERSION_MAJOR ||
       pdfix->GetVersionMinor() != PDFIX_VERSION_MINOR ||
@@ -75,6 +70,4 @@ void CreateNewDocuments(
   for (auto& w : workers) {
     w.join();
   }
-
-  pdfix->Destroy();
 }
