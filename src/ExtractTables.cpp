@@ -10,7 +10,6 @@
 #include <fstream>
 #include "pdfixsdksamples/Utils.h"
 #include "Pdfix.h"
-#include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
 
@@ -29,7 +28,7 @@ void GetText(PdeText* element, std::ofstream& ofs, bool eof) {
 // SaveTable processes each element recursively. 
 // If the element is a table, it saves it to save_path as csv.
 void SaveTable(PdeElement* element, std::wstring save_path, int& table_index) {
-  auto pdfix = PdfixEngine::Get();
+  Pdfix* pdfix = GetPdfix();
 
   PdfElementType elem_type = element->GetType();
   if (elem_type == kPdeTable) {
@@ -92,7 +91,13 @@ void ExtractTables(
   const std::wstring& open_path,                 // source PDF document
   const std::wstring& save_path                  // directory where to extract images
 ) {
-  auto pdfix = PdfixEngine::Get();
+  // initialize Pdfix
+  if (!Pdfix_init(Pdfix_MODULE_NAME))
+    throw std::runtime_error("Pdfix initialization fail");
+
+  Pdfix* pdfix = GetPdfix();
+  if (!pdfix)
+    throw std::runtime_error("GetPdfix fail");
 
   PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), L"");
   if (!doc)
@@ -122,4 +127,5 @@ void ExtractTables(
   std::cout << std::endl << table_index - 1 << " tables found" << std::endl;
 
   doc->Close();
+  pdfix->Destroy();
 }

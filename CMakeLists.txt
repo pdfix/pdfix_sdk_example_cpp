@@ -20,7 +20,6 @@ set(HEADERS
   include/pdfixsdksamples/ConvertRGBToCMYK.h
   include/pdfixsdksamples/ConvertToHtml.h
   include/pdfixsdksamples/ConvertToHtmlEx.h
-  include/pdfixsdksamples/ConvertToTiff.h
   include/pdfixsdksamples/CopyAnnots.h
   include/pdfixsdksamples/CreateNewDocument.h
   include/pdfixsdksamples/CreateNewDocuments.h
@@ -92,7 +91,6 @@ set(SOURCES
   src/ConvertRGBToCMYK.cpp
   src/ConvertToHtml.cpp
   src/ConvertToHtmlEx.cpp
-  src/ConvertToTiff.cpp
   src/CopyAnnots.cpp
   src/CreateNewDocument.cpp
   src/CreateNewDocuments.cpp
@@ -132,7 +130,6 @@ set(SOURCES
   src/PagesToJson.cpp
   src/ParsePageContent.cpp
   src/ParsePdsObjects.cpp
-  src/PdfixEngine.cpp
   src/PreflightDocTemplate.cpp
   src/PrintPage.cpp
   src/ReadOCGLayers.cpp

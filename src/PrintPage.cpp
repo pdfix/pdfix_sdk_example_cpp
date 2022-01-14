@@ -10,7 +10,6 @@
 #include <memory>
 #include <algorithm>
 #include "Pdfix.h"
-#include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
 
@@ -18,7 +17,13 @@ void PrintPage(
   const std::wstring& open_path                      // source PDF document
 ) {
 #ifdef _WIN32
-  auto pdfix = PdfixEngine::Get();
+  // initialize Pdfix
+  if (!Pdfix_init(Pdfix_MODULE_NAME))
+    throw std::runtime_error("Pdfix initialization fail");
+
+  Pdfix* pdfix = GetPdfix();
+  if (!pdfix)
+    throw std::runtime_error("GetPdfix fail");
 
   // find the printer
   DWORD sz = 0;
@@ -119,5 +124,6 @@ void PrintPage(
 
   page->Release();
   doc->Close();
+  pdfix->Destroy();
 #endif
 }

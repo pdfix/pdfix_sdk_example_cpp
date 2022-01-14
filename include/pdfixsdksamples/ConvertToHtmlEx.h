@@ -2,6 +2,7 @@
 
 #include <string>
 #include "Pdfix.h"
+#include "PdfToHtml.h"
 
 using namespace PDFixSDK;
 

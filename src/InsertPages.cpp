@@ -8,7 +8,6 @@
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
-#include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
 
@@ -22,7 +21,13 @@ void InsertPages(
   int from,                                     // from page
   int to                                        // to oage
   ) {
-  auto pdfix = PdfixEngine::Get();
+    // initialize Pdfix
+  if (!Pdfix_init(Pdfix_MODULE_NAME))
+    throw std::runtime_error("Pdfix initialization fail");
+
+  auto pdfix = GetPdfix();
+  if (!pdfix)
+    throw std::runtime_error("GetPdfix fail");
 
   auto source_doc = pdfix->OpenDoc(source_doc_file.c_str(), L"");
   if (!source_doc)
@@ -39,4 +44,6 @@ void InsertPages(
   dest_doc->Save(save_file.c_str(), kSaveFull);
   dest_doc->Close();
   source_doc->Close();
+
+  pdfix->Destroy();
 }

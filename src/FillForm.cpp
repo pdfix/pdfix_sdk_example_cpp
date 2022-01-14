@@ -12,7 +12,6 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include "Pdfix.h"
-#include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
 using namespace boost::property_tree;
@@ -27,7 +26,13 @@ void FillForm(
   const std::wstring& json_file,                // json with field values
   bool flatten                                  // flatten for fields
 ) {
-  auto pdfix = PdfixEngine::Get();
+  // initialize Pdfix
+  if (!Pdfix_init(Pdfix_MODULE_NAME))
+    throw std::runtime_error("Pdfix initialization fail");
+
+  Pdfix* pdfix = GetPdfix();
+  if (!pdfix)
+    throw std::runtime_error("GetPdfix fail");
 
   PdfDoc* doc = pdfix->OpenDoc(open_file.c_str(), L"");
   if (!doc)
@@ -64,4 +69,6 @@ void FillForm(
     throw PdfixException();
 
   doc->Close();
+
+  pdfix->Destroy();
 }

@@ -9,7 +9,6 @@
 #include <string>
 
 #include "pdfixsdksamples/samples.h"
-#include "pdfixsdksamples/PdfixEngine.h"
  
 extern std::wstring GetAbsolutePath(const std::wstring& path);
 
@@ -33,8 +32,6 @@ int main(int argc, char* argv[]) {
   std::wstring config_path = resources_dir + L"/config.json";   // configuration file
 
   try {
-    PdfixEngine::Init();
-
     if (!DirectoryExists(output_dir, true))
       throw std::runtime_error("Output directory does not exist");
 
@@ -133,14 +130,11 @@ int main(int argc, char* argv[]) {
     // Regex
     RegexSearch(open_path, L"(\\d{4}[- ]){3}\\d{4}");
     RegexSetPattern(open_path);
-
-    PdfixEngine::Terminate();
   }
   catch (std::exception& ex) {
     std::cout << "Error: " << ex.what() << std::endl;
 	  return 1;
   }
-
   return 0;
 }
 

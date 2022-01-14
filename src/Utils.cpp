@@ -20,11 +20,13 @@ extern HINSTANCE ghInstance;
 #include <sys/stat.h>
 #endif
 #include "Pdfix.h"
+#include "PdfToHtml.h"
 #include "OcrTesseract.h"
 
 using namespace PDFixSDK;
 
 Pdfix_statics;
+PdfToHtml_statics;
 OcrTesseract_statics;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

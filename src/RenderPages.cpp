@@ -10,7 +10,6 @@
 #include <thread>
 #include <sstream>
 #include "Pdfix.h"
-#include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
 
@@ -25,7 +24,13 @@ void RenderPages(
   PdfDevRect clip_rect,                       // clip region
   size_t thread_count                         // max number of threads
 ) {
-  auto pdfix = PdfixEngine::Get();
+  // initialize Pdfix
+  if (!Pdfix_init(Pdfix_MODULE_NAME))
+    throw PdfixException();
+
+  Pdfix* pdfix = GetPdfix();
+  if (!pdfix)
+    throw std::runtime_error("GetPdfix fail");
 
   PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), L"");
   if (!doc)
@@ -106,4 +111,6 @@ void RenderPages(
   }
 
   doc->Close();
+
+  pdfix->Destroy();
 }

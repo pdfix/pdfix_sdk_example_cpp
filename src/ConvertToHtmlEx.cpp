@@ -9,7 +9,7 @@
 #include <cstdlib>
 #include <iostream>
 #include "Pdfix.h"
-#include "pdfixsdksamples/PdfixEngine.h"
+#include "PdfToHtml.h"
 
 using namespace PDFixSDK;
 
@@ -25,45 +25,66 @@ namespace ConvertToHtmlEx {
     const std::wstring& param1,         // param 1
     const std::wstring& param2          // param 2
   ) {
-    auto pdfix = PdfixEngine::Get();
+    // initialize Pdfix
+    if (!Pdfix_init(Pdfix_MODULE_NAME))
+      throw std::runtime_error("Pdfix initialization fail");
 
+    Pdfix* pdfix = GetPdfix();
+    if (!pdfix)
+      throw std::runtime_error("GetPdfix fail");
+
+    // initialize PdfToHtml
+    if (!PdfToHtml_init(PdfToHtml_MODULE_NAME))
+      throw std::runtime_error("PdfToHtml_init fail");
+      
+    auto pdf_to_html = GetPdfToHtml();
+    if (!pdf_to_html)
+      throw std::runtime_error("GetPdfToHtml fail");
+
+    if (!pdf_to_html->Initialize(pdfix))
+      throw PdfixException();
+    
     // prepare output stream
     PsStream* stm = pdfix->CreateFileStream(save_path.c_str(), kPsTruncate);
     if (!stm)
       throw PdfixException();
-
-    PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), password.c_str());
-    if (!doc)
-      throw PdfixException();
-
-    auto* html_doc = doc->CreateHtmlDocConversion();
-    if (!html_doc)
-      throw PdfixException();
-
-    html_params.flags |= kHtmlNoExternalCSS | kHtmlNoExternalJS | kHtmlNoExternalIMG |
-      kHtmlNoExternalFONT;
-
-    if (!html_doc->SetParams(&html_params))
-      throw PdfixException();
-
-    if (param1 == L"document") {
-      if (!html_doc->SaveToStream(stm, nullptr, nullptr))
-        throw PdfixException();
+    
+    if (param1 == L"js") {
+      pdf_to_html->SaveJavaScript(stm);
     }
-    else if (param1 == L"page") {
-      auto page_num = atoi(ToUtf8(param2).c_str());
-      if (page_num == 0)
-        throw std::runtime_error("Invalid page num");
-
-      if (!html_doc->SelectPage(page_num))
-        throw PdfixException();
-
-      if (!html_doc->SaveToStream(stm, nullptr, nullptr))
-        throw PdfixException();
+    else if (param1 == L"css") {
+      pdf_to_html->SaveCSS(stm);
     }
-    html_doc->Destroy();
-    doc->Close();
+    else {
+      PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), password.c_str());
+      if (!doc)
+        throw PdfixException();
+
+      PdfHtmlDoc* html_doc = pdf_to_html->OpenHtmlDoc(doc);
+      if (!html_doc)
+        throw PdfixException();
+
+      html_params.flags |= kHtmlNoExternalCSS | kHtmlNoExternalJS | kHtmlNoExternalIMG |
+        kHtmlNoExternalFONT;
+
+      if (param1 == L"document") {
+        if (!html_doc->SaveDocHtml(stm, &html_params, nullptr, nullptr))
+          throw PdfixException();
+      }
+      else if (param1 == L"page") {
+        auto page_num = atoi(ToUtf8(param2).c_str());
+        if (page_num == 0)
+          throw std::runtime_error("Invalid page num");
+
+        if (!html_doc->SavePageHtml(stm, &html_params, page_num - 1, nullptr, nullptr))
+          throw PdfixException();
+      }
+      html_doc->Close();
+      doc->Close();
+    }
     
     stm->Destroy();
+    pdf_to_html->Destroy();
+    pdfix->Destroy();
   }
 }

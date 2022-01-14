@@ -7,7 +7,6 @@
 
 // project
 #include "Pdfix.h"
-#include "pdfixsdksamples/PdfixEngine.h"
 
 #include <cassert>
 
@@ -67,9 +66,17 @@ namespace CopyAnnots {
       int src_page_index,
       int dest_page_index
   ) {
-    auto pdfix = PdfixEngine::Get();
+    // initialize Pdfix
+    if (!Pdfix_init(Pdfix_MODULE_NAME))
+      throw std::runtime_error("Pdfix initialization fail");
+
+    auto pdfix = GetPdfix();
+    if (!pdfix)
+      throw std::runtime_error("GetPdfix fail");
 
     CopyAnnots(pdfix, src_path, dest_path, save_path, src_page_index, dest_page_index);
+
+    pdfix->Destroy();
   }
 
   // we define custom annot handler for circle annotations that copies
@@ -81,7 +88,13 @@ namespace CopyAnnots {
       int src_page_index,
       int dest_page_index
   ) {
-    auto pdfix = PdfixEngine::Get();
+    // initialize Pdfix
+    if (!Pdfix_init(Pdfix_MODULE_NAME))
+      throw std::runtime_error("Pdfix initialization fail");
+
+    auto pdfix = GetPdfix();
+    if (!pdfix)
+      throw std::runtime_error("GetPdfix fail");
 
     std::wstring custom_annot_name = L"Circle";
     auto annot_handler = pdfix->RegisterAnnotHandler(custom_annot_name.c_str());
@@ -125,5 +138,7 @@ namespace CopyAnnots {
     });
 
     CopyAnnots(pdfix, src_path, dest_path, save_path, src_page_index, dest_page_index);
+
+    pdfix->Destroy();
   }
 }

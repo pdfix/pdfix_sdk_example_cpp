@@ -9,7 +9,6 @@
 #include <iostream>
 #include "Pdfix.h"
 #include "ReadOCGLayers.hpp"
-#include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
 
@@ -82,7 +81,13 @@ namespace ExtractTextFromOCGLayer {
   void Run(
     const std::wstring& open_file                 // source PDF document
   ) {
-    auto pdfix = PdfixEngine::Get();
+    // initialize Pdfix
+    if (!Pdfix_init(Pdfix_MODULE_NAME))
+      throw std::runtime_error("Pdfix initialization fail");
+
+    Pdfix* pdfix = GetPdfix();
+    if (!pdfix)
+      throw std::runtime_error("GetPdfix fail");
 
     PdfDoc* doc = pdfix->OpenDoc(open_file.c_str(), L"");
     if (!doc)
@@ -101,5 +106,6 @@ namespace ExtractTextFromOCGLayer {
     page->Release();
 
     doc->Close();
+    pdfix->Destroy();
   }
 }

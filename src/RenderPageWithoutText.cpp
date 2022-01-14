@@ -7,7 +7,6 @@
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
-#include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
 
@@ -36,7 +35,13 @@ void RenderPageWithoutText(
   double zoom,                                // page zoom
   PdfRotate rotate                            // page rotation
 ) {
-  auto pdfix = PdfixEngine::Get();
+  // initialize Pdfix
+  if (!Pdfix_init(Pdfix_MODULE_NAME))
+    throw std::runtime_error("Pdfix initialization fail");
+
+  Pdfix* pdfix = GetPdfix();
+  if (!pdfix)
+    throw std::runtime_error("GetPdfix fail");
 
   PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), L"");
   if (!doc)
@@ -80,4 +85,6 @@ void RenderPageWithoutText(
 
   page->Release();
   doc->Close();
+
+  pdfix->Destroy();
 }

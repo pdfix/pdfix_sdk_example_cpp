@@ -11,7 +11,6 @@
 #include <memory>
 #include <algorithm>
 #include "Pdfix.h"
-#include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
 
@@ -68,7 +67,13 @@ namespace ExtractText {
     const std::wstring& config_path,     // configuration file
     const int page_number
     ) {
-    auto pdfix = PdfixEngine::Get();
+    // initialize Pdfix
+    if (!Pdfix_init(Pdfix_MODULE_NAME))
+      throw std::runtime_error("Pdfix initialization fail");
+
+    Pdfix* pdfix = GetPdfix();
+    if (!pdfix)
+      throw std::runtime_error("GetPdfix fail");
 
     PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), L"");
     if (!doc)
@@ -92,5 +97,6 @@ namespace ExtractText {
 
     // destroy variables
     doc->Close();
+    pdfix->Destroy();
   }
 }

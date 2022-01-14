@@ -8,7 +8,6 @@
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
-#include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
 
@@ -24,7 +23,13 @@ namespace RenderPage {
     PdfRotate rotate,                           // page rotation
     PdfDevRect clip_rect                        // clip region
   ) {
-  auto pdfix = PdfixEngine::Get();
+    // initialize Pdfix
+    if (!Pdfix_init(Pdfix_MODULE_NAME))
+      throw PdfixException();
+
+    Pdfix* pdfix = GetPdfix();
+    if (!pdfix)
+      throw std::runtime_error("GetPdfix fail");
 
     PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), password.c_str());
     if (!doc)
@@ -57,7 +62,7 @@ namespace RenderPage {
     params.image = image;
     params.clip_box = clip_box;
     page_view->GetDeviceMatrix(&params.matrix);
-    params.render_flags = kRenderAnnot | kRenderLCDText; // | kRenderGrayscale;
+    params.render_flags = kRenderAnnot; // | kRenderGrayscale;
     if (!page->DrawContent(&params, nullptr, nullptr))
       throw PdfixException();
 
@@ -70,5 +75,7 @@ namespace RenderPage {
 
     page->Release();
     doc->Close();
+
+    pdfix->Destroy();
   }
 }

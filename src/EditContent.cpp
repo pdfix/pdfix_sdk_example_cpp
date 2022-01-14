@@ -6,7 +6,6 @@
 #include "pdfixsdksamples/EditContent.h"
 
 #include "Pdfix.h"
-#include "pdfixsdksamples/PdfixEngine.h"
 
 #include <sstream>
 #include <iterator>
@@ -252,7 +251,18 @@ namespace EditContent {
     const std::vector<ObjectProps>& object_props   // structure containing object properties
     )
   {
-    auto pdfix = PdfixEngine::Get();
+    // initialize Pdfix
+    if (!Pdfix_init(Pdfix_MODULE_NAME))
+      throw std::runtime_error("Pdfix initialization fail");
+
+    Pdfix* pdfix = GetPdfix();
+    if (!pdfix)
+      throw std::runtime_error("GetPdfix fail");
+
+    if (pdfix->GetVersionMajor() != PDFIX_VERSION_MAJOR || 
+      pdfix->GetVersionMinor() != PDFIX_VERSION_MINOR ||
+      pdfix->GetVersionPatch() != PDFIX_VERSION_PATCH)
+      throw std::runtime_error("Incompatible version");
 
     auto doc = pdfix->CreateDoc();
     if (!doc)
@@ -277,6 +287,7 @@ namespace EditContent {
 
     page->Release();
     doc->Close();
+    pdfix->Destroy();
     
   }
 } // namespace EditContent

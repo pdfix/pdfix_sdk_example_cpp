@@ -8,7 +8,6 @@
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
-#include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
 
@@ -20,7 +19,13 @@ namespace SetAnnotationAppearance {
     const std::wstring& save_path,                    // path to save PDF docuemnt
     const std::wstring& img_path                      // image to apply
   ) {
-    auto pdfix = PdfixEngine::Get();
+    // initialize Pdfix
+    if (!Pdfix_init(Pdfix_MODULE_NAME))
+      throw std::runtime_error("Pdfix initialization fail");
+
+    Pdfix* pdfix = GetPdfix();
+    if (!pdfix)
+      throw std::runtime_error("GetPdfix fail");
 
     PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), L"");
     if (!doc)
@@ -72,5 +77,6 @@ namespace SetAnnotationAppearance {
     page_view->Release();
     page->Release();
     doc->Close();
+    pdfix->Destroy();
   }
 }

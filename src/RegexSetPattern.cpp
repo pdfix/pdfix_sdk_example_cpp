@@ -8,7 +8,6 @@
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
-#include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
 
@@ -16,7 +15,13 @@ using namespace PDFixSDK;
 void RegexSetPattern(
   const std::wstring& text                       // text where to search the pattern
 ) {
-  auto pdfix = PdfixEngine::Get();
+  // initialize Pdfix
+  if (!Pdfix_init(Pdfix_MODULE_NAME))
+    throw std::runtime_error("Pdfix initialization fail");
+
+  Pdfix* pdfix = GetPdfix();
+  if (!pdfix)
+    throw std::runtime_error("GetPdfix fail");
 
   PsRegex* regex = pdfix->CreateRegex();
   if (!regex)
@@ -56,4 +61,5 @@ void RegexSetPattern(
     }
   }
   regex->Destroy();
+  pdfix->Destroy();
 }

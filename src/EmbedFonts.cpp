@@ -8,7 +8,6 @@
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
-#include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
 
@@ -17,7 +16,13 @@ namespace EmbedFonts {
     const std::wstring& open_path,             // source PDF document
     const std::wstring& save_path              // output PDF doucment
   ) {
-  auto pdfix = PdfixEngine::Get();
+    // initialize Pdfix
+    if (!Pdfix_init(Pdfix_MODULE_NAME))
+      throw std::runtime_error("Pdfix initialization fail");
+
+    Pdfix* pdfix = GetPdfix();
+    if (!pdfix)
+      throw std::runtime_error("GetPdfix fail");
 
     PdfDoc* doc = nullptr;
     doc = pdfix->OpenDoc(open_path.c_str(), L"");
@@ -31,5 +36,6 @@ namespace EmbedFonts {
       throw PdfixException();
 
     doc->Close();
+    pdfix->Destroy();
   }
 }

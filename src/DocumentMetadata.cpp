@@ -8,7 +8,6 @@
 #include <string>
 #include <iostream>
 #include "Pdfix.h"
-#include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
 
@@ -18,7 +17,13 @@ namespace DocumentMetadata {
     const std::wstring& save_path,                       // output PDF doucment
     const std::wstring& xml_path                         // metadata file path
   ) {
-    auto pdfix = PdfixEngine::Get();
+    // initialize Pdfix
+    if (!Pdfix_init(Pdfix_MODULE_NAME))
+      throw std::runtime_error("Pdfix initialization fail");
+
+    Pdfix* pdfix = GetPdfix();
+    if (!pdfix)
+      throw std::runtime_error("GetPdfix fail");
 
     PdfDoc* doc = nullptr;
     doc = pdfix->OpenDoc(open_path.c_str(), L"");
@@ -45,5 +50,6 @@ namespace DocumentMetadata {
       throw PdfixException();
 
     doc->Close();
+    pdfix->Destroy();
   }
 }

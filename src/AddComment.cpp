@@ -9,8 +9,6 @@
 #include <iostream>
 #include "Pdfix.h"
 
-#include "pdfixsdksamples/PdfixEngine.h"
-
 using namespace PDFixSDK;
 
   // Adds a new text annotation.
@@ -18,7 +16,13 @@ void AddComment(
   const std::wstring& open_file,                // source PDF document
   const std::wstring& save_file                 // directory where to save PDF docuemnt
 ) {
-  auto pdfix = PdfixEngine::Get();
+  // initialize Pdfix
+  if (!Pdfix_init(Pdfix_MODULE_NAME))
+    throw std::runtime_error("Pdfix initialization fail");
+
+  Pdfix* pdfix = GetPdfix();
+  if (!pdfix)
+    throw std::runtime_error("GetPdfix fail");
 
   if (pdfix->GetVersionMajor() != PDFIX_VERSION_MAJOR || 
     pdfix->GetVersionMinor() != PDFIX_VERSION_MINOR ||
@@ -53,4 +57,6 @@ void AddComment(
   page->Release();
   doc->Save(save_file.c_str(), kSaveFull);
   doc->Close();
+
+  pdfix->Destroy();
 }
