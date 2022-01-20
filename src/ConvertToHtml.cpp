@@ -28,8 +28,8 @@ namespace ConvertToHtml {
     if (!doc)
       throw PdfixException();
 
-    auto* html_doc = doc->CreateHtmlDocConversion();
-    if (!html_doc)
+    auto* html_conv = doc->CreateHtmlConversion();
+    if (!html_conv)
       throw PdfixException();
 
     // initializ edocument template
@@ -67,13 +67,13 @@ namespace ConvertToHtml {
     html_params.flags |= kHtmlNoExternalCSS | kHtmlNoExternalJS | kHtmlNoExternalIMG | kHtmlNoExternalFONT;
     */
 
-    if (!html_doc->SetParams(&html_params))
+    if (!html_conv->SetParams(&html_params))
       throw PdfixException();
 
-    if (!html_doc->SaveToPath(save_path.c_str(), nullptr, nullptr))
+    if (!html_conv->Save(save_path.c_str(), nullptr, nullptr))
       throw PdfixException();
 
-    html_doc->Destroy();
+    html_conv->Destroy();
     doc->Close();
   }
 }

@@ -36,32 +36,47 @@ namespace ConvertToHtmlEx {
     if (!doc)
       throw PdfixException();
 
-    auto* html_doc = doc->CreateHtmlDocConversion();
-    if (!html_doc)
+    auto* html_conv = doc->CreateHtmlConversion();
+    if (!html_conv)
       throw PdfixException();
 
-    html_params.flags |= kHtmlNoExternalCSS | kHtmlNoExternalJS | kHtmlNoExternalIMG |
-      kHtmlNoExternalFONT;
-
-    if (!html_doc->SetParams(&html_params))
-      throw PdfixException();
-
-    if (param1 == L"document") {
-      if (!html_doc->SaveToStream(stm, nullptr, nullptr))
-        throw PdfixException();
+    if (param1 == L"js") {
+      html_conv->SaveJavaScript(stm);
     }
-    else if (param1 == L"page") {
-      auto page_num = atoi(ToUtf8(param2).c_str());
-      if (page_num == 0)
-        throw std::runtime_error("Invalid page num");
-
-      if (!html_doc->SelectPage(page_num))
-        throw PdfixException();
-
-      if (!html_doc->SaveToStream(stm, nullptr, nullptr))
-        throw PdfixException();
+    else if (param1 == L"css") {
+      html_conv->SaveCSS(stm);
     }
-    html_doc->Destroy();
+    else {
+      html_params.flags |= kHtmlNoExternalCSS | kHtmlNoExternalJS | kHtmlNoExternalIMG |
+        kHtmlNoExternalFONT;
+
+      if (param1 == L"document") {
+        html_params.flags |= kHtmlNoHeadNode | kHtmlNoPagesNode;
+
+        if (!html_conv->SetParams(&html_params))
+          throw PdfixException();
+
+        if (!html_conv->SaveToStream(stm, nullptr, nullptr))
+          throw PdfixException();
+      }
+      else if (param1 == L"page") {
+        html_params.flags |= kHtmlNoHeadNode | kHtmlNoDocumentNode;
+
+        if (!html_conv->SetParams(&html_params))
+          throw PdfixException();
+
+        auto page_num = atoi(ToUtf8(param2).c_str());
+        if (page_num == 0)
+          throw std::runtime_error("Invalid page num");
+
+        if (!html_conv->AddPage(page_num - 1, nullptr, nullptr))
+          throw PdfixException();
+
+        if (!html_conv->SaveToStream(stm, nullptr, nullptr))
+          throw PdfixException();
+      }
+    }
+    html_conv->Destroy();
     doc->Close();
     
     stm->Destroy();
