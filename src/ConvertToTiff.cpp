@@ -26,14 +26,14 @@ namespace ConvertToTiff {
     if (!doc)
       throw PdfixException();
 
-    auto* tiff_conversion = doc->CreateTiffDocConversion();
+    auto* tiff_conversion = doc->CreateTiffConversion();
     if (!tiff_conversion)
       throw PdfixException();
 
     if (!tiff_conversion->SetParams(&tiff_params))
       throw PdfixException();
 
-    if (!tiff_conversion->SaveToPath(save_path.c_str(), nullptr, nullptr))
+    if (!tiff_conversion->Save(save_path.c_str(), nullptr, nullptr))
       throw PdfixException();
 
     tiff_conversion->Destroy();
