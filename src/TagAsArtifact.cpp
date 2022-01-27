@@ -27,7 +27,7 @@ namespace TagAsArtifact {
         PdsDictionary* artifact_dict = doc->CreateDictObject(false);
         artifact_dict->Put(L"Type", doc->CreateNameObject(false, L"Pagination"));
         artifact_dict->Put(L"Subtype", doc->CreateNameObject(false, L"Footer"));
-        content_mark->AddTag("Artifact", artifact_dict, false);
+        content_mark->AddTag(L"Artifact", artifact_dict, false);
       }
     }
     page->SetContent();
