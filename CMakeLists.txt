@@ -155,7 +155,7 @@ set(SOURCES
   src/TagTableAsFigure.cpp
   src/TagsEditStructTree.cpp
   src/TagsReadStructTree.cpp
-  # src/TagsReadingOrder.cpp
+  src/TagsReadingOrder.cpp
   src/Utils.cpp
   src/CreateRedactionMark.cpp
   src/ProcessControl.cpp
