@@ -4,8 +4,11 @@
 Pdfix* PdfixEngine::_pdfix = nullptr;
 
 
-void PdfixEngine::Init() {
+Pdfix* PdfixEngine::Init() {
   if (!_pdfix) {
+    // current working dirextory must be where the pdfix shared library is stored
+    // the module name contains only relative file path name
+    
     if (!Pdfix_init(Pdfix_MODULE_NAME))
       throw std::runtime_error("Pdfix initialization fail");
 
@@ -16,6 +19,7 @@ void PdfixEngine::Init() {
         _pdfix->GetVersionPatch() != PDFIX_VERSION_PATCH)
       throw std::runtime_error("Incompatible version");
   }
+  return _pdfix;
 }
 
 void PdfixEngine::Terminate() {
