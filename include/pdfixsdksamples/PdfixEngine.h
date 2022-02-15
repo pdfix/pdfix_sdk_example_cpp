@@ -1,6 +1,6 @@
 #pragma once
 
-
+#include <memory>
 #include "Pdfix.h"
 using namespace PDFixSDK;
 
