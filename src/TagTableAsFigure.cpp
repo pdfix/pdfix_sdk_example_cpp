@@ -141,7 +141,7 @@ namespace TagTableAsFigure {
     if (!page_map->CreateElements(nullptr, nullptr))
       throw PdfixException();
 
-    if (!page_map->AddTags(table, nullptr, nullptr))
+    if (!page_map->AddTags(table, false, nullptr, nullptr))
       throw PdfixException();
 
     if (!table->SetType(L"Sect"))
