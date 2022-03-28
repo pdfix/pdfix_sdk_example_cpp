@@ -66,7 +66,7 @@ namespace ExtractHighlightedText {
           if (!word)
             return;
           // iterate through each character
-          int length = word->GetNumChars();
+          int length = word->GetNumChars(false);
           for (int i = 0; i < length; i++) {
             PdfRect char_bbox;
             word->GetCharBBox(i, &char_bbox);
