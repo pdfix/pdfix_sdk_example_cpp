@@ -71,7 +71,7 @@ namespace SearchText {
   static void SearchText(
     PdfPage* page,
     const std::wstring& query,
-    std::function<void(PdsWord*)> process_word
+    std::function<void(PdeWord*)> process_word
   ) {
 
     auto word_list = page->AcquireWordList(kWordFinderAlgLatest);
@@ -130,7 +130,7 @@ namespace SearchText {
 
     PdfPage* page = nullptr;
 
-    auto process_word = [&](PdsWord* word) {
+    auto process_word = [&](PdeWord* word) {
       auto content = page->GetContent();
       auto quad = word->GetQuad();      
       DrawQuad(doc, content, quad);
