@@ -14,6 +14,7 @@ set(HEADERS
   include/pdfixsdksamples/AddTags.h
   include/pdfixsdksamples/AddWatermark.h
   include/pdfixsdksamples/ApplyRedaction.h
+  include/pdfixsdksamples/BatchCommand.h
   include/pdfixsdksamples/BookmarksToJson.h
   # include/pdfixsdksamples/CertDigitalSignature.h
   # include/pdfixsdksamples/ConvertTaggedPdf.h
@@ -86,6 +87,7 @@ set(SOURCES
   src/AddTags.cpp
   src/AddWatermark.cpp
   src/ApplyRedaction.cpp
+  src/BatchCommand.cpp
   src/BookmarksToJson.cpp
   # src/CertDigitalSignature.cpp
   #src/ConvertTaggedPdf.cpp
