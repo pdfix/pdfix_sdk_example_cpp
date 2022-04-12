@@ -191,7 +191,9 @@ namespace BatchCommand {
     }
     else if (!save_file.empty()) {
       // no changes - copy original file
-      std::filesystem::copy(open_file, save_file);
+      std::ifstream  src(ToUtf8(open_file), std::ios::binary);
+      std::ofstream  dst(ToUtf8(save_file), std::ios::binary);
+      dst << src.rdbuf();
     }
     doc->Close();
   }
