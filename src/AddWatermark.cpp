@@ -44,7 +44,7 @@ void AddWatermark(
     || (img_path.rfind(L".PNG") != std::wstring::npos) )
     format = kImageFormatPng;
       
-  auto image_obj = doc->CreateXObjectFromImage(image_stm, format);
+  auto image_obj = doc->CreateXObjectFromImage(image_stm, format, 0);
   if (!image_obj)
     throw PdfixException();
 

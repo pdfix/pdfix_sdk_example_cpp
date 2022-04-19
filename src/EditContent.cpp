@@ -231,7 +231,7 @@ namespace EditContent {
     if ((img_path.rfind(L".png") != std::wstring::npos)
       || (img_path.rfind(L".PNG") != std::wstring::npos))
       format = kImageFormatPng;
-    auto xobj = doc->CreateXObjectFromImage(image_stm, format);
+    auto xobj = doc->CreateXObjectFromImage(image_stm, format, 0);
     auto image_dict = xobj->GetStreamDict();
     auto width = image_dict->GetNumber(L"Width");
     auto height = image_dict->GetNumber(L"Height");
