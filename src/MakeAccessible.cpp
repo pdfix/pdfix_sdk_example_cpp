@@ -60,16 +60,12 @@ void MakeAccessible(
   params.subset_fonts = 1;
   //params.accept_tags = 1;
  
-  if (!doc->MakeAccessible(&params, nullptr, nullptr))
+  if (!doc->MakeAccessible(&params, 
+                           title.first ? title.second.c_str() : nullptr, 
+                           language.first ? language.second.c_str() : nullptr, 
+                           nullptr, 
+                           nullptr));
     throw PdfixException();
-
-  // set document language
-  if (language.first)
-    doc->SetLang(language.second.c_str());
-
-  // set documnt title
-  if (title.first)
-    doc->SetInfo(L"Title", title.second.c_str());
 
   if (!doc->Save(save_path.c_str(), kSaveFull))
     throw PdfixException();
