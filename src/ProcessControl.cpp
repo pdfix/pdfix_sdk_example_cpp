@@ -50,9 +50,10 @@ namespace ProcessControl{
 
     std::cout << "AddTags" << std::endl;
     // run long process on the document and throw exception if the process was not correctly cancelled
-    if (!doc->AddTags(cancel_proc, &control)) {
+    PdfTagsParams params;
+    if (!doc->AddTags(&params, cancel_proc, &control)) {
       if (pdfix->GetErrorType() != 6)
-        throw PdfixException(); 
+        throw PdfixException();
     }
 
     pdfix->UnregisterEvent(kEventProgressDidChange, event_proc, &control);

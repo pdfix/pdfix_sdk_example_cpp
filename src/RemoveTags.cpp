@@ -22,7 +22,8 @@ void RemoveTags(
   if (!doc)
     throw PdfixException();
   
-  if (!doc->RemoveTags(nullptr, nullptr))
+  PdfTagsParams params;
+  if (!doc->RemoveTags(&params, nullptr, nullptr))
     throw PdfixException();
 
   if (!doc->Save(save_path.c_str(), kSaveFull))

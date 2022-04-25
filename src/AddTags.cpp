@@ -50,11 +50,12 @@ void AddTags(
   }
 
   // remove old marked content
-  if (!doc->RemoveTags(nullptr, nullptr))
+  PdfTagsParams params;
+  if (!doc->RemoveTags(&params, nullptr, nullptr))
     throw PdfixException();
 
   // add tags to the document
-  if (!doc->AddTags(nullptr, nullptr))
+  if (!doc->AddTags(&params, nullptr, nullptr))
     throw PdfixException();
 
   if (!doc->Save(save_path.c_str(), kSaveFull | kSaveCompressedStructureOnly))

@@ -100,13 +100,14 @@ void TagsEditStructTree(
   PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), L"");
   if (!doc)
     throw PdfixException();
-  
+
+  PdfTagsParams params;
   // cleanup any previous structure tree
-  if (!doc->RemoveTags(nullptr, nullptr))
+  if (!doc->RemoveTags(&params, nullptr, nullptr))
     throw PdfixException();
   
   // autotag document first
-  if (!doc->AddTags(nullptr, nullptr))
+  if (!doc->AddTags(&params, nullptr, nullptr))
     throw PdfixException();
 
   // get the struct tree
