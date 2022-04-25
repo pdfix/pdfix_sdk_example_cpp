@@ -85,11 +85,11 @@ namespace TagAsArtifact {
       throw PdfixException();
     
     // cleanup any previous structure tree
-    PdfTagsParams params;
-    if (!doc->RemoveTags(&params, nullptr, nullptr))
+    if (!doc->RemoveTags(nullptr, nullptr))
       throw PdfixException();
     
     // autotag document first
+    PdfTagsParams params;
     if (!doc->AddTags(&params, nullptr, nullptr))
       throw PdfixException();
 

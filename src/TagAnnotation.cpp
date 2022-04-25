@@ -101,12 +101,12 @@ namespace TagAnnotation {
     if (!doc)
       throw PdfixException();
     
-    PdfTagsParams params;
     // cleanup any previous structure tree
-    if (!doc->RemoveTags(&params, nullptr, nullptr))
+    if (!doc->RemoveTags(nullptr, nullptr))
       throw PdfixException();
     
     // autotag document first
+    PdfTagsParams params;
     if (!doc->AddTags(&params, nullptr, nullptr))
       throw PdfixException();
 
@@ -132,7 +132,7 @@ namespace TagAnnotation {
       throw PdfixException();
     
     // re-tag the document the link annotation
-    if (!doc->RemoveTags(&params, nullptr, nullptr))
+    if (!doc->RemoveTags(nullptr, nullptr))
       throw PdfixException();
     if (!doc->AddTags(&params, nullptr, nullptr))
       throw PdfixException();

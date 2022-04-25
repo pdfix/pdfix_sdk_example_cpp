@@ -49,12 +49,12 @@ void AddTags(
       throw PdfixException();
   }
 
-  // remove old marked content
-  PdfTagsParams params;
-  if (!doc->RemoveTags(&params, nullptr, nullptr))
+  // remove old marked content  
+  if (!doc->RemoveTags(nullptr, nullptr))
     throw PdfixException();
 
   // add tags to the document
+  PdfTagsParams params;
   if (!doc->AddTags(&params, nullptr, nullptr))
     throw PdfixException();
 
