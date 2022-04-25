@@ -106,7 +106,8 @@ namespace TagAnnotation {
       throw PdfixException();
     
     // autotag document first
-    if (!doc->AddTags(nullptr, nullptr))
+    PdfTagsParams params;
+    if (!doc->AddTags(&params, nullptr, nullptr))
       throw PdfixException();
 
     // get the struct tree
@@ -133,7 +134,7 @@ namespace TagAnnotation {
     // re-tag the document the link annotation
     if (!doc->RemoveTags(nullptr, nullptr))
       throw PdfixException();
-    if (!doc->AddTags(nullptr, nullptr))
+    if (!doc->AddTags(&params, nullptr, nullptr))
       throw PdfixException();
 
     // save document

@@ -113,7 +113,8 @@ void Run(
     throw PdfixException();
   
   // autotag document first
-  if (!doc->AddTags(nullptr, nullptr))
+  PdfTagsParams params;
+  if (!doc->AddTags(&params, nullptr, nullptr))
     throw PdfixException();
 
   // get the struct tree

@@ -101,7 +101,8 @@ namespace TagTableAsFigure {
       throw PdfixException();
     
     // autotag document first
-    if (!doc->AddTags(nullptr, nullptr))
+    PdfTagsParams params;
+    if (!doc->AddTags(&params, nullptr, nullptr))
       throw PdfixException();
 
     // get the struct tree
@@ -141,7 +142,7 @@ namespace TagTableAsFigure {
     if (!page_map->CreateElements(nullptr, nullptr))
       throw PdfixException();
 
-    if (!page_map->AddTags(table, false, nullptr, nullptr))
+    if (!page_map->AddTags(table, false, &params, nullptr, nullptr))
       throw PdfixException();
 
     if (!table->SetType(L"Sect"))
