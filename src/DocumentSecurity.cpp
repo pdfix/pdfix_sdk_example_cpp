@@ -292,7 +292,7 @@ namespace DocumentSecurity {
     };
 
     auto cipher_key = key;
-    if (!doc->Authorize(get_auth_data, &cipher_key)) {
+    if (!doc->Authorize(false, get_auth_data, &cipher_key)) {
       throw std::runtime_error(pdfix->GetError());
     }
 
@@ -330,7 +330,7 @@ namespace DocumentSecurity {
       if (filter == L"Standard") {
         auto std_handler = static_cast<PdfStandardSecurityHandler*>(handler);
         const wchar_t* password = static_cast<const wchar_t*>(data);
-        std_handler->SetPassword(password);
+        std_handler->SetPassword(password, false);
         return true;
       }
 
@@ -338,7 +338,7 @@ namespace DocumentSecurity {
     };
 
     std::wstring pass = password;
-    if (doc->IsSecured() && !doc->Authorize(get_auth_data, pass.data())) {
+    if (doc->IsSecured() && !doc->Authorize(false, get_auth_data, pass.data())) {
       throw std::runtime_error(pdfix->GetError());
     }
 
