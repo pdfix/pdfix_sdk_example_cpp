@@ -58,14 +58,13 @@ void MakeAccessible(
   PdfAccessibleParams params;
   params.embed_fonts = 1;
   params.subset_fonts = 1;
-  //params.accept_tags = 1;
- 
+
   if (!doc->MakeAccessible(&params, 
                            title.first ? title.second.c_str() : nullptr, 
                            language.first ? language.second.c_str() : nullptr, 
                            nullptr, 
-                           nullptr));
-    throw PdfixException();
+                           nullptr))
+      throw PdfixException();
 
   if (!doc->Save(save_path.c_str(), kSaveFull))
     throw PdfixException();
