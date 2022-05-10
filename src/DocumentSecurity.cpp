@@ -233,7 +233,7 @@ namespace DocumentSecurity {
       throw std::runtime_error(pdfix->GetError());
 
     PdfStandardSecurityParams encryption_params;
-    auto security_handler = pdfix->CreateStandardSecurityHandler(password.c_str(), &encryption_params);
+    auto security_handler = pdfix->CreateStandardSecurityHandler(password.c_str(), L"", &encryption_params);
 
     // new security handler will be used when saving the document
     doc->SetSecurityHandler(security_handler);
