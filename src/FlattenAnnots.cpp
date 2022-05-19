@@ -36,12 +36,11 @@ void FlattenAnnots(
         continue;
       }
 
-      // flatten all but link annotations which to not have appearance
+      // flatten all but link annotations which do not have appearance
       if (annot && annot->GetSubtype() != kAnnotLink) {
         page->FlattenAnnot(annot);
       }
     }
-    page->SetContent();
     page->Release();
   }
 
