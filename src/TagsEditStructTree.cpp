@@ -137,7 +137,7 @@ void TagsEditStructTree(
   // add annot, add page object
 
   // reconstruct parent tree
-  if (!struct_tree->UpdateParentTree())
+  if (!struct_tree->RepairParentTree(nullptr, nullptr))
     throw PdfixException();
 
   // save document
