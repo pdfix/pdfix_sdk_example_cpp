@@ -26,14 +26,22 @@ namespace DocumentMetadata {
       throw PdfixException();
 
     // save document metadata into a file
-    PsMetadata* metadata = doc->GetMetadata();
+    auto* metadata = doc->GetMetadata();
     if (!metadata)
       throw PdfixException();
 
+    auto size = metadata->GetSize();
+    std::string buffer;
+    buffer.resize(size);
+    if (!metadata->Read(0, (uint8_t*)buffer.c_str(), size)) {
+      throw PdfixException();
+    }
+
     // save metadata to file
     PsFileStream* stream = pdfix->CreateFileStream(xml_path.c_str(), kPsTruncate);
-    if (!metadata->SaveToStream(stream))
+    if (!stream->Write(0, (uint8_t*)buffer.c_str(), size)) {
       throw PdfixException();
+    }
     stream->Destroy();
 
     // modify document title
