@@ -182,7 +182,11 @@ if(MSVC)
   endif()
   set(DOWNLOAD_PLATFORM windows.zip)
 elseif(APPLE)
-  set(OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin/darwin")
+  if("${CMAKE_OSX_ARCHITECTURES}" STREQUAL "arm64")
+    set(OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin/arm64")
+  elseif("${CMAKE_OSX_ARCHITECTURES}" STREQUAL "x86_64")
+    set(OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin/x64")
+  endif()
   set(DOWNLOAD_PLATFORM macos.zip)
 elseif(UNIX)
   set(OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin/linux")
@@ -225,7 +229,7 @@ target_compile_definitions(pdfixsdksample
 target_include_directories(pdfixsdksample
   PUBLIC
   "$<IF:$<TARGET_EXISTS:pdfix_app>,${CMAKE_SOURCE_DIR}/libs/boost/include,${CMAKE_SOURCE_DIR}/external>"
-  "$<IF:$<TARGET_EXISTS:pdfix_app>,${CMAKE_SOURCE_DIR}/libs/boost_1_75_0,${CMAKE_SOURCE_DIR}/external>"
+  "$<IF:$<TARGET_EXISTS:pdfix_app>,${CMAKE_SOURCE_DIR}/libs/boost_1_78_0,${CMAKE_SOURCE_DIR}/external>"
   "$<IF:$<TARGET_EXISTS:pdfix_app>,${CMAKE_SOURCE_DIR}/include/c++,${pdfixdist_SOURCE_DIR}/include/c++>"
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
   )
