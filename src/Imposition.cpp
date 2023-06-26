@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// DocumentMetadata.cpp
+// Imposition.cpp
 // Copyright (c) 2018 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -12,7 +12,7 @@
 
 using namespace PDFixSDK;
 
-namespace EmbedFonts {
+namespace Imposition {
 void Run(const std::wstring& open_path,  // source PDF document
          const std::wstring& save_path   // output PDF doucment
 ) {
@@ -44,4 +44,4 @@ void Run(const std::wstring& open_path,  // source PDF document
 
   doc->Close();
 }
-}  // namespace EmbedFonts
+}  // namespace Imposition
