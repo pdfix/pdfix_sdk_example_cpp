@@ -41,6 +41,7 @@ set(HEADERS
   include/pdfixsdksamples/FlattenAnnots.h
   include/pdfixsdksamples/GetWhitespace.h
   include/pdfixsdksamples/ImportFormData.h
+  include/pdfixsdksamples/Imposition.h
   include/pdfixsdksamples/Initialization.h
   include/pdfixsdksamples/InsertPages.h
   include/pdfixsdksamples/LicenseReset.h
@@ -119,6 +120,7 @@ set(SOURCES
   src/FlattenAnnots.cpp
   src/GetWhitespace.cpp
   src/ImportFormData.cpp
+  src/Imposition.cpp
   src/Initialization.cpp
   src/InsertPages.cpp
   src/LicenseReset.cpp
