@@ -5,16 +5,15 @@
 
 #include "pdfixsdksamples/FlattenAnnots.h"
 
-#include <string>
 #include <iostream>
+#include <string>
 #include "Pdfix.h"
 #include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
 
-void FlattenAnnots(
-  const std::wstring& open_path,               // source PDF document
-  const std::wstring& save_path                // output PDF doucment
+void FlattenAnnots(const std::wstring& open_path,  // source PDF document
+                   const std::wstring& save_path   // output PDF doucment
 ) {
   auto pdfix = PdfixEngine::Get();
 
@@ -28,7 +27,7 @@ void FlattenAnnots(
       throw PdfixException();
     for (auto j = page->GetNumAnnots() - 1; j >= 0; j--) {
       auto annot = page->GetAnnot(j);
-      
+
       // skip and remove hidden annotations
       auto flags = annot->GetFlags();
       if (flags & kAnnotFlagHidden) {
@@ -38,7 +37,7 @@ void FlattenAnnots(
 
       // flatten all but link annotations which do not have appearance
       if (annot && annot->GetSubtype() != kAnnotLink) {
-        page->FlattenAnnot(annot);
+        page->FlattenAnnot(annot, nullptr, nullptr);
       }
     }
     page->Release();
