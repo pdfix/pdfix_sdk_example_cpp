@@ -75,6 +75,7 @@ set(HEADERS
   include/pdfixsdksamples/samples.h
   include/pdfixsdksamples/CreateRedactionMark.h
   include/pdfixsdksamples/ProcessControl.h
+  include/pdfixsdksamples/EditPageObjectMCID.h
   )
 
 set(SOURCES
@@ -161,11 +162,12 @@ set(SOURCES
   src/Utils.cpp
   src/CreateRedactionMark.cpp
   src/ProcessControl.cpp
+  src/EditPageObjectMCID.cpp
   )
 
 add_library(pdfixsdksample
   ${HEADERS}
-  ${SOURCES}
+  ${SOURCES} 
   )
 
 # idendify project architecture

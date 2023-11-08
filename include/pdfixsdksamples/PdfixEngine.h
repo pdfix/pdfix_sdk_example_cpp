@@ -17,5 +17,5 @@ class PdfixEngine {
 
 // Pdfix unique_ptr class can be used as a pdfix singleton initialization
 // example: PdfixPtr pdfix(PdfixEngine::Init(), pdfix_deleter);
-auto pdfix_deleter = [](Pdfix* pdfix) { pdfix->Destroy(); };
+static auto pdfix_deleter = [](Pdfix* pdfix) { pdfix->Destroy(); };
 typedef std::unique_ptr<Pdfix, decltype(pdfix_deleter)> PdfixPtr;
