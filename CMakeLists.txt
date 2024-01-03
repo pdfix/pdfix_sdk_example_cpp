@@ -201,8 +201,8 @@ endif()
 include(FetchContent)
 
 FetchContent_Declare(
-  pdfixdist
-  URL "https://github.com/pdfix/pdfix_sdk_builds/releases/download/7.0.0/pdfix_sdk_7.0.0.30_e044a267_${DOWNLOAD_PLATFORM}"
+  pdfixdist  
+  URL "https://github.com/pdfix/pdfix_sdk_builds/releases/download/7.2.0/pdfix_sdk_7.2.0.1081_4fd73280_${DOWNLOAD_PLATFORM}"
   SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/pdfix_sdk
   )
 
@@ -221,6 +221,11 @@ set_target_properties(pdfixsdksample
   RUNTIME_OUTPUT_DIRECTORY_DEBUG ${OUTPUT_DIRECTORY}
   )
 
+if(APPLE)
+    set(BUILD_APPLE_COMPILER_DEFINITIONS _LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION)
+endif()
+
+
 target_compile_definitions(pdfixsdksample
   PUBLIC
   NOMINMAX 
@@ -228,6 +233,7 @@ target_compile_definitions(pdfixsdksample
   _UNICODE
   "$<$<CONFIG:DEBUG>:_DEBUG>"
   BOOST_BIND_GLOBAL_PLACEHOLDERS
+  ${BUILD_APPLE_COMPILER_DEFINITIONS}
   )  
 
 target_include_directories(pdfixsdksample
