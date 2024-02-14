@@ -4,17 +4,18 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include <string>
 #include <iostream>
 #include <memory>
+#include <string>
 #include "Pdfix.h"
 #include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
 
 // Find struct element by the name in the structure element
-PdsStructElement* FindStructElement(PdsStructElement* struct_elem, const std::wstring& type,
-  const std::wstring& title = L"") {
+PdsStructElement* FindStructElement(PdsStructElement* struct_elem,
+                                    const std::wstring& type,
+                                    const std::wstring& title = L"") {
   // find object inside of the struct element with specified name
   auto struct_tree = struct_elem->GetStructTree();
   auto num_kids = struct_elem->GetNumChildren();
@@ -25,7 +26,7 @@ PdsStructElement* FindStructElement(PdsStructElement* struct_elem, const std::ws
     PdsObject* kid_obj = struct_elem->GetChildObject(i);
     if (!kid_obj)
       throw PdfixException();
-    
+
     PdsStructElement* kid_elem = struct_tree->GetStructElementFromObject(kid_obj);
 
     // get struct element type and title
@@ -36,7 +37,7 @@ PdsStructElement* FindStructElement(PdsStructElement* struct_elem, const std::ws
     // compare type and title
     if (type_str == type && (title.empty() || title_str == title))
       return kid_elem;
-    
+
     // find in kid's elements
     if (auto found = FindStructElement(kid_elem, type, title))
       return found;
@@ -45,8 +46,9 @@ PdsStructElement* FindStructElement(PdsStructElement* struct_elem, const std::ws
 }
 
 // Find struct element by the name in the structure tree
-PdsStructElement* FindStructElement(PdsStructTree* struct_tree, const std::wstring& name,
-  const std::wstring& title = L"") {
+PdsStructElement* FindStructElement(PdsStructTree* struct_tree,
+                                    const std::wstring& name,
+                                    const std::wstring& title = L"") {
   // find object inside of the struct tree
   for (int i = 0; i < struct_tree->GetNumChildren(); i++) {
     auto kid_obj = struct_tree->GetChildObject(i);
@@ -72,9 +74,9 @@ void TableTagRowHeader(PdsStructElement* table) {
       PdsObject* td_obj = tr->GetChildObject(i);
       if (!td_obj)
         throw PdfixException();
-      
+
       PdsStructElement* td = struct_tree->GetStructElementFromObject(td_obj);
-      
+
       std::wstring type(L"TD");
       td->GetType(true, (wchar_t*)type.c_str(), (int)type.length());
 
@@ -91,9 +93,8 @@ void FigureTagSetAttributes(PdsStructElement* figure) {
   figure->SetAlt(L"This is new image alternate text");
 }
 
-void TagsEditStructTree(
-  const std::wstring& open_path,        // source PDF document
-  const std::wstring& save_path         // output PDF document
+void TagsEditStructTree(const std::wstring& open_path,  // source PDF document
+                        const std::wstring& save_path   // output PDF document
 ) {
   auto pdfix = PdfixEngine::Get();
 
@@ -104,7 +105,7 @@ void TagsEditStructTree(
   // cleanup any previous structure tree
   if (!doc->RemoveTags(nullptr, nullptr))
     throw PdfixException();
-  
+
   // autotag document first
   PdfTagsParams params;
   if (!doc->AddTags(&params, nullptr, nullptr))
@@ -114,7 +115,7 @@ void TagsEditStructTree(
   auto struct_tree = doc->GetStructTree();
   if (!struct_tree)
     throw PdfixException();
-  
+
   // rename tags
   auto table_elem = FindStructElement(struct_tree, L"Table");
   if (table_elem)
@@ -124,25 +125,25 @@ void TagsEditStructTree(
   auto image_elem = FindStructElement(struct_tree, L"Figure");
   if (image_elem)
     FigureTagSetAttributes(image_elem);
-  
+
   // change reading order
-  
+
   // make top and bottom element on page an artifact (header, footer)
   auto page2 = FindStructElement(struct_tree, L"NonStruct", L"Page 2");
 
   // re-tag only one page
   auto page3 = FindStructElement(struct_tree, L"NonStruct", L"Page 3");
-  
+
   // create struct element
   // add annot, add page object
 
   // reconstruct parent tree
-  if (!struct_tree->RepairParentTree(nullptr, nullptr))
+  if (!struct_tree->FixParentTree(nullptr, nullptr))
     throw PdfixException();
 
   // save document
   if (!doc->Save(save_path.c_str(), kSaveFull))
     throw PdfixException();
-  
+
   doc->Close();
 }
