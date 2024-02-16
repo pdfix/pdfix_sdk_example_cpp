@@ -4,12 +4,13 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // system
+#include <string>
 // other libraries
 #include "Pdfix.h"
 
 using namespace PDFixSDK;
-namespace StandardLicenseUpdate {
-void Run() {
+namespace StandardLicenseUpdateOffline {
+void Run(const std::wstring& update_file) {
   // initialize Pdfix
   if (!Pdfix_init(Pdfix_MODULE_NAME)) {
     throw std::runtime_error("Pdfix initialization fail");
@@ -25,10 +26,10 @@ void Run() {
     throw PdfixException();
   }
 
-  if (!authorization->Update(false)) {
+  if (!authorization->UpdateOffline(update_file.c_str())) {
     throw PdfixException();
   }
 
   pdfix->Destroy();
 }
-}  // namespace StandardLicenseUpdate
+}  // namespace StandardLicenseUpdateOffline

@@ -70,7 +70,10 @@ set(HEADERS
   include/pdfixsdksamples/SetFieldFlags.h
   include/pdfixsdksamples/SetFormFieldValue.h
   include/pdfixsdksamples/StandardLicenseActivate.h
+  include/pdfixsdksamples/StandardLicenseCreateOfflineActivationFile.h
+  include/pdfixsdksamples/StandardLicenseActivateOffline.h
   include/pdfixsdksamples/StandardLicenseDeactivate.h
+  include/pdfixsdksamples/StandardLicenseDeactivateOffline.h
   include/pdfixsdksamples/StandardLicenseUpdate.h
   include/pdfixsdksamples/samples.h
   include/pdfixsdksamples/CreateRedactionMark.h
@@ -151,6 +154,8 @@ set(SOURCES
   src/SetFieldFlags.cpp
   src/SetFormFieldValue.cpp
   src/StandardLicenseActivate.cpp
+  src/StandardLicenseCreateOfflineActivationFile.cpp
+  src/StandardLicenseActivateOffline.cpp
   src/StandardLicenseDeactivate.cpp
   src/StandardLicenseUpdate.cpp
   src/TagAnnotation.cpp
@@ -167,7 +172,10 @@ set(SOURCES
 
 add_library(pdfixsdksample
   ${HEADERS}
-  ${SOURCES} 
+  ${SOURCES}
+  include/pdfixsdksamples/StandardLicenseUpdateOffline.h
+  src/StandardLicenseDeactivateOffline.cpp
+  src/StandardLicenseUpdateOffline.cpp
   )
 
 # idendify project architecture

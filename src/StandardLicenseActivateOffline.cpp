@@ -1,15 +1,18 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// StandardLicenseUpdate.cpp
+// StandardLicenseActivate.cpp
 // Copyright (c) 2019 Pdfix. All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // system
+#include <string>
 // other libraries
 #include "Pdfix.h"
 
 using namespace PDFixSDK;
-namespace StandardLicenseUpdate {
-void Run() {
+
+namespace StandardLicenseActivateOffline {
+void Run(const std::wstring& license_path  // license activation file path
+) {
   // initialize Pdfix
   if (!Pdfix_init(Pdfix_MODULE_NAME)) {
     throw std::runtime_error("Pdfix initialization fail");
@@ -25,10 +28,10 @@ void Run() {
     throw PdfixException();
   }
 
-  if (!authorization->Update(false)) {
+  if (!authorization->ActivateOffline(license_path.c_str())) {
     throw PdfixException();
   }
 
   pdfix->Destroy();
 }
-}  // namespace StandardLicenseUpdate
+}  // namespace StandardLicenseActivateOffline
