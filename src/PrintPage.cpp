@@ -5,17 +5,16 @@
 
 #include "pdfixsdksamples/PrintPage.h"
 
-#include <string>
+#include <algorithm>
 #include <iostream>
 #include <memory>
-#include <algorithm>
+#include <string>
 #include "Pdfix.h"
 #include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
 
-void PrintPage(
-  const std::wstring& open_path                      // source PDF document
+void PrintPage(const std::wstring& open_path  // source PDF document
 ) {
 #ifdef _WIN32
   auto pdfix = PdfixEngine::Get();
@@ -25,8 +24,8 @@ void PrintPage(
   GetDefaultPrinter(NULL, &sz);
 
   auto malloc_deleter = [=](void* buf) { free(buf); };
-  std::unique_ptr<wchar_t, decltype(malloc_deleter)>
-    name((wchar_t*)malloc(sz * sizeof(wchar_t) + 1), malloc_deleter);
+  std::unique_ptr<wchar_t, decltype(malloc_deleter)> name(
+      (wchar_t*)malloc(sz * sizeof(wchar_t) + 1), malloc_deleter);
   if (!name)
     throw std::runtime_error("Memory allocation error");
 
@@ -43,8 +42,8 @@ void PrintPage(
     throw std::runtime_error("Error OpenPrinter");
 
   GetPrinter(handle, 2, 0, 0, &sz);
-  std::unique_ptr<unsigned char, decltype(malloc_deleter)>
-    data_2((unsigned char*)malloc(sz * sizeof(unsigned char) + 1), malloc_deleter);
+  std::unique_ptr<unsigned char, decltype(malloc_deleter)> data_2(
+      (unsigned char*)malloc(sz * sizeof(unsigned char) + 1), malloc_deleter);
   if (!data_2)
     throw std::runtime_error("Memory allocation error");
 
@@ -88,7 +87,7 @@ void PrintPage(
   PdfMatrix matrix;
   page_view->GetDeviceMatrix(&matrix);
 
-  //center page on the device
+  // center page on the device
   matrix.e += ((w - page_view->GetDeviceWidth()) / 2.);
   matrix.f += ((h - page_view->GetDeviceHeight()) / 2.);
 
@@ -99,7 +98,6 @@ void PrintPage(
 
   if (StartDoc(hdc, &di) > 0) {
     if (StartPage(hdc) > 0) {
-
       PdfDevRect clip_rect;
       page_view->RectToDevice(&crop_box, &clip_rect);
 
@@ -107,8 +105,8 @@ void PrintPage(
       params.device = pdfix->CreateRenderDeviceContext(hdc, kRenderDeviceTypeGDI);
       params.matrix = matrix;
       params.clip_box = crop_box;
-      params.render_flags = kRenderAnnot;// | kRenderGrayscale;
-      if (!page->DrawContent(&params, nullptr, nullptr))
+      params.render_flags = kRenderAnnot;  // | kRenderGrayscale;
+      if (!page->DrawContent(&params))
         std::cout << std::to_string(GetPdfix()->GetErrorType()) << std::endl;
 
       EndPage(hdc);
