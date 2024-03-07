@@ -15,6 +15,8 @@
 
 using namespace PDFixSDK;
 
+extern std::string ToUtf8(const std::wstring& wstr);
+
 namespace ProcessControl {
 
 // helper class to handle process control
@@ -23,8 +25,10 @@ class CProgressControl {
   static void event_proc(void* data) {
     auto event = GetPdfix()->GetEvent();
     auto progress = event->GetProgressControl();
+    auto string = progress->GetText();
 
-    std::cout << "Progress status: " << progress->GetState() << std::endl;
+    std::cout << "Progress status: " << progress->GetState() << " text: " << ToUtf8(string)
+              << std::endl;
     // stop the process after reaching 60%
     if (progress->GetState() > .6) {
       ((CProgressControl*)data)->request_stop();
@@ -55,8 +59,16 @@ class CProgressControl {
       throw PdfixException();
     }
   }
+  float state() {
+    auto progress_control = m_doc->GetProgressControl();
+    return progress_control->GetState();
+  }
   void request_stop() { m_stop = true; }
   bool stop() { return m_stop; }
+  void set_text(const std::wstring& text) {
+    auto progress_control = m_doc->GetProgressControl();
+    progress_control->SetText(text.c_str());
+  }
 
  private:
   PdfDoc* m_doc = nullptr;
@@ -74,17 +86,21 @@ void Run(const std::wstring& open_path  // source PDF document
 
   // start the document progress control
   std::unique_ptr<CProgressControl> progress_control(new CProgressControl(doc, 3));
+  progress_control->set_text(L"Starting prgress...");
   progress_control->step();  // proceed to next step
 
-  std::cout << "Running AddTags" << std::endl;
+  progress_control->set_text(L"Running AutoTag...");
   // Run long process on the document. The process connects to stared progress control and emits
   // kEventProgressDidChange signals
   PdfTagsParams params;
   if (!doc->AddTags(&params)) {
-    throw PdfixException();
+    if (pdfix->GetErrorType() == kErrorOperationCancelled) {
+      progress_control->set_text(L"Process cancelled ...");
+    } else {
+      throw PdfixException();
+    }
   }
 
-  progress_control->step();  // proceed to next step
   progress_control.reset();  // cleanup the progress control before closing the document
 
   doc->Close();
