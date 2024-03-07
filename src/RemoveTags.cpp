@@ -5,24 +5,23 @@
 
 #include "pdfixsdksamples/RemoveTags.h"
 
-#include <string>
 #include <iostream>
+#include <string>
 #include "Pdfix.h"
 #include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
 
-void RemoveTags(
-  const std::wstring& open_path,        // source PDF document
-  const std::wstring& save_path        // output PDF document
+void RemoveTags(const std::wstring& open_path,  // source PDF document
+                const std::wstring& save_path   // output PDF document
 ) {
   auto pdfix = PdfixEngine::Get();
 
   PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), L"");
   if (!doc)
     throw PdfixException();
-  
-  if (!doc->RemoveTags(nullptr, nullptr))
+
+  if (!doc->RemoveTags())
     throw PdfixException();
 
   if (!doc->Save(save_path.c_str(), kSaveFull))

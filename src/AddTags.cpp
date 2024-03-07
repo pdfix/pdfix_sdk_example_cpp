@@ -5,18 +5,17 @@
 
 #include "pdfixsdksamples/AddTags.h"
 
-#include <string>
 #include <iostream>
+#include <string>
 #include "Pdfix.h"
 #include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
 
-void AddTags(
-  const std::wstring& open_path,        // source PDF document
-  const std::wstring& save_path,        // output PDF document
-  const std::wstring& config_path,      // configuration file
-  const bool preflight                  // preflight document template before processing
+void AddTags(const std::wstring& open_path,    // source PDF document
+             const std::wstring& save_path,    // output PDF document
+             const std::wstring& config_path,  // configuration file
+             const bool preflight              // preflight document template before processing
 ) {
   auto pdfix = PdfixEngine::Get();
 
@@ -40,22 +39,22 @@ void AddTags(
   if (preflight) {
     // add reference pages for preflight
     for (auto i = 0; i < doc->GetNumPages(); i++) {
-      if (!doc_template->AddPage(i, nullptr, nullptr))
+      if (!doc_template->AddPage(i))
         throw PdfixException();
     }
-      
+
     // run document preflight
-    if (!doc_template->Update(nullptr, nullptr))
+    if (!doc_template->Update())
       throw PdfixException();
   }
 
-  // remove old marked content  
-  if (!doc->RemoveTags(nullptr, nullptr))
+  // remove old marked content
+  if (!doc->RemoveTags())
     throw PdfixException();
 
   // add tags to the document
   PdfTagsParams params;
-  if (!doc->AddTags(&params, nullptr, nullptr))
+  if (!doc->AddTags(&params))
     throw PdfixException();
 
   if (!doc->Save(save_path.c_str(), kSaveFull | kSaveCompressedStructureOnly))

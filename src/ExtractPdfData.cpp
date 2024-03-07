@@ -98,12 +98,12 @@ void Run(const std::wstring& open_path,
   if (preflight) {
     // add reference pages for preflight
     for (auto i = 0; i < doc->GetNumPages(); i++) {
-      if (!doc_template->AddPage(i, nullptr, nullptr))
+      if (!doc_template->AddPage(i))
         throw PdfixException();
     }
 
     // run document preflight
-    if (!doc_template->Update(nullptr, nullptr))
+    if (!doc_template->Update())
       throw PdfixException();
   }
 

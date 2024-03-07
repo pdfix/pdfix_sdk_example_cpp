@@ -5,17 +5,18 @@
 
 #include "pdfixsdksamples/ExtractTables.h"
 
-#include <string>
-#include <iostream>
 #include <fstream>
-#include "pdfixsdksamples/Utils.h"
+#include <iostream>
+#include <string>
 #include "Pdfix.h"
 #include "pdfixsdksamples/PdfixEngine.h"
+#include "pdfixsdksamples/Utils.h"
 
 using namespace PDFixSDK;
 
 // Example how to extract tables from a PDF document and save them to csv format.
-// GetText processes each element recursively. If the element is a text, saves it to the output stream.
+// GetText processes each element recursively. If the element is a text, saves it to the output
+// stream.
 void GetText(PdeText* element, std::ofstream& ofs, bool eof) {
   PdeText* text_elem = static_cast<PdeText*>(element);
   std::wstring text = text_elem->GetText();
@@ -26,7 +27,7 @@ void GetText(PdeText* element, std::ofstream& ofs, bool eof) {
     ofs << std::endl;
 }
 
-// SaveTable processes each element recursively. 
+// SaveTable processes each element recursively.
 // If the element is a table, it saves it to save_path as csv.
 void SaveTable(PdeElement* element, std::wstring save_path, int& table_index) {
   auto pdfix = PdfixEngine::Get();
@@ -74,8 +75,7 @@ void SaveTable(PdeElement* element, std::wstring save_path, int& table_index) {
     }
 
     ofs.close();
-  }
-  else {
+  } else {
     int count = element->GetNumChildren();
     if (count == 0)
       return;
@@ -87,10 +87,9 @@ void SaveTable(PdeElement* element, std::wstring save_path, int& table_index) {
   }
 }
 
-// Extracts all tables from the document and saves them to CSV format. 
-void ExtractTables(
-  const std::wstring& open_path,                 // source PDF document
-  const std::wstring& save_path                  // directory where to extract images
+// Extracts all tables from the document and saves them to CSV format.
+void ExtractTables(const std::wstring& open_path,  // source PDF document
+                   const std::wstring& save_path   // directory where to extract images
 ) {
   auto pdfix = PdfixEngine::Get();
 
@@ -108,7 +107,7 @@ void ExtractTables(
     PdePageMap* page_map = page->AcquirePageMap();
     if (!page_map)
       throw PdfixException();
-    if (!page_map->CreateElements(nullptr, nullptr))
+    if (!page_map->CreateElements())
       throw PdfixException();
 
     auto element = page_map->GetElement();

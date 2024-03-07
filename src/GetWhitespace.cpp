@@ -27,7 +27,7 @@ void Run(const std::wstring& open_path  // source PDF document
   PdePageMap* page_map = page->AcquirePageMap();
   if (!page_map)
     throw PdfixException();
-  if (!page_map->CreateElements(nullptr, nullptr))
+  if (!page_map->CreateElements())
     throw PdfixException();
 
   PdfRect bbox;
@@ -36,7 +36,7 @@ void Run(const std::wstring& open_path  // source PDF document
   whitespace_params.width = 100;
   // set watermark height in user space coordinates
   whitespace_params.height = 50;
-  if (page_map->GetWhitespace(&whitespace_params, 0, nullptr, nullptr, &bbox)) {
+  if (page_map->GetWhitespace(&whitespace_params, 0, &bbox)) {
     // use the bbox to place watermark into it - AddWatermark example
     // ...
   }

@@ -49,12 +49,12 @@ void Run(const std::wstring& open_path,      // source PDF document
   if (preflight) {
     // add reference pages for preflight
     for (auto i = 0; i < doc->GetNumPages(); i++) {
-      if (!doc_template->AddPage(i, nullptr, nullptr))
+      if (!doc_template->AddPage(i))
         throw PdfixException();
     }
 
     // run document preflight
-    if (!doc_template->Update(nullptr, nullptr))
+    if (!doc_template->Update())
       throw PdfixException();
   }
   /* set html_param
@@ -77,7 +77,7 @@ void Run(const std::wstring& open_path,      // source PDF document
   if (!html_conv->SetParams(&html_params))
     throw PdfixException();
 
-  if (!html_conv->Save(save_path.c_str(), nullptr, nullptr))
+  if (!html_conv->Save(save_path.c_str()))
     throw PdfixException();
 
   html_conv->Destroy();

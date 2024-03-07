@@ -5,23 +5,21 @@
 
 #include "pdfixsdksamples/InsertPages.h"
 
-#include <string>
 #include <iostream>
+#include <string>
 #include "Pdfix.h"
 #include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
 
-
 // Insert pages from one document to another.
-void InsertPages(
-  const std::wstring& source_doc_file,          // source PDF document
-  const std::wstring& dest_doc_file,            // destination PDF document
-  const std::wstring& save_file,                // file where to save PDF docuemnt
-  int where,                                    // index where to insert pages
-  int from,                                     // from page
-  int to                                        // to oage
-  ) {
+void InsertPages(const std::wstring& source_doc_file,  // source PDF document
+                 const std::wstring& dest_doc_file,    // destination PDF document
+                 const std::wstring& save_file,        // file where to save PDF docuemnt
+                 int where,                            // index where to insert pages
+                 int from,                             // from page
+                 int to                                // to oage
+) {
   auto pdfix = PdfixEngine::Get();
 
   auto source_doc = pdfix->OpenDoc(source_doc_file.c_str(), L"");
@@ -32,7 +30,7 @@ void InsertPages(
   if (!dest_doc)
     throw PdfixException();
 
-  auto result = dest_doc->InsertPages(where, source_doc, from, to, kPageInsertAll, nullptr, nullptr);
+  auto result = dest_doc->InsertPages(where, source_doc, from, to, kPageInsertAll);
   if (!result)
     throw PdfixException();
 

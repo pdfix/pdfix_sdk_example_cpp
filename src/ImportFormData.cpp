@@ -54,7 +54,7 @@ void Run(const std::wstring& open_path,  // source PDF document
         auto annot = page->GetAnnot(i);
         // flatten all but link annotations which to not have appearance
         if (annot && annot->GetSubtype() == kAnnotWidget)
-          if (!page->FlattenAnnot(annot, nullptr, nullptr))
+          if (!page->FlattenAnnot(annot))
             throw PdfixException();
       }
       page->Release();

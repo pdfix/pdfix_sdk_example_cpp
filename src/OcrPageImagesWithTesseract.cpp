@@ -5,11 +5,11 @@
 
 #include "pdfixsdksamples/OcrPageImagesWithTesseract.h"
 
-#include <string>
 #include <iostream>
+#include <string>
 #include <vector>
-#include "Pdfix.h"
 #include "OcrTesseract.h"
+#include "Pdfix.h"
 #include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
@@ -26,8 +26,7 @@ void parse_page_element(PdeElement* elem, std::vector<PdfRect>& image_bbox_arr) 
   if (elem->GetType() == kPdeImage) {
     PdfRect bbox = elem->GetBBox();
     image_bbox_arr.push_back(bbox);
-  }
-  else {
+  } else {
     for (int i = 0; i < elem->GetNumChildren(); i++) {
       PdeElement* child = elem->GetChild(i);
       parse_page_element(child, image_bbox_arr);
@@ -35,13 +34,12 @@ void parse_page_element(PdeElement* elem, std::vector<PdfRect>& image_bbox_arr) 
   }
 }
 
-void OcrPageImagesWithTesseract(
-  const std::wstring& open_path,                  // source PDF document
-  const std::wstring& save_path,                  // searchable PDF document
-  const std::wstring& data_path,                  // path to OCR data
-  const std::wstring& language,                   // default OCR language
-  const float zoom,                              // zoom to control page rendering quality
-  const PdfRotate rotate                          // page rotation to be applied
+void OcrPageImagesWithTesseract(const std::wstring& open_path,  // source PDF document
+                                const std::wstring& save_path,  // searchable PDF document
+                                const std::wstring& data_path,  // path to OCR data
+                                const std::wstring& language,   // default OCR language
+                                const float zoom,       // zoom to control page rendering quality
+                                const PdfRotate rotate  // page rotation to be applied
 ) {
   auto pdfix = PdfixEngine::Get();
 
@@ -59,10 +57,10 @@ void OcrPageImagesWithTesseract(
   PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), L"");
   if (!doc)
     throw PdfixException();
-  
+
   // collect page images
   std::vector<PdfRect> image_bbox_arr;
-  
+
   PdfPage* page = doc->AcquirePage(0);
   if (!page)
     throw PdfixException();
@@ -71,12 +69,12 @@ void OcrPageImagesWithTesseract(
   PdePageMap* page_map = page->AcquirePageMap();
   if (!page_map)
     throw PdfixException();
-  if (!page_map->CreateElements(nullptr, nullptr))
+  if (!page_map->CreateElements())
     throw PdfixException();
-    
+
   PdeElement* elem = page_map->GetElement();
   parse_page_element(elem, image_bbox_arr);
-  
+
   page_map->Release();
 
   // setup the ocr engine
@@ -86,10 +84,10 @@ void OcrPageImagesWithTesseract(
   TesseractDoc* ocr_doc = ocr->OpenOcrDoc(doc);
   if (!ocr_doc)
     throw PdfixException();
-  
+
   // prepare page rendering matrix
   PdfPageView* page_view = page->AcquirePageView(zoom, rotate);
-  
+
   // run ocr on each image bbox
   for (auto& bbox : image_bbox_arr) {
     // render page to image
@@ -97,7 +95,7 @@ void OcrPageImagesWithTesseract(
     page_view->RectToDevice(&bbox, &dev_rect);
     int width = dev_rect.right - dev_rect.left;
     int height = dev_rect.bottom - dev_rect.top;
-    
+
     PsImage* image = pdfix->CreateImage(width, height, kImageDIBFormatArgb);
 
     // render portion of the page - the image
@@ -105,27 +103,35 @@ void OcrPageImagesWithTesseract(
     page_view->GetDeviceMatrix(&render_params.matrix);
     render_params.image = image;
     render_params.clip_box = bbox;
-    if (!page->DrawContent(&render_params, nullptr, nullptr))
+    if (!page->DrawContent(&render_params))
       throw PdfixException();
-    
+
     // calculate PdfMatrix to position the recognized text on the page
     auto rotate = ((page->GetRotate() / 90) % 4);
     PdfMatrix matrix;
     PdfMatrixRotate(matrix, rotate * kPi / 2, false);
-    PdfMatrixScale(matrix, 1/zoom, 1/zoom, false);
+    PdfMatrixScale(matrix, 1 / zoom, 1 / zoom, false);
     switch (rotate) {
-      case 0: PdfMatrixTranslate(matrix, bbox.left, bbox.bottom, false); break;
-      case 1: PdfMatrixTranslate(matrix, bbox.right, bbox.bottom, false); break;
-      case 2: PdfMatrixTranslate(matrix, bbox.right, bbox.top, false); break;
-      case 3: PdfMatrixTranslate(matrix, bbox.left, bbox.top, false); break;
+      case 0:
+        PdfMatrixTranslate(matrix, bbox.left, bbox.bottom, false);
+        break;
+      case 1:
+        PdfMatrixTranslate(matrix, bbox.right, bbox.bottom, false);
+        break;
+      case 2:
+        PdfMatrixTranslate(matrix, bbox.right, bbox.top, false);
+        break;
+      case 3:
+        PdfMatrixTranslate(matrix, bbox.left, bbox.top, false);
+        break;
     }
-    
+
     if (!ocr_doc->OcrImageToPage(image, &matrix, page, nullptr, nullptr))
       throw PdfixException();
-    
+
     image->Destroy();
   }
-  
+
   page->Release();
 
   if (!doc->Save(save_path.c_str(), kSaveFull))

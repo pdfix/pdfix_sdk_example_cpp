@@ -5,17 +5,16 @@
 
 #include "pdfixsdksamples/RegexSearch.h"
 
-#include <string>
 #include <iostream>
+#include <string>
 #include "Pdfix.h"
 #include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
 
-  // Finds all occurences of the regex_pattern at the first page.
-void RegexSearch(
-  const std::wstring& open_path,                 // source PDF document
-  const std::wstring& regex_pattern              // regex pattern you want to search
+// Finds all occurences of the regex_pattern at the first page.
+void RegexSearch(const std::wstring& open_path,     // source PDF document
+                 const std::wstring& regex_pattern  // regex pattern you want to search
 ) {
   auto pdfix = PdfixEngine::Get();
 
@@ -27,11 +26,11 @@ void RegexSearch(
   if (!page)
     throw PdfixException();
 
-    PdePageMap* page_map = page->AcquirePageMap();
-    if (!page_map)
-      throw PdfixException();
-    if (!page_map->CreateElements(nullptr, nullptr))
-      throw PdfixException();
+  PdePageMap* page_map = page->AcquirePageMap();
+  if (!page_map)
+    throw PdfixException();
+  if (!page_map->CreateElements())
+    throw PdfixException();
 
   PsRegex* regex = pdfix->CreateRegex();
   regex->SetPattern(regex_pattern.c_str());
@@ -53,8 +52,7 @@ void RegexSearch(
           std::wstring match = text.substr(start_pos + pos, len);
           std::wcout << match << std::endl;
           start_pos += pos + 1;
-        }
-        else
+        } else
           start_pos = (int)text.length();
       }
     }

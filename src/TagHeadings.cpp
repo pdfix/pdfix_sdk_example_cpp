@@ -4,9 +4,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include <string>
 #include <iostream>
 #include <memory>
+#include <string>
 #include "Pdfix.h"
 #include "pdfixsdksamples/PdfixEngine.h"
 
@@ -25,8 +25,7 @@ bool GetPageObjectTextState(PdsPageObject* page_object, int mcid, PdfTextState* 
       text->GetTextState(ts);
       return true;
     }
-  }
-  else if (page_object->GetObjectType() == kPdsPageForm) {
+  } else if (page_object->GetObjectType() == kPdsPageForm) {
     // search for the text object inside of the form XObject
     PdsForm* form = (PdsForm*)page_object;
     auto content = form->GetContent();
@@ -45,9 +44,9 @@ bool GetParagraphTextState(PdsStructElement* struct_elem, PdfTextState* ts) {
       // acquire page on which the element is present
       PdfDoc* doc = struct_elem->GetStructTree()->GetDoc();
       auto page_deleter = [](PdfPage* page) { page->Release(); };
-      std::unique_ptr<PdfPage, decltype(page_deleter)>
-        page(doc->AcquirePage(struct_elem->GetChildPageNumber(i)), page_deleter);
-      
+      std::unique_ptr<PdfPage, decltype(page_deleter)> page(
+          doc->AcquirePage(struct_elem->GetChildPageNumber(i)), page_deleter);
+
       // find text object with mcid on the page to get the text state
       int mcid = struct_elem->GetChildMcid(i);
       auto content = page->GetContent();
@@ -67,22 +66,22 @@ void TagParagraphAsHeading(PdsStructElement* struct_elem) {
   if (type == L"P") {
     // get the paragraph text_state
     PdfTextState ts;
-    if (GetParagraphTextState(struct_elem, &ts) ) {
+    if (GetParagraphTextState(struct_elem, &ts)) {
       // get the font name
       auto font_name = ts.font->GetFontName();
-      
+
       std::wstring tag_type;
       if (font_name.find(L"Black") != std::wstring::npos && ts.font_size >= 25)
         tag_type = L"H1";
-      else if ( font_name.find(L"Bold") != std::wstring::npos && ts.font_size >= 16)
+      else if (font_name.find(L"Bold") != std::wstring::npos && ts.font_size >= 16)
         tag_type = L"H2";
-      
+
       // update tag type
       if (!tag_type.empty()) {
         struct_elem->SetType(tag_type.c_str());
       }
     }
-    return; // this was a P tag, no need to continue to kid struct elements
+    return;  // this was a P tag, no need to continue to kid struct elements
   }
   // search kid struct elements
   for (int i = 0; i < struct_elem->GetNumChildren(); i++) {
@@ -98,42 +97,41 @@ void TagParagraphAsHeading(PdsStructElement* struct_elem) {
 // TagParagraphAsHeading
 // re-tag P tags to Hx tag based on predefined font properties (size, font name)
 //////////////////////////////////////////////////////////////////////////////////////////////////
-void Run(
-  const std::wstring& open_path,        // source PDF document
-  const std::wstring& save_path         // output PDF document
+void Run(const std::wstring& open_path,  // source PDF document
+         const std::wstring& save_path   // output PDF document
 ) {
   auto pdfix = PdfixEngine::Get();
 
   PdfDoc* doc = pdfix->OpenDoc(open_path.c_str(), L"");
   if (!doc)
     throw PdfixException();
-  
+
   // cleanup any previous structure tree
-  if (!doc->RemoveTags(nullptr, nullptr))
+  if (!doc->RemoveTags())
     throw PdfixException();
-  
+
   // autotag document first
   PdfTagsParams params;
-  if (!doc->AddTags(&params, nullptr, nullptr))
+  if (!doc->AddTags(&params))
     throw PdfixException();
 
   // get the struct tree
   auto struct_tree = doc->GetStructTree();
   if (!struct_tree)
     throw PdfixException();
-  
+
   // tag headings
   for (int i = 0; i < struct_tree->GetNumChildren(); i++) {
     PdsObject* kid_obj = struct_tree->GetChildObject(i);
     auto kid_elem = struct_tree->GetStructElementFromObject(kid_obj);
     TagParagraphAsHeading(kid_elem);
   }
-  
+
   // save document
   if (!doc->Save(save_path.c_str(), kSaveFull))
     throw PdfixException();
-  
+
   doc->Close();
 }
-  
-}
+
+}  // namespace TagHeadings

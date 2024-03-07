@@ -103,12 +103,12 @@ void TagsEditStructTree(const std::wstring& open_path,  // source PDF document
     throw PdfixException();
 
   // cleanup any previous structure tree
-  if (!doc->RemoveTags(nullptr, nullptr))
+  if (!doc->RemoveTags())
     throw PdfixException();
 
   // autotag document first
   PdfTagsParams params;
-  if (!doc->AddTags(&params, nullptr, nullptr))
+  if (!doc->AddTags(&params))
     throw PdfixException();
 
   // get the struct tree
@@ -138,7 +138,7 @@ void TagsEditStructTree(const std::wstring& open_path,  // source PDF document
   // add annot, add page object
 
   // reconstruct parent tree
-  if (!struct_tree->FixParentTree(nullptr, nullptr))
+  if (!struct_tree->FixParentTree())
     throw PdfixException();
 
   // save document

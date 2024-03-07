@@ -7,16 +7,15 @@
 
 // #define GENERATE_REDAC_APP
 
-#include <string>
 #include <iostream>
+#include <string>
 #include "Pdfix.h"
 #include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
 
-void ApplyRedaction(
-  const std::wstring& open_path,               // source PDF document
-  const std::wstring& save_path                // output PDF doucment
+void ApplyRedaction(const std::wstring& open_path,  // source PDF document
+                    const std::wstring& save_path   // output PDF doucment
 ) {
   auto pdfix = PdfixEngine::Get();
 
@@ -36,7 +35,7 @@ void ApplyRedaction(
   }
 #endif
 
-  if (!doc->ApplyRedaction(nullptr, nullptr))
+  if (!doc->ApplyRedaction())
     throw PdfixException();
 
   if (!doc->Save(save_path.c_str(), kSaveFull))

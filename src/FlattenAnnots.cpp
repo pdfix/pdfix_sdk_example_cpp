@@ -37,7 +37,7 @@ void FlattenAnnots(const std::wstring& open_path,  // source PDF document
 
       // flatten all but link annotations which do not have appearance
       if (annot && annot->GetSubtype() != kAnnotLink) {
-        page->FlattenAnnot(annot, nullptr, nullptr);
+        page->FlattenAnnot(annot);
       }
     }
     page->Release();

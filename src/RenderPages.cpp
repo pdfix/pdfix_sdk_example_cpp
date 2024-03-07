@@ -5,25 +5,24 @@
 
 #include "pdfixsdksamples/RenderPages.h"
 
-#include <string>
 #include <iostream>
-#include <thread>
 #include <sstream>
+#include <string>
+#include <thread>
 #include "Pdfix.h"
 #include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
 
-void RenderPages(
-  const std::wstring& open_path,              // source PDF document
-  const std::wstring& img_path,               // output image
-  PdfImageParams img_params,                  // output image params
-  int page_from,                              // page from
-  int page_to,                                // page to
-  double zoom,                                // page zoom
-  PdfRotate rotate,                           // page rotation
-  PdfDevRect clip_rect,                       // clip region
-  size_t thread_count                         // max number of threads
+void RenderPages(const std::wstring& open_path,  // source PDF document
+                 const std::wstring& img_path,   // output image
+                 PdfImageParams img_params,      // output image params
+                 int page_from,                  // page from
+                 int page_to,                    // page to
+                 double zoom,                    // page zoom
+                 PdfRotate rotate,               // page rotation
+                 PdfDevRect clip_rect,           // clip region
+                 size_t thread_count             // max number of threads
 ) {
   auto pdfix = PdfixEngine::Get();
 
@@ -51,8 +50,8 @@ void RenderPages(
       int height = page_view->GetDeviceHeight();
 
       PdfRect clip_box;
-      if (!(clip_rect.left == 0 && clip_rect.right == 0 &&
-        clip_rect.top == 0 && clip_rect.bottom == 0)) {
+      if (!(clip_rect.left == 0 && clip_rect.right == 0 && clip_rect.top == 0 &&
+            clip_rect.bottom == 0)) {
         width = clip_rect.right - clip_rect.left;
         height = clip_rect.bottom - clip_rect.top;
         page_view->RectToPage(&clip_rect, &clip_box);
@@ -66,8 +65,8 @@ void RenderPages(
       params.image = image;
       params.clip_box = clip_box;
       page_view->GetDeviceMatrix(&params.matrix);
-      params.render_flags = kRenderAnnot; // | kRenderGrayscale;
-      if (!page->DrawContent(&params, nullptr, nullptr))
+      params.render_flags = kRenderAnnot;  // | kRenderGrayscale;
+      if (!page->DrawContent(&params))
         throw PdfixException();
 
       std::wstringstream ss;
@@ -83,9 +82,7 @@ void RenderPages(
     }
   };
 
-  auto div_round_up = [](auto a, auto b) {
-    return (a + b - 1) / b;
-  };
+  auto div_round_up = [](auto a, auto b) { return (a + b - 1) / b; };
 
   std::vector<std::thread> workers;
   size_t last_page = page_from;

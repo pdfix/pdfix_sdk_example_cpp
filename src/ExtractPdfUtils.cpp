@@ -117,7 +117,7 @@ void RenderPageArea(PdfPage* page, PdfRect& bbox, ptree& node, const DataType& d
   PdfPageRenderParams render_params;
   render_params.image = ps_image;
   page_view->GetDeviceMatrix(&render_params.matrix);
-  page->DrawContent(&render_params, nullptr, nullptr);
+  page->DrawContent(&render_params);
 
   PdfImageParams img_params;
   img_params.format = data_types.image_format;

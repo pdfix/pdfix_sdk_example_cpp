@@ -5,28 +5,28 @@
 
 #include "pdfixsdksamples/ExtractImages.h"
 
-#include <string>
 #include <iostream>
+#include <string>
 #include "Pdfix.h"
 #include "pdfixsdksamples/PdfixEngine.h"
 
 using namespace PDFixSDK;
 
-// SaveImage processes each element recursively. If the element is an image, it saves it to save_path.
-void SaveImage(PdeElement* element, 
-  const std::wstring& save_path, 
-  PdfImageParams& img_params,
-  PdfPage* page, 
-  PdfPageView* page_view, 
-  int& image_index) {
-
+// SaveImage processes each element recursively. If the element is an image, it saves it to
+// save_path.
+void SaveImage(PdeElement* element,
+               const std::wstring& save_path,
+               PdfImageParams& img_params,
+               PdfPage* page,
+               PdfPageView* page_view,
+               int& image_index) {
   auto pdfix = PdfixEngine::Get();
-    
+
   PdfElementType elem_type = element->GetType();
-    
+
   if (elem_type == kPdeImage) {
     PdeImage* image = static_cast<PdeImage*>(element);
-      
+
     PdfRect elem_rect = element->GetBBox();
     PdfDevRect elem_dev_rect;
     page_view->RectToDevice(&elem_rect, &elem_dev_rect);
@@ -34,17 +34,17 @@ void SaveImage(PdeElement* element,
     int elem_height = elem_dev_rect.bottom - elem_dev_rect.top;
     if (elem_height == 0 || elem_width == 0)
       return;
-      
+
     PsImage* ps_image = pdfix->CreateImage(page_view->GetDeviceWidth(),
-      page_view->GetDeviceHeight(), kImageDIBFormatArgb);
+                                           page_view->GetDeviceHeight(), kImageDIBFormatArgb);
     if (!ps_image)
       throw PdfixException();
 
     PdfPageRenderParams render_params;
     render_params.image = ps_image;
     page_view->GetDeviceMatrix(&render_params.matrix);
-    page->DrawContent(&render_params, nullptr, nullptr);
-      
+    page->DrawContent(&render_params);
+
     std::wstring path = save_path + L"/ExtractImages_" + std::to_wstring(image_index++) + L".png";
     ps_image->SaveRect(path.c_str(), &img_params, &elem_dev_rect);
     ps_image->Destroy();
@@ -61,11 +61,10 @@ void SaveImage(PdeElement* element,
 }
 
 // Extracts all images from the document and saves them to save_path.
-void ExtractImages(
-  const std::wstring& open_path,                // source PDF document
-  const std::wstring& save_path,                // directory where to extract images
-  int render_width,                             // with of the rendered page in pixels (image )
-  PdfImageParams& img_params                    // image parameters
+void ExtractImages(const std::wstring& open_path,  // source PDF document
+                   const std::wstring& save_path,  // directory where to extract images
+                   int render_width,               // with of the rendered page in pixels (image )
+                   PdfImageParams& img_params      // image parameters
 ) {
   auto pdfix = PdfixEngine::Get();
 
@@ -97,7 +96,7 @@ void ExtractImages(
     PdePageMap* page_map = page->AcquirePageMap();
     if (!page_map)
       throw PdfixException();
-    if (!page_map->CreateElements(nullptr, nullptr))
+    if (!page_map->CreateElements())
       throw PdfixException();
 
     auto element = page_map->GetElement();
