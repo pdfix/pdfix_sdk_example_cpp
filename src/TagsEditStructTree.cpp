@@ -138,7 +138,7 @@ void TagsEditStructTree(const std::wstring& open_path,  // source PDF document
   // add annot, add page object
 
   // reconstruct parent tree
-  if (!struct_tree->FixParentTree(nullptr, nullptr))
+  if (!struct_tree->RepairParentTree(nullptr, nullptr))
     throw PdfixException();
 
   // save document
