@@ -6,6 +6,7 @@ external/pdfix_sdk
 .vs/
 .vscode/
 *.user
+.cache/
 
 xcuserdata/
 *.xcworkspace/
