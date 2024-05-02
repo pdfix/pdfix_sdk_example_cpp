@@ -17,10 +17,7 @@ using namespace PDFixSDK;
 
 void MakeAccessible(const std::wstring& open_path,           // source PDF document
                     const std::wstring& save_path,           // output PDF/UA document
-                    std::pair<bool, std::wstring> language,  // document reading language
-                    std::pair<bool, std::wstring> title,     // document title
-                    const std::wstring& config_path,         // configuration file
-                    const bool preflight  // preflight document template before processing
+                    const std::wstring& command_path         // command configuration file
 ) {
   auto pdfix = PdfixEngine::Get();
 
@@ -28,39 +25,21 @@ void MakeAccessible(const std::wstring& open_path,           // source PDF docum
   if (!doc)
     throw PdfixException();
 
-  auto doc_template = doc->GetTemplate();
-  if (!doc_template)
-    throw PdfixException();
-
-  if (!config_path.empty()) {
-    PsFileStream* stm = pdfix->CreateFileStream(config_path.c_str(), kPsReadOnly);
-    if (stm) {
-      if (!doc_template->LoadFromStream(stm, kDataFormatJson))
-        throw PdfixException();
-      stm->Destroy();
-    }
-  }
-
-  if (preflight) {
-    // add reference pages for preflight
-    for (auto i = 0; i < doc->GetNumPages(); i++) {
-      if (!doc_template->AddPage(i))
-        throw PdfixException();
-    }
-
-    // run document preflight
-    if (!doc_template->Update())
+  auto cmd = doc->GetCommand();
+  
+  auto stm = pdfix->CreateFileStream(command_path.c_str(), kPsReadOnly);
+  if (!stm) {
       throw PdfixException();
   }
 
-  // // convert to PDF/UA
-  // PdfAccessibleParams params;
-  // params.embed_fonts = 1;
-  // params.subset_fonts = 1;
+  if (!cmd->LoadParamsFromStream(stm, kDataFormatJson)) {
+    throw PdfixException();
+  }
+  stm->Destroy();
 
-  // if (!doc->MakeAccessible(&params, title.first ? title.second.c_str() : nullptr,
-  //                          language.first ? language.second.c_str() : nullptr))
-  //   throw PdfixException();
+  if (!cmd->Run()) {
+    throw PdfixException();
+  }
 
   if (!doc->Save(save_path.c_str(), kSaveFull))
     throw PdfixException();

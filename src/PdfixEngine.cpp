@@ -10,7 +10,7 @@ Pdfix* PdfixEngine::Init() {
     // the module name contains only relative file path name
     
     if (!Pdfix_init(Pdfix_MODULE_NAME))
-      throw std::runtime_error("Pdfix initialization fail");
+      throw std::runtime_error("Pdfix initialization fail. Unable to load pdf.dylib");
 
     _pdfix = GetPdfix();
 

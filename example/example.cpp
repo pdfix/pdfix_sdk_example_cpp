@@ -33,6 +33,16 @@ int main(int argc, char* argv[]) {
   std::wstring config_path = resources_dir + L"/config.json";  // configuration file
 
   try {
+    // update current working directory
+    std::string path = argv[0];
+    auto pos = path.find_last_of("/\\");
+    if (pos != std::string::npos) {
+      path.erase(path.begin() + pos, path.end());
+      auto ok = chdir(path.c_str());
+      if (ok != 0)
+        throw std::system_error(errno, std::generic_category(), "Failed to set working directory");
+    }
+
     PdfixPtr pdfix(PdfixEngine::Init(), pdfix_deleter);
 
     if (!DirectoryExists(output_dir, true))
@@ -51,8 +61,7 @@ int main(int argc, char* argv[]) {
     ConvertRGBToCMYK(open_path, output_dir + L"/Rgb2Cmyk.pdf");
 
     // Accessibility and PDF Tagging samples
-    MakeAccessible(open_path, output_dir + L"/MakeAccessible.pdf", std::make_pair(false, L""),
-                   std::make_pair(true, L"Document title"), config_path, false);
+    MakeAccessible(open_path, output_dir + L"/MakeAccessible.pdf", resources_dir + L"/make-accessible.json");
 
     AddTags(open_path, output_dir + L"/AddTags.pdf", config_path, true);
 
