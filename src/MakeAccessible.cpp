@@ -15,9 +15,9 @@
 
 using namespace PDFixSDK;
 
-void MakeAccessible(const std::wstring& open_path,           // source PDF document
-                    const std::wstring& save_path,           // output PDF/UA document
-                    const std::wstring& command_path         // command configuration file
+void MakeAccessible(const std::wstring& open_path,    // source PDF document
+                    const std::wstring& save_path,    // output PDF/UA document
+                    const std::wstring& command_path  // command configuration file
 ) {
   auto pdfix = PdfixEngine::Get();
 
@@ -25,19 +25,32 @@ void MakeAccessible(const std::wstring& open_path,           // source PDF docum
   if (!doc)
     throw PdfixException();
 
-  auto cmd = doc->GetCommand();
-  
-  auto stm = pdfix->CreateFileStream(command_path.c_str(), kPsReadOnly);
-  if (!stm) {
+  auto command = doc->GetCommand();
+
+  // if command path is empty, use the default command from the SDK, othervise use the provided path
+  // to JSON
+
+  PsStream* cmd_stm = nullptr;
+
+  if (command_path.empty()) {
+    cmd_stm = pdfix->CreateMemStream();
+    if (!cmd_stm || !command->SaveCommandsToStream(kCommandMakeAccessible, cmd_stm, kDataFormatJson,
+                                                   kSaveFull)) {
       throw PdfixException();
+    }
+  } else {
+    cmd_stm = pdfix->CreateFileStream(command_path.c_str(), kPsReadOnly);
+    if (!cmd_stm) {
+      throw PdfixException();
+    }
   }
 
-  if (!cmd->LoadParamsFromStream(stm, kDataFormatJson)) {
+  if (!command->LoadParamsFromStream(cmd_stm, kDataFormatJson)) {
     throw PdfixException();
   }
-  stm->Destroy();
+  cmd_stm->Destroy();
 
-  if (!cmd->Run()) {
+  if (!command->Run()) {
     throw PdfixException();
   }
 
