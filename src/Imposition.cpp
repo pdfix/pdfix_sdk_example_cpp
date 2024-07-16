@@ -18,13 +18,13 @@ void Run(const std::wstring& open_path,  // source PDF document
 ) {
   auto pdfix = PdfixEngine::Get();
 
-  PdfDoc* doc = nullptr;
-  doc = pdfix->OpenDoc(open_path.c_str(), L"");
-  if (!doc)
+  PdfDoc* doc = pdfix->CreateDoc();
+  auto src_doc = pdfix->OpenDoc(open_path.c_str(), L"");
+  if (!src_doc)
     throw PdfixException();
 
   // create XObject from a page
-  auto page = doc->AcquirePage(0);
+  auto page = src_doc->AcquirePage(0);
   auto xobj = doc->CreateXObjectFromPage(page);
   page->Release();
 
