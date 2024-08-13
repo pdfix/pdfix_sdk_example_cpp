@@ -34,7 +34,7 @@ void MakeAccessible(const std::wstring& open_path,    // source PDF document
 
   if (command_path.empty()) {
     cmd_stm = pdfix->CreateMemStream();
-    if (!cmd_stm || !command->SaveCommandsToStream(kCommandMakeAccessible, cmd_stm, kDataFormatJson,
+    if (!cmd_stm || !command->SaveCommandsToStream(kActionMakeAccessible, cmd_stm, kDataFormatJson,
                                                    kSaveFull)) {
       throw PdfixException();
     }
