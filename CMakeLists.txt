@@ -20,6 +20,7 @@ set(HEADERS
   include/pdfixsdksamples/ConvertRGBToCMYK.h
   include/pdfixsdksamples/ConvertToHtml.h
   include/pdfixsdksamples/ConvertToHtmlEx.h
+  include/pdfixsdksamples/ConvertToJson.h
   include/pdfixsdksamples/ConvertToTiff.h
   include/pdfixsdksamples/CopyAnnots.h
   include/pdfixsdksamples/CreateNewDocument.h
@@ -97,6 +98,7 @@ set(SOURCES
   src/ConvertRGBToCMYK.cpp
   src/ConvertToHtml.cpp
   src/ConvertToHtmlEx.cpp
+  src/ConvertToJson.cpp
   src/ConvertToTiff.cpp
   src/CopyAnnots.cpp
   src/CreateNewDocument.cpp
@@ -189,28 +191,37 @@ endif ()
 if(MSVC)
   if (CMAKE_CL_64 OR ${PROJECTNAME_ARCHITECTURE} EQUAL "x64")  # -- 64-bit builds.
     set(OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin/x64")
+    set(DOWNLOAD_PLATFORM windows_x86_64.zip)
   else()
     set(OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin/x86")
+    set(DOWNLOAD_PLATFORM windows.zip)
   endif()
-  set(DOWNLOAD_PLATFORM windows.zip)
 elseif(APPLE)
   if("${CMAKE_OSX_ARCHITECTURES}" STREQUAL "arm64")
     set(OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin/arm64")
+    set(DOWNLOAD_PLATFORM macos_arm64.zip)
   elseif("${CMAKE_OSX_ARCHITECTURES}" STREQUAL "x86_64")
     set(OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin/x64")
+    set(DOWNLOAD_PLATFORM macos_x86_64.zip)
   endif()
-  set(DOWNLOAD_PLATFORM macos.zip)
 elseif(UNIX)
-  set(OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin/x64")
-  set(DOWNLOAD_PLATFORM linux.tar.gz)
+  if("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "aarch64")
+    set(OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin/aarch64")
+    set(DOWNLOAD_PLATFORM linux_aarch64.tar.gz)
+  else()
+    set(OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin/x86_64")
+    set(DOWNLOAD_PLATFORM linux_x86_64.tar.gz)
+  endif()
 else()
 endif()
 
-include(FetchContent)
+set(OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin/x86_64")
+set(DOWNLOAD_PLATFORM linux_x86_64.tar.gz)
 
+include(FetchContent)
 FetchContent_Declare(
   pdfixdist  
-  URL "https://github.com/pdfix/pdfix_sdk_builds/releases/download/8.0.0/pdfix_sdk_8.0.0_ede0c5cf_${DOWNLOAD_PLATFORM}"
+  URL "https://github.com/pdfix/pdfix_sdk_builds/releases/download/8.2.0/pdfix_sdk_8.2.0_180fe298_${DOWNLOAD_PLATFORM}"
   SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/pdfix_sdk
   )
 
