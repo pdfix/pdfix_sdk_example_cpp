@@ -15,9 +15,12 @@
 
 using namespace PDFixSDK;
 
-void MakeAccessible(const std::wstring& open_path,    // source PDF document
-                    const std::wstring& save_path,    // output PDF/UA document
-                    const std::wstring& command_path  // command configuration file
+void MakeAccessible(
+    const std::wstring& open_path,     // source PDF document
+    const std::wstring& save_path,     // output PDF/UA document
+    const std::wstring& command_path,  // command configuration file
+    const std::wstring& language,  // document language to set and overide the command configuration
+    const std::wstring& title      // document title to set and overide the command configuration
 ) {
   auto pdfix = PdfixEngine::Get();
 
@@ -51,6 +54,14 @@ void MakeAccessible(const std::wstring& open_path,    // source PDF document
   cmd_stm->Destroy();
 
   if (!command->Run()) {
+    throw PdfixException();
+  }
+
+  if ((!language.empty()) && (!doc->SetLang(language.c_str()))) {
+    throw PdfixException();
+  }
+
+  if ((!title.empty()) && (!doc->SetInfo(L"Title", title.c_str()))) {
     throw PdfixException();
   }
 
