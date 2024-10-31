@@ -10,7 +10,7 @@ class PdfixEngine {
     static Pdfix* _pdfix;
 
   public:
-    static Pdfix* Init();
+    static Pdfix* Init(const std::string &path = "");
     static void Terminate();
     static Pdfix* Get() { return _pdfix;}
 };
