@@ -255,14 +255,14 @@ target_compile_definitions(pdfixsdksample
   ${BUILD_APPLE_COMPILER_DEFINITIONS}
   )  
 
-set(Boost_dir "${CMAKE_SOURCE_DIR}/libs/boost_1_86_0")
+set(Boost_dir "${CMAKE_SOURCE_DIR}/libs/boost_1_87_0")
 set(Boost_lib "${Boost_dir}/stage/lib")
   
 target_include_directories(pdfixsdksample
   PUBLIC
   "${Boost_dir}"
   "$<IF:$<TARGET_EXISTS:pdfix_app>,${CMAKE_SOURCE_DIR}/libs/boost/include,${CMAKE_SOURCE_DIR}/external>"
-  "$<IF:$<TARGET_EXISTS:pdfix_app>,${CMAKE_SOURCE_DIR}/libs/boost_1_78_0,${CMAKE_SOURCE_DIR}/external>"
+  "$<IF:$<TARGET_EXISTS:pdfix_app>,${Boost_dir},${CMAKE_SOURCE_DIR}/external>"
   "$<IF:$<TARGET_EXISTS:pdfix_app>,${CMAKE_SOURCE_DIR}/include/c++,${pdfixdist_SOURCE_DIR}/include/c++>"
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
   )
