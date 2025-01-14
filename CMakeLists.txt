@@ -50,8 +50,6 @@ set(HEADERS
   include/pdfixsdksamples/MakeAccessible.h
   include/pdfixsdksamples/MovePage.h
   include/pdfixsdksamples/NamedDestsToJson.h
-  include/pdfixsdksamples/OcrPageImagesWithTesseract.h
-  include/pdfixsdksamples/OcrWithTesseract.h
   include/pdfixsdksamples/OpedDocumentFromStream.h
   include/pdfixsdksamples/PagesToJson.h
   include/pdfixsdksamples/ParsePageContent.h
@@ -134,8 +132,6 @@ set(SOURCES
   src/MakeAccessible.cpp
   src/MovePage.cpp
   src/NamedDestsToJson.cpp
-  src/OcrPageImagesWithTesseract.cpp
-  src/OcrWithTesseract.cpp
   src/OpedDocumentFromStream.cpp
   src/PagesToJson.cpp
   src/ParsePageContent.cpp
