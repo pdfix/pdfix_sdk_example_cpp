@@ -66,12 +66,19 @@ void Run(const std::wstring& open_path,    // source PDF document
   json_conv->Destroy();
 
   auto sz = memStm->GetSize();
-  std::vector<uint8_t> data;
-  data.resize(sz);
-  if (!memStm->Read(0, data.data(), sz))
-    throw PdfixException();
+  uint8_t data[4096];
+  size_t remaining = sz;
+  size_t offset = 0;
 
-  output << data.data();
+  while (remaining > 0) {
+    size_t chunkSize = (remaining > sizeof(data)) ? sizeof(data) : remaining;
+    if (!memStm->Read(offset, data, chunkSize))
+      throw PdfixException();
+
+    output.write(reinterpret_cast<const char*>(data), chunkSize);
+    offset += chunkSize;
+    remaining -= chunkSize;
+  }
 
   doc->Close();
 }
