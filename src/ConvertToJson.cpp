@@ -31,32 +31,6 @@ void Run(const std::wstring& open_path,    // source PDF document
   if (!json_conv)
     throw PdfixException();
 
-  // initializ edocument template
-  auto doc_template = doc->GetTemplate();
-  if (!doc_template)
-    throw PdfixException();
-
-  if (!config_path.empty()) {
-    PsFileStream* stm = pdfix->CreateFileStream(config_path.c_str(), kPsReadOnly);
-    if (stm) {
-      if (!doc_template->LoadFromStream(stm, kDataFormatJson))
-        throw PdfixException();
-      stm->Destroy();
-    }
-  }
-
-  if (preflight) {
-    // add reference pages for preflight
-    for (auto i = 0; i < doc->GetNumPages(); i++) {
-      if (!doc_template->AddPage(i))
-        throw PdfixException();
-    }
-
-    // run document preflight
-    if (!doc_template->Update())
-      throw PdfixException();
-  }
-
   if (!json_conv->SetParams(&json_params))
     throw PdfixException();
 
