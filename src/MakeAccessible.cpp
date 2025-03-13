@@ -9,7 +9,6 @@
 #include <memory>
 #include <optional>
 #include <string>
-#include "OcrTesseract.h"
 #include "Pdfix.h"
 #include "pdfixsdksamples/PdfixEngine.h"
 
