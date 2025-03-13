@@ -129,12 +129,6 @@ int main(int argc, char* argv[]) {
     SetFormFieldValue(open_path, output_dir + L"/SetFormFieldValue.pdf");
     SetFieldFlags(open_path, output_dir + L"/SetFieldFlags.pdf");
 
-    // OCR Tesseract
-    OcrWithTesseract(open_path, output_dir + L"/OcrTesseract.pdf", resources_dir + L"/tessdata",
-                     L"eng", 2., kRotate0);
-    OcrPageImagesWithTesseract(open_path, output_dir + L"/OcrPageImagesWithTesseract.pdf",
-                               resources_dir + L"/tessdata", L"eng", 2., kRotate0);
-
     // Miscelaneous
     ProcessControl::Run(open_path);
     BookmarksToJson::Run(open_path, L"", std::cout);
