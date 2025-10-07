@@ -2,9 +2,9 @@
 
 #include <string>
 
-void AddTags(
-    const std::wstring& open_path,        // source PDF document
-    const std::wstring& save_path,        // output PDF document
-    const std::wstring& config_path,      // configuration file
-    const bool preflight                  // preflight document template before processing
-    );
+void AddTags(const std::wstring& open_path,    // source PDF document
+             const std::wstring& save_path,    // output PDF document
+             const std::wstring& config_path,  // configuration file
+             const bool preflight,             // preflight document template before processing
+             const bool sequential_headings    // request sequential headings
+);

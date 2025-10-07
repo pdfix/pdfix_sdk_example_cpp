@@ -15,7 +15,8 @@ using namespace PDFixSDK;
 void AddTags(const std::wstring& open_path,    // source PDF document
              const std::wstring& save_path,    // output PDF document
              const std::wstring& config_path,  // configuration file
-             const bool preflight              // preflight document template before processing
+             const bool preflight,             // preflight document template before processing
+             const bool sequential_headings    // request sequential headings
 ) {
   auto pdfix = PdfixEngine::Get();
 
@@ -54,6 +55,7 @@ void AddTags(const std::wstring& open_path,    // source PDF document
 
   // add tags to the document
   PdfTagsParams params;
+  params.headings = sequential_headings;
   if (!doc->AddTags(&params))
     throw PdfixException();
 
