@@ -251,7 +251,7 @@ target_compile_definitions(pdfixsdksample
   ${BUILD_APPLE_COMPILER_DEFINITIONS}
   )  
 
-set(Boost_dir "${CMAKE_SOURCE_DIR}/libs/boost_1_87_0")
+set(Boost_dir "${CMAKE_SOURCE_DIR}/libs/boost_1_90_0")
 set(Boost_lib "${Boost_dir}/stage/lib")
   
 target_include_directories(pdfixsdksample
