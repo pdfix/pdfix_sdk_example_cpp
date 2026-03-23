@@ -12,6 +12,9 @@ void ExtractTextElement(PdeText* text, ptree& node, const DataType& data_types) 
 
   if (data_types.extract_text_style) {
     switch (text->GetTextStyle()) {
+      case kTextH:
+        node.put("text_style", "h");
+        break;
       case kTextH1:
         node.put("text_style", "h1");
         break;
@@ -29,12 +32,6 @@ void ExtractTextElement(PdeText* text, ptree& node, const DataType& data_types) 
         break;
       case kTextH6:
         node.put("text_style", "h6");
-        break;
-      case kTextH7:
-        node.put("text_style", "h7");
-        break;
-      case kTextH8:
-        node.put("text_style", "h8");
         break;
       case kTextNote:
         node.put("text_style", "note");
