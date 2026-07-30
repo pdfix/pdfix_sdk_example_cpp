@@ -78,6 +78,7 @@ set(HEADERS
   include/pdfixsdksamples/CreateRedactionMark.h
   include/pdfixsdksamples/ProcessControl.h
   include/pdfixsdksamples/EditPageObjectMCID.h
+  include/pdfixsdksamples/TemplateQueryTestPageObject.h
   )
 
 set(SOURCES
@@ -166,6 +167,7 @@ set(SOURCES
   src/CreateRedactionMark.cpp
   src/ProcessControl.cpp
   src/EditPageObjectMCID.cpp
+  src/TemplateQueryTestPageObject.cpp
   )
 
 add_library(pdfixsdksample

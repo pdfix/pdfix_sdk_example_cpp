@@ -136,6 +136,7 @@ int main(int argc, char* argv[]) {
     OpedDocumentFromStream::Run(open_path);
     ParsePdsObjects::Run(open_path, L"", std::cout);
     ParsePageContent::Run(open_path, std::cout, 0);
+    TemplateQueryTestPageObject::Run(open_path, std::cout);
     DocumentMetadata::Run(open_path, output_dir + L"/DocumentMetadata.pdf",
                           output_dir + L"/metadata.xml");
     EmbedFonts::Run(open_path, output_dir + L"/EmbedFonts.pdf");

@@ -37,5 +37,6 @@
 #include "RemoveComments.h"
 #include "RenderPage.h"
 #include "SearchText.h"
+#include "TemplateQueryTestPageObject.h"
 #include "SetFieldFlags.h"
 #include "SetFormFieldValue.h"
