@@ -63,7 +63,7 @@ int main(int argc, char* argv[]) {
     // Accessibility and PDF Tagging samples
     MakeAccessible(open_path, output_dir + L"/MakeAccessible.pdf", resources_dir + L"/make-accessible.json");
 
-    AddTags(open_path, output_dir + L"/AddTags.pdf", config_path, true);
+    AddTags(open_path, output_dir + L"/AddTags.pdf", config_path, true, true);
 
     // TagsReadStructTree(open_path, output_dir + L"/TagsReadStructTree.txt", config_path);
     // TagTableAsFigure::Run(open_path, output_dir + L"/TagTableAsFigure.pdf");
