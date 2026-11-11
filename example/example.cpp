@@ -48,8 +48,6 @@ int main(int argc, char* argv[]) {
     if (!DirectoryExists(output_dir, true))
       throw std::runtime_error("Output directory does not exist");
 
-    Initialization();
-
     EditContent::PropsBuilder builder;
     builder.AddImage(0, 0, resources_dir + L"/watermark.png");
     builder.AddText(100, 100, L"Hello!");
