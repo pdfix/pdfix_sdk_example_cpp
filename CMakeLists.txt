@@ -187,12 +187,12 @@ endif ()
 
 # set output directory
 if(MSVC)
-  if (CMAKE_CL_64 OR ${PROJECTNAME_ARCHITECTURE} EQUAL "x64")  # -- 64-bit builds.
+  if(PROJECTNAME_ARCHITECTURE STREQUAL "x64")  # -- 64-bit builds.
     set(OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin/x64")
     set(DOWNLOAD_PLATFORM windows_x86_64.zip)
   else()
-    set(OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin/x86")
-    set(DOWNLOAD_PLATFORM windows.zip)
+    message(FATAL_ERROR "32-bit Windows is not supported by PDFix SDK. "
+      "Configure a 64-bit build, e.g. cmake -A x64.")
   endif()
 elseif(APPLE)
   # CMAKE_OSX_ARCHITECTURES is empty unless passed in, so fall back to the host CPU.
