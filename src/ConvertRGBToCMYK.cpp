@@ -63,7 +63,7 @@ static void ConvertRGBToCMYK(PdfPage* page) {
       if (color_state.fill_color)
         color_state.fill_color->Destroy();
     } else {
-      auto text_object = (PdsText*)page_object;
+      auto text_object = page_object->AsPdsText();
       auto t_state = text_object->GetTextState();
       auto& color_state = t_state.color_state;
       ConvertRGBToCMYK(color_state);

@@ -31,13 +31,13 @@ namespace ParsePageContent {
         ss << "unknown" << std::endl; break;
       case kPdsPageText: {
         ss << "text" << std::endl;
-        auto text = ((PdsText*)obj);
+        auto text = obj->AsPdsText();
         auto str = text->GetText();
         ss << indent << "text: " << ToUtf8(str) << std::endl;
         break;
       }
       case kPdsPageImage:{
-        auto image = (PdsImage*)obj;
+        auto image = obj->AsPdsImage();
         auto stream = image->GetDataStm();
         ss << "image" << std::endl; 
         auto sz = stream->GetSize();
@@ -51,7 +51,7 @@ namespace ParsePageContent {
         break;
         }
       case kPdsPagePath:{
-        auto path = (PdsPath*)obj;
+        auto path = obj->AsPdsPath();
         auto points_num = path->GetNumPathPoints();
         ss << "path" << std::endl;
         ss << indent << "points_num: " << points_num << std::endl;
@@ -59,7 +59,7 @@ namespace ParsePageContent {
         }
         
       case kPdsPageShading:{
-        auto shading = (PdsShading*)obj;
+        auto shading = obj->AsPdsShading();
         auto id = shading->GetId();
         ss << "shading" << std::endl;
         ss << "blend_mode: " << shading->GetGState().blend_mode << std::endl;
@@ -67,7 +67,7 @@ namespace ParsePageContent {
         }
       case kPdsPageForm: {
         ss << "form" << std::endl;
-        auto form = (PdsForm*)obj;
+        auto form = obj->AsPdsForm();
         auto content = form->GetContent();
         auto objects_num = content->GetNumObjects();
         if (objects_num > 0) {

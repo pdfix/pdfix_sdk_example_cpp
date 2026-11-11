@@ -17,7 +17,7 @@ namespace TagHeadings {
 // get text object's of specified mcid the text state
 bool GetPageObjectTextState(PdsPageObject* page_object, int mcid, PdfTextState* ts) {
   if (page_object->GetObjectType() == kPdsPageText) {
-    PdsText* text = (PdsText*)page_object;
+    PdsText* text = page_object->AsPdsText();
 
     // check if this text page object has the same mcid
     PdsContentMark* content_mark = page_object->GetContentMark();
@@ -27,7 +27,7 @@ bool GetPageObjectTextState(PdsPageObject* page_object, int mcid, PdfTextState* 
     }
   } else if (page_object->GetObjectType() == kPdsPageForm) {
     // search for the text object inside of the form XObject
-    PdsForm* form = (PdsForm*)page_object;
+    PdsForm* form = page_object->AsPdsForm();
     auto content = form->GetContent();
     for (int i = 0; i < content->GetNumObjects(); i++) {
       if (GetPageObjectTextState(content->GetObject(i), mcid, ts))

@@ -23,7 +23,7 @@ void SetPageObjectsRenderFlag(PdsPageObject* obj) {
   if (obj->GetObjectType() == kPdsPageForm) {
     // form object - process child objects
     obj->SetRender(true);
-    PdsForm* form = (PdsForm*)obj;
+    PdsForm* form = obj->AsPdsForm();
     int num_objects = form->GetNumPageObjects();
     for (int i = 0; i < num_objects; i++)
       SetPageObjectsRenderFlag(form->GetPageObject(i));

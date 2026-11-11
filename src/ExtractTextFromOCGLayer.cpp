@@ -63,7 +63,7 @@ namespace ExtractTextFromOCGLayer {
   void CheckPageObject(PdsPageObject* page_object, const std::pair<std::wstring, int>& layer) {
     switch (page_object->GetObjectType()) {
       case kPdsPageText: {
-        auto text_obj = (PdsText*)page_object;
+        auto text_obj = page_object->AsPdsText();
         auto text = text_obj->GetText();
         text_obj->GetText((wchar_t*)text.c_str(), (int)text.size());
 

@@ -34,7 +34,7 @@ namespace NamedDestsToJson {
 
   void ProcessNamedDest(PdsObject* name, PdsObject* value, PdfDoc* doc, ptree& json) {
     ptree dest_json;
-    auto text = static_cast<PdsString*>(name)->GetText();
+    auto text = name->AsPdsString()->GetText();
     auto view_dest = doc->GetViewDestinationFromObject(value);
     if (view_dest) {
       if (ProcessViewDestination(view_dest, doc, dest_json)) {
@@ -48,14 +48,14 @@ namespace NamedDestsToJson {
     if (!obj) return;
     
     if (obj->GetObjectType() == kPdsDictionary) {
-      auto names = static_cast<PdsDictionary*>(obj)->GetArray(L"Names");
+      auto names = obj->AsPdsDictionary()->GetArray(L"Names");
       if (names) {
         for (int i = 0; i < names->GetNumObjects(); i+=2) {
           ProcessNamedDest(names->Get(i), names->Get(i+1), doc, json);
         }
         return;
       }
-      auto kids = static_cast<PdsDictionary*>(obj)->GetArray(L"Kids");
+      auto kids = obj->AsPdsDictionary()->GetArray(L"Kids");
       if (kids) {
         for (int i = 0; i < kids->GetNumObjects(); i++) {
           ProcessNameTreeObject(kids->GetDictionary(i), doc, json);

@@ -214,10 +214,14 @@ elseif(UNIX)
 else()
 endif()
 
+# PDFix SDK release from https://github.com/pdfix/pdfix_sdk_builds/releases
+set(PDFIX_SDK_VERSION "9.3.0")
+set(PDFIX_SDK_COMMIT "c4e284e9")
+
 include(FetchContent)
 FetchContent_Declare(
-  pdfixdist  
-  URL "https://github.com/pdfix/pdfix_sdk_builds/releases/download/8.2.0/pdfix_sdk_8.2.0_180fe298_${DOWNLOAD_PLATFORM}"
+  pdfixdist
+  URL "https://github.com/pdfix/pdfix_sdk_builds/releases/download/v${PDFIX_SDK_VERSION}/pdfix_sdk_${PDFIX_SDK_VERSION}_${PDFIX_SDK_COMMIT}_${DOWNLOAD_PLATFORM}"
   SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/pdfix_sdk
   )
 

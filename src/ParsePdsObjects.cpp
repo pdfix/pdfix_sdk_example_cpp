@@ -39,28 +39,28 @@ namespace ParsePdsObjects {
     mapped.insert(std::make_pair(obj, 1));
     switch (obj->GetObjectType()) {
     case kPdsBoolean:{
-      PdsBoolean* boolObj = (PdsBoolean*)obj;
+      PdsBoolean* boolObj = obj->AsPdsBoolean();
       ss << (boolObj->GetValue() ? "true" : "false");
     } break;
     case kPdsNumber: {
-      PdsNumber* numberObj = (PdsNumber*)obj;
+      PdsNumber* numberObj = obj->AsPdsNumber();
       if (numberObj->IsIntegerValue())
         ss << numberObj->GetIntegerValue();
       else
         ss << (float)numberObj->GetValue();
     } break;
     case kPdsName: {
-      PdsName* nameObj = (PdsName*)obj;
+      PdsName* nameObj = obj->AsPdsName();
       auto str = nameObj->GetText();
       ss << ToUtf8(str);
     } break;
     case kPdsString: {
-      PdsString* strObj = (PdsString*)obj;
+      PdsString* strObj = obj->AsPdsString();
       auto str = strObj->GetText();
       ss << ToUtf8(str);
     } break;
     case kPdsStream: {
-      PdsStream* streamObj = (PdsStream*)obj;
+      PdsStream* streamObj = obj->AsPdsStream();
       ss << "stream (" << streamObj->GetRawDataSize() << ")" << std::endl;
       auto sz = streamObj->GetSize();
       std::vector<unsigned char> data;
@@ -74,14 +74,14 @@ namespace ParsePdsObjects {
       ProcessObject(streamObj->GetStreamDict(), ss, indent, mapped);
     } break;
     case kPdsArray: {
-      PdsArray* arrObj = (PdsArray*)obj;
+      PdsArray* arrObj = obj->AsPdsArray();
       for (int i = 0; i < (arrObj->GetNumObjects()); i++) {
         ss << std::endl << indent << "[" << i << "] ";
         ProcessObject(arrObj->Get(i), ss, indent, mapped);
       }
     } break;
     case kPdsDictionary: {
-      PdsDictionary* dictObj = (PdsDictionary*)obj;
+      PdsDictionary* dictObj = obj->AsPdsDictionary();
       for (int i = 0; i < (dictObj->GetNumKeys()); i++) {
         auto key = dictObj->GetKey(i);
         ss << indent << std::endl << indent << "/" << ToUtf8(key) << " ";

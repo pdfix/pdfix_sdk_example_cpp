@@ -71,18 +71,18 @@ namespace ExtractData {
     switch (object->GetObjectType()) {
       case kPdsPageText: 
         if (data_types.extract_text)
-          ExtractTextObject((PdsText *)object, node, data_types);
+          ExtractTextObject(object->AsPdsText(), node, data_types);
         break;
       case kPdsPageForm: 
-        ExtractFormObject((PdsForm *)object, node, data_types);
+        ExtractFormObject(object->AsPdsForm(), node, data_types);
         break;
       case kPdsPagePath: 
         if (data_types.extract_paths)
-          ExtractPathObject((PdsPath *)object, node, data_types);
+          ExtractPathObject(object->AsPdsPath(), node, data_types);
         break;
       case kPdsPageImage: 
         if (data_types.extract_images)
-          ExtractImageObject((PdsImage *)object, node, data_types);
+          ExtractImageObject(object->AsPdsImage(), node, data_types);
         break;
       default:;
       }
