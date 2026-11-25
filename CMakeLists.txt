@@ -215,8 +215,8 @@ else()
 endif()
 
 # PDFix SDK release from https://github.com/pdfix/pdfix_sdk_builds/releases
-set(PDFIX_SDK_VERSION "10.0.0")
-set(PDFIX_SDK_COMMIT "14ecb689")
+set(PDFIX_SDK_VERSION "10.0.1")
+set(PDFIX_SDK_COMMIT "7cf79f90")
 
 include(FetchContent)
 FetchContent_Declare(
